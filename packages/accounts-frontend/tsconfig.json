@@ -1,0 +1,11 @@
+// tsconfig.json
+{
+  "compilerOptions": {
+    "target": "ES2015",
+    "module": "CommonJS",
+    // this enables stricter inference for data properties on `this`
+    "strict": true,
+    "jsx": "preserve",
+    "moduleResolution": "node"
+  }
+}

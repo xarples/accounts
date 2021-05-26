@@ -1,0 +1,17 @@
+{
+  "name": "@xarples/accounts-utils",
+  "version": "0.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "scripts": {
+    "build": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@xarples/accounts-protos": "^0.0.0",
+    "@xarples/accounts-db": "^0.0.0"
+  }
+}

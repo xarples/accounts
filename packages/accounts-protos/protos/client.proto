@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package client;
+
+message Client {
+  string id  = 1; 
+  string secret  = 2;
+  string name  = 3;
+  string description  = 4;
+  string token_endpoint_auth_method  = 5;
+  repeated string redirect_uris  = 6;
+  string logo_uri  = 7;
+  string website_uri  = 8;
+  string policy_uri  = 9;
+  string user_id  = 10;
+  string created_at = 11;
+  string updated_at = 12;
+}
+
+message ClientList {
+  repeated Client client = 1;
+}

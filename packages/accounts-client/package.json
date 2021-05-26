@@ -1,0 +1,17 @@
+{
+  "name": "@xarples/accounts-client",
+  "version": "0.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "@xarples/accounts-protos": "^0.0.0"
+  }
+}
