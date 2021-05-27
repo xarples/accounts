@@ -11,11 +11,13 @@
   "license": "MIT",
   "dependencies": {
     "@xarples/accounts-client": "^0.0.0",
+    "@xarples/accounts-protos": "^0.0.0",
     "@xarples/accounts-utils": "^0.0.0",
     "@vueuse/head": "^0.5.1",
     "fastify": "^3.15.1",
     "fastify-cookie": "^5.3.1",
     "fastify-express": "^0.3.2",
+    "fastify-formbody": "^5.0.0",
     "fastify-session": "^5.2.1",
     "fastify-static": "^4.2.2",
     "fastify-vite": "^2.1.3",
