@@ -9,14 +9,16 @@ export default async function createClient(
   const request = call.request.toObject()
   const user = await db.client.create({
     data: {
-      secret: 'random_string',
       name: request.name,
-      description: request.description,
-      redirect_uris: request.redirectUrisList,
-      logo_uri: request.logoUri,
-      policy_uri: request.policyUri,
-      website_uri: request.websiteUri,
-    },
+      description: request.description || undefined
+      // token_endpoint_auth_method: request.tokenEndpointAuthMethod,
+      // scope: request.scope,
+      // contacts: request.contactsList,
+      // redirect_uris: request.redirectUrisList,
+      // logo_uri: request.logoUri,
+      // policy_uri: request.policyUri,
+      // website_uri: request.websiteUri
+    }
   })
 
   const message = toClientMessage(user)

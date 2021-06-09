@@ -17,6 +17,20 @@ export class Client extends jspb.Message {
     setDescription(value: string): Client;
     getTokenEndpointAuthMethod(): string;
     setTokenEndpointAuthMethod(value: string): Client;
+    getScope(): string;
+    setScope(value: string): Client;
+    clearContactsList(): void;
+    getContactsList(): Array<string>;
+    setContactsList(value: Array<string>): Client;
+    addContacts(value: string, index?: number): string;
+    clearGrantTypesList(): void;
+    getGrantTypesList(): Array<string>;
+    setGrantTypesList(value: Array<string>): Client;
+    addGrantTypes(value: string, index?: number): string;
+    clearResponseTypesList(): void;
+    getResponseTypesList(): Array<string>;
+    setResponseTypesList(value: Array<string>): Client;
+    addResponseTypes(value: string, index?: number): string;
     clearRedirectUrisList(): void;
     getRedirectUrisList(): Array<string>;
     setRedirectUrisList(value: Array<string>): Client;
@@ -27,6 +41,8 @@ export class Client extends jspb.Message {
     setWebsiteUri(value: string): Client;
     getPolicyUri(): string;
     setPolicyUri(value: string): Client;
+    getTosUri(): string;
+    setTosUri(value: string): Client;
     getUserId(): string;
     setUserId(value: string): Client;
     getCreatedAt(): string;
@@ -51,10 +67,15 @@ export namespace Client {
         name: string,
         description: string,
         tokenEndpointAuthMethod: string,
+        scope: string,
+        contactsList: Array<string>,
+        grantTypesList: Array<string>,
+        responseTypesList: Array<string>,
         redirectUrisList: Array<string>,
         logoUri: string,
         websiteUri: string,
         policyUri: string,
+        tosUri: string,
         userId: string,
         createdAt: string,
         updatedAt: string,

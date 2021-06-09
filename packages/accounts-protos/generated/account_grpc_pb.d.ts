@@ -1,27 +1,29 @@
 // package: auth
-// file: auth.proto
+// file: account.proto
 
 /* tslint:disable */
 /* eslint-disable */
 
 import * as grpc from "@grpc/grpc-js";
 import {handleClientStreamingCall} from "@grpc/grpc-js/build/src/server-call";
-import * as auth_pb from "./auth_pb";
+import * as account_pb from "./account_pb";
 import * as user_pb from "./user_pb";
 import * as client_pb from "./client_pb";
 
-interface IAuthService extends grpc.ServiceDefinition<grpc.UntypedServiceImplementation> {
-    createUser: IAuthService_ICreateUser;
-    getUser: IAuthService_IGetUser;
-    listUsers: IAuthService_IListUsers;
-    updateUser: IAuthService_IUpdateUser;
-    createClient: IAuthService_ICreateClient;
-    listClients: IAuthService_IListClients;
-    updateClient: IAuthService_IUpdateClient;
+interface IAccountService extends grpc.ServiceDefinition<grpc.UntypedServiceImplementation> {
+    createUser: IAccountService_ICreateUser;
+    getUser: IAccountService_IGetUser;
+    listUsers: IAccountService_IListUsers;
+    updateUser: IAccountService_IUpdateUser;
+    createClient: IAccountService_ICreateClient;
+    getClient: IAccountService_IGetClient;
+    listClients: IAccountService_IListClients;
+    updateClient: IAccountService_IUpdateClient;
+    deleteClient: IAccountService_IDeleteClient;
 }
 
-interface IAuthService_ICreateUser extends grpc.MethodDefinition<user_pb.User, user_pb.User> {
-    path: "/auth.Auth/CreateUser";
+interface IAccountService_ICreateUser extends grpc.MethodDefinition<user_pb.User, user_pb.User> {
+    path: "/auth.Account/CreateUser";
     requestStream: false;
     responseStream: false;
     requestSerialize: grpc.serialize<user_pb.User>;
@@ -29,8 +31,8 @@ interface IAuthService_ICreateUser extends grpc.MethodDefinition<user_pb.User, u
     responseSerialize: grpc.serialize<user_pb.User>;
     responseDeserialize: grpc.deserialize<user_pb.User>;
 }
-interface IAuthService_IGetUser extends grpc.MethodDefinition<user_pb.User, user_pb.User> {
-    path: "/auth.Auth/GetUser";
+interface IAccountService_IGetUser extends grpc.MethodDefinition<user_pb.User, user_pb.User> {
+    path: "/auth.Account/GetUser";
     requestStream: false;
     responseStream: false;
     requestSerialize: grpc.serialize<user_pb.User>;
@@ -38,8 +40,8 @@ interface IAuthService_IGetUser extends grpc.MethodDefinition<user_pb.User, user
     responseSerialize: grpc.serialize<user_pb.User>;
     responseDeserialize: grpc.deserialize<user_pb.User>;
 }
-interface IAuthService_IListUsers extends grpc.MethodDefinition<user_pb.User, user_pb.UserList> {
-    path: "/auth.Auth/ListUsers";
+interface IAccountService_IListUsers extends grpc.MethodDefinition<user_pb.User, user_pb.UserList> {
+    path: "/auth.Account/ListUsers";
     requestStream: false;
     responseStream: true;
     requestSerialize: grpc.serialize<user_pb.User>;
@@ -47,8 +49,8 @@ interface IAuthService_IListUsers extends grpc.MethodDefinition<user_pb.User, us
     responseSerialize: grpc.serialize<user_pb.UserList>;
     responseDeserialize: grpc.deserialize<user_pb.UserList>;
 }
-interface IAuthService_IUpdateUser extends grpc.MethodDefinition<user_pb.User, user_pb.User> {
-    path: "/auth.Auth/UpdateUser";
+interface IAccountService_IUpdateUser extends grpc.MethodDefinition<user_pb.User, user_pb.User> {
+    path: "/auth.Account/UpdateUser";
     requestStream: false;
     responseStream: false;
     requestSerialize: grpc.serialize<user_pb.User>;
@@ -56,8 +58,8 @@ interface IAuthService_IUpdateUser extends grpc.MethodDefinition<user_pb.User, u
     responseSerialize: grpc.serialize<user_pb.User>;
     responseDeserialize: grpc.deserialize<user_pb.User>;
 }
-interface IAuthService_ICreateClient extends grpc.MethodDefinition<client_pb.Client, client_pb.Client> {
-    path: "/auth.Auth/CreateClient";
+interface IAccountService_ICreateClient extends grpc.MethodDefinition<client_pb.Client, client_pb.Client> {
+    path: "/auth.Account/CreateClient";
     requestStream: false;
     responseStream: false;
     requestSerialize: grpc.serialize<client_pb.Client>;
@@ -65,8 +67,17 @@ interface IAuthService_ICreateClient extends grpc.MethodDefinition<client_pb.Cli
     responseSerialize: grpc.serialize<client_pb.Client>;
     responseDeserialize: grpc.deserialize<client_pb.Client>;
 }
-interface IAuthService_IListClients extends grpc.MethodDefinition<client_pb.Client, client_pb.ClientList> {
-    path: "/auth.Auth/ListClients";
+interface IAccountService_IGetClient extends grpc.MethodDefinition<client_pb.Client, client_pb.Client> {
+    path: "/auth.Account/GetClient";
+    requestStream: false;
+    responseStream: false;
+    requestSerialize: grpc.serialize<client_pb.Client>;
+    requestDeserialize: grpc.deserialize<client_pb.Client>;
+    responseSerialize: grpc.serialize<client_pb.Client>;
+    responseDeserialize: grpc.deserialize<client_pb.Client>;
+}
+interface IAccountService_IListClients extends grpc.MethodDefinition<client_pb.Client, client_pb.ClientList> {
+    path: "/auth.Account/ListClients";
     requestStream: false;
     responseStream: false;
     requestSerialize: grpc.serialize<client_pb.Client>;
@@ -74,8 +85,17 @@ interface IAuthService_IListClients extends grpc.MethodDefinition<client_pb.Clie
     responseSerialize: grpc.serialize<client_pb.ClientList>;
     responseDeserialize: grpc.deserialize<client_pb.ClientList>;
 }
-interface IAuthService_IUpdateClient extends grpc.MethodDefinition<client_pb.Client, client_pb.Client> {
-    path: "/auth.Auth/UpdateClient";
+interface IAccountService_IUpdateClient extends grpc.MethodDefinition<client_pb.Client, client_pb.Client> {
+    path: "/auth.Account/UpdateClient";
+    requestStream: false;
+    responseStream: false;
+    requestSerialize: grpc.serialize<client_pb.Client>;
+    requestDeserialize: grpc.deserialize<client_pb.Client>;
+    responseSerialize: grpc.serialize<client_pb.Client>;
+    responseDeserialize: grpc.deserialize<client_pb.Client>;
+}
+interface IAccountService_IDeleteClient extends grpc.MethodDefinition<client_pb.Client, client_pb.Client> {
+    path: "/auth.Account/DeleteClient";
     requestStream: false;
     responseStream: false;
     requestSerialize: grpc.serialize<client_pb.Client>;
@@ -84,19 +104,21 @@ interface IAuthService_IUpdateClient extends grpc.MethodDefinition<client_pb.Cli
     responseDeserialize: grpc.deserialize<client_pb.Client>;
 }
 
-export const AuthService: IAuthService;
+export const AccountService: IAccountService;
 
-export interface IAuthServer extends grpc.UntypedServiceImplementation {
+export interface IAccountServer extends grpc.UntypedServiceImplementation {
     createUser: grpc.handleUnaryCall<user_pb.User, user_pb.User>;
     getUser: grpc.handleUnaryCall<user_pb.User, user_pb.User>;
     listUsers: grpc.handleServerStreamingCall<user_pb.User, user_pb.UserList>;
     updateUser: grpc.handleUnaryCall<user_pb.User, user_pb.User>;
     createClient: grpc.handleUnaryCall<client_pb.Client, client_pb.Client>;
+    getClient: grpc.handleUnaryCall<client_pb.Client, client_pb.Client>;
     listClients: grpc.handleUnaryCall<client_pb.Client, client_pb.ClientList>;
     updateClient: grpc.handleUnaryCall<client_pb.Client, client_pb.Client>;
+    deleteClient: grpc.handleUnaryCall<client_pb.Client, client_pb.Client>;
 }
 
-export interface IAuthClient {
+export interface IAccountClient {
     createUser(request: user_pb.User, callback: (error: grpc.ServiceError | null, response: user_pb.User) => void): grpc.ClientUnaryCall;
     createUser(request: user_pb.User, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: user_pb.User) => void): grpc.ClientUnaryCall;
     createUser(request: user_pb.User, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: user_pb.User) => void): grpc.ClientUnaryCall;
@@ -111,15 +133,21 @@ export interface IAuthClient {
     createClient(request: client_pb.Client, callback: (error: grpc.ServiceError | null, response: client_pb.Client) => void): grpc.ClientUnaryCall;
     createClient(request: client_pb.Client, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: client_pb.Client) => void): grpc.ClientUnaryCall;
     createClient(request: client_pb.Client, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: client_pb.Client) => void): grpc.ClientUnaryCall;
+    getClient(request: client_pb.Client, callback: (error: grpc.ServiceError | null, response: client_pb.Client) => void): grpc.ClientUnaryCall;
+    getClient(request: client_pb.Client, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: client_pb.Client) => void): grpc.ClientUnaryCall;
+    getClient(request: client_pb.Client, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: client_pb.Client) => void): grpc.ClientUnaryCall;
     listClients(request: client_pb.Client, callback: (error: grpc.ServiceError | null, response: client_pb.ClientList) => void): grpc.ClientUnaryCall;
     listClients(request: client_pb.Client, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: client_pb.ClientList) => void): grpc.ClientUnaryCall;
     listClients(request: client_pb.Client, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: client_pb.ClientList) => void): grpc.ClientUnaryCall;
     updateClient(request: client_pb.Client, callback: (error: grpc.ServiceError | null, response: client_pb.Client) => void): grpc.ClientUnaryCall;
     updateClient(request: client_pb.Client, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: client_pb.Client) => void): grpc.ClientUnaryCall;
     updateClient(request: client_pb.Client, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: client_pb.Client) => void): grpc.ClientUnaryCall;
+    deleteClient(request: client_pb.Client, callback: (error: grpc.ServiceError | null, response: client_pb.Client) => void): grpc.ClientUnaryCall;
+    deleteClient(request: client_pb.Client, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: client_pb.Client) => void): grpc.ClientUnaryCall;
+    deleteClient(request: client_pb.Client, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: client_pb.Client) => void): grpc.ClientUnaryCall;
 }
 
-export class AuthClient extends grpc.Client implements IAuthClient {
+export class AccountClient extends grpc.Client implements IAccountClient {
     constructor(address: string, credentials: grpc.ChannelCredentials, options?: Partial<grpc.ClientOptions>);
     public createUser(request: user_pb.User, callback: (error: grpc.ServiceError | null, response: user_pb.User) => void): grpc.ClientUnaryCall;
     public createUser(request: user_pb.User, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: user_pb.User) => void): grpc.ClientUnaryCall;
@@ -135,10 +163,16 @@ export class AuthClient extends grpc.Client implements IAuthClient {
     public createClient(request: client_pb.Client, callback: (error: grpc.ServiceError | null, response: client_pb.Client) => void): grpc.ClientUnaryCall;
     public createClient(request: client_pb.Client, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: client_pb.Client) => void): grpc.ClientUnaryCall;
     public createClient(request: client_pb.Client, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: client_pb.Client) => void): grpc.ClientUnaryCall;
+    public getClient(request: client_pb.Client, callback: (error: grpc.ServiceError | null, response: client_pb.Client) => void): grpc.ClientUnaryCall;
+    public getClient(request: client_pb.Client, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: client_pb.Client) => void): grpc.ClientUnaryCall;
+    public getClient(request: client_pb.Client, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: client_pb.Client) => void): grpc.ClientUnaryCall;
     public listClients(request: client_pb.Client, callback: (error: grpc.ServiceError | null, response: client_pb.ClientList) => void): grpc.ClientUnaryCall;
     public listClients(request: client_pb.Client, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: client_pb.ClientList) => void): grpc.ClientUnaryCall;
     public listClients(request: client_pb.Client, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: client_pb.ClientList) => void): grpc.ClientUnaryCall;
     public updateClient(request: client_pb.Client, callback: (error: grpc.ServiceError | null, response: client_pb.Client) => void): grpc.ClientUnaryCall;
     public updateClient(request: client_pb.Client, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: client_pb.Client) => void): grpc.ClientUnaryCall;
     public updateClient(request: client_pb.Client, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: client_pb.Client) => void): grpc.ClientUnaryCall;
+    public deleteClient(request: client_pb.Client, callback: (error: grpc.ServiceError | null, response: client_pb.Client) => void): grpc.ClientUnaryCall;
+    public deleteClient(request: client_pb.Client, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: client_pb.Client) => void): grpc.ClientUnaryCall;
+    public deleteClient(request: client_pb.Client, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: client_pb.Client) => void): grpc.ClientUnaryCall;
 }

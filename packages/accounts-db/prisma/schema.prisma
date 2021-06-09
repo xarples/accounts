@@ -11,27 +11,45 @@ generator client {
 }
 
 model User {
-  id         String   @id @default(uuid())
+  id         String   @id @default(cuid())
   username   String   @unique
   password   String   @unique
   email      String   @unique
   clients    Client[]
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
+
+  @@map(name: "users")
 }
 
 model Client {
-  id                         String   @id @default(uuid())
-  secret                     String   @unique
-  name                       String   @unique
-  description                String   @unique
-  token_endpoint_auth_method String?  @unique @default("client_secret_basic")
+  id                         String   @id @default(cuid())
+  secret                     String?  @unique @default(cuid())
+  name                       String
+  description                String?
+  token_endpoint_auth_method String?  @default("client_secret_basic")
+  scope                      String?
+  contacts                   String[]
+  grant_types                String[]
+  response_types             String[]
   redirect_uris              String[]
-  logo_uri                   String?  @unique
-  website_uri                String?  @unique
-  policy_uri                 String?  @unique
+  logo_uri                   String?
+  website_uri                String?
+  policy_uri                 String?
+  tos_uri                    String?
   user_id                    String?
-  User                       User?    @relation(fields: [user_id], references: [id])
   created_at                 DateTime @default(now())
   updated_at                 DateTime @updatedAt
+
+  User User? @relation(fields: [user_id], references: [id])
+
+  @@map(name: "clients")
+}
+
+model Scope {
+  id          String   @id @default(cuid())
+  name        String
+  description String
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
 }

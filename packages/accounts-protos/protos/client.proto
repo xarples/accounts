@@ -4,17 +4,22 @@ package client;
 
 message Client {
   string id  = 1; 
-  string secret  = 2;
-  string name  = 3;
+  string secret = 2;
+  string name = 3;
   string description  = 4;
   string token_endpoint_auth_method  = 5;
-  repeated string redirect_uris  = 6;
-  string logo_uri  = 7;
-  string website_uri  = 8;
-  string policy_uri  = 9;
-  string user_id  = 10;
-  string created_at = 11;
-  string updated_at = 12;
+  string scope  = 6;
+  repeated string contacts  = 7;
+  repeated string grant_types  = 8;
+  repeated string response_types  = 9;
+  repeated string redirect_uris  = 10;
+  string logo_uri  = 11;
+  string website_uri  = 12;
+  string policy_uri  = 13;
+  string tos_uri  = 14;
+  string user_id  = 15;
+  string created_at = 16;
+  string updated_at = 17;
 }
 
 message ClientList {

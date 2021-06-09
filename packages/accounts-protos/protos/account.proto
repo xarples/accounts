@@ -5,14 +5,16 @@ package auth;
 import "user.proto";
 import "client.proto";
 
-service Auth{
+service Account{
   rpc CreateUser(user.User) returns (user.User) {}
   rpc GetUser(user.User) returns (user.User) {}
   rpc ListUsers(user.User) returns (stream user.UserList) {}
   rpc UpdateUser(user.User) returns (user.User) {}
   rpc CreateClient(client.Client) returns (client.Client) {}
+  rpc GetClient(client.Client) returns (client.Client) {}
   rpc ListClients(client.Client) returns (client.ClientList) {}
   rpc UpdateClient(client.Client) returns (client.Client) {}
+  rpc DeleteClient(client.Client) returns (client.Client) {}
 }
 
 

@@ -50,9 +50,9 @@ function deserialize_user_UserList(buffer_arg) {
 }
 
 
-var AuthService = exports.AuthService = {
+var AccountService = exports.AccountService = {
   createUser: {
-    path: '/auth.Auth/CreateUser',
+    path: '/auth.Account/CreateUser',
     requestStream: false,
     responseStream: false,
     requestType: user_pb.User,
@@ -63,7 +63,7 @@ var AuthService = exports.AuthService = {
     responseDeserialize: deserialize_user_User,
   },
   getUser: {
-    path: '/auth.Auth/GetUser',
+    path: '/auth.Account/GetUser',
     requestStream: false,
     responseStream: false,
     requestType: user_pb.User,
@@ -74,7 +74,7 @@ var AuthService = exports.AuthService = {
     responseDeserialize: deserialize_user_User,
   },
   listUsers: {
-    path: '/auth.Auth/ListUsers',
+    path: '/auth.Account/ListUsers',
     requestStream: false,
     responseStream: true,
     requestType: user_pb.User,
@@ -85,7 +85,7 @@ var AuthService = exports.AuthService = {
     responseDeserialize: deserialize_user_UserList,
   },
   updateUser: {
-    path: '/auth.Auth/UpdateUser',
+    path: '/auth.Account/UpdateUser',
     requestStream: false,
     responseStream: false,
     requestType: user_pb.User,
@@ -96,7 +96,18 @@ var AuthService = exports.AuthService = {
     responseDeserialize: deserialize_user_User,
   },
   createClient: {
-    path: '/auth.Auth/CreateClient',
+    path: '/auth.Account/CreateClient',
+    requestStream: false,
+    responseStream: false,
+    requestType: client_pb.Client,
+    responseType: client_pb.Client,
+    requestSerialize: serialize_client_Client,
+    requestDeserialize: deserialize_client_Client,
+    responseSerialize: serialize_client_Client,
+    responseDeserialize: deserialize_client_Client,
+  },
+  getClient: {
+    path: '/auth.Account/GetClient',
     requestStream: false,
     responseStream: false,
     requestType: client_pb.Client,
@@ -107,7 +118,7 @@ var AuthService = exports.AuthService = {
     responseDeserialize: deserialize_client_Client,
   },
   listClients: {
-    path: '/auth.Auth/ListClients',
+    path: '/auth.Account/ListClients',
     requestStream: false,
     responseStream: false,
     requestType: client_pb.Client,
@@ -118,7 +129,18 @@ var AuthService = exports.AuthService = {
     responseDeserialize: deserialize_client_ClientList,
   },
   updateClient: {
-    path: '/auth.Auth/UpdateClient',
+    path: '/auth.Account/UpdateClient',
+    requestStream: false,
+    responseStream: false,
+    requestType: client_pb.Client,
+    responseType: client_pb.Client,
+    requestSerialize: serialize_client_Client,
+    requestDeserialize: deserialize_client_Client,
+    responseSerialize: serialize_client_Client,
+    responseDeserialize: deserialize_client_Client,
+  },
+  deleteClient: {
+    path: '/auth.Account/DeleteClient',
     requestStream: false,
     responseStream: false,
     requestType: client_pb.Client,
@@ -130,4 +152,4 @@ var AuthService = exports.AuthService = {
   },
 };
 
-exports.AuthClient = grpc.makeGenericClientConstructor(AuthService);
+exports.AccountClient = grpc.makeGenericClientConstructor(AccountService);

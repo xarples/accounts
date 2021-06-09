@@ -1,7 +1,7 @@
-import { AuthClient, grpc } from '@xarples/accounts-protos'
+import { AccountClient, grpc } from '@xarples/accounts-protos'
 
 const port = process.env.GRPC_PORT ?? 5001
-const client = new AuthClient(
+const client = new AccountClient(
   `localhost:${port}`,
   grpc.credentials.createInsecure()
 )

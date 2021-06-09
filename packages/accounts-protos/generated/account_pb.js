@@ -1,4 +1,4 @@
-// source: auth.proto
+// source: account.proto
 /**
  * @fileoverview
  * @enhanceable

@@ -8,6 +8,7 @@
     "bootstrap": "npx lerna bootstrap"
   },
   "devDependencies": {
+    "@types/cuid": "^2.0.1",
     "@types/google-protobuf": "^3.15.2",
     "@types/node": "^15.6.0",
     "lerna": "^4.0.0",
