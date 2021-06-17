@@ -1,6 +1,4 @@
 {
-  "cSpell.ignoreWords": [
-    "fastify",
-    "formbody"
-  ]
+  "cSpell.ignoreWords": ["fastify", "formbody", "vetur"],
+  "vetur.experimental.templateInterpolationService": true
 }

@@ -1,3 +1,15 @@
+<script lang="ts">
+import { defineComponent } from '@nuxtjs/composition-api'
+
+export default defineComponent({
+  setup() {
+    return {
+      msg: 'Authorize Page 1'
+    }
+  }
+})
+</script>
+
 <template>
-  <div>Authorize Page</div>
+  <div>{{ msg }}</div>
 </template>

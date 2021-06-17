@@ -7,8 +7,11 @@ import clients from './clients'
 import metadata from './metadata'
 import nuxt from './nuxt'
 
+// const isDev = process.env.NODE_ENV !== 'production'
 const port = process.env.PORT || 5000
-const server = fastify({ logger: true })
+const server = fastify({
+  logger: true
+})
 
 server.register(fastifyFormbody)
 server.register(fastifyCookie)
