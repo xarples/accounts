@@ -1,5 +1,5 @@
 import db from '@xarples/accounts-db'
-import { grpc, User } from '@xarples/accounts-protos'
+import { grpc, User } from '@xarples/accounts-proto-loader'
 import { toUserMessage } from '@xarples/accounts-utils'
 
 export default async function getUser(
@@ -11,13 +11,13 @@ export default async function getUser(
     where: {
       id: request.id || undefined,
       email: request.email || undefined,
-      username: request.username || undefined,
-    },
+      username: request.username || undefined
+    }
   })
 
   if (!user) {
     cb({
-      code: grpc.status.NOT_FOUND,
+      code: grpc.status.NOT_FOUND
     })
 
     return

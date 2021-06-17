@@ -1,5 +1,5 @@
 {
-  "name": "@xarples/accounts-protos",
+  "name": "@xarples/accounts-proto-loader",
   "version": "0.0.0",
   "description": "",
   "main": "dist/index.js",

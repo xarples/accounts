@@ -1,4 +1,4 @@
-import { AccountClient, grpc } from '@xarples/accounts-protos'
+import { AccountClient, grpc } from '@xarples/accounts-proto-loader'
 
 const port = process.env.GRPC_PORT ?? 5001
 const client = new AccountClient(

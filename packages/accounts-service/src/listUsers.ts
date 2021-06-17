@@ -1,5 +1,5 @@
 import db from '@xarples/accounts-db'
-import { grpc, User, UserList } from '@xarples/accounts-protos'
+import { grpc, User, UserList } from '@xarples/accounts-proto-loader'
 import { toUserMessage } from '@xarples/accounts-utils'
 
 export default async function listUsers(

@@ -5,7 +5,9 @@
     "packages/*"
   ],
   "scripts": {
-    "bootstrap": "npx lerna bootstrap"
+    "bootstrap": "lerna bootstrap",
+    "build": "lerna run build",
+    "dev": "lerna run dev"
   },
   "devDependencies": {
     "@types/cuid": "^2.0.1",

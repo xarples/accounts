@@ -1,4 +1,4 @@
-import { AccountService, grpc } from '@xarples/accounts-protos'
+import { AccountService, grpc } from '@xarples/accounts-proto-loader'
 import * as service from '@xarples/accounts-service'
 
 const host = process.env.HOST || '127.0.0.1'

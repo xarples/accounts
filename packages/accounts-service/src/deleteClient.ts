@@ -1,5 +1,5 @@
 import db from '@xarples/accounts-db'
-import { grpc, Client } from '@xarples/accounts-protos'
+import { grpc, Client } from '@xarples/accounts-proto-loader'
 import { toClientMessage } from '@xarples/accounts-utils'
 
 export default async function deleteClient(

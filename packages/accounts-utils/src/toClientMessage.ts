@@ -1,5 +1,5 @@
 import { Client } from '@xarples/accounts-db'
-import { Client as ClientMessage } from '@xarples/accounts-protos'
+import { Client as ClientMessage } from '@xarples/accounts-proto-loader'
 
 export default function toClientMessage(client: Client): ClientMessage {
   const message = new ClientMessage()

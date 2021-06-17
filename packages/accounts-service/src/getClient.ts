@@ -1,5 +1,5 @@
 import db from '@xarples/accounts-db'
-import { grpc, Client } from '@xarples/accounts-protos'
+import { grpc, Client } from '@xarples/accounts-proto-loader'
 import { toClientMessage } from '@xarples/accounts-utils'
 
 export default async function getClient(
@@ -9,13 +9,13 @@ export default async function getClient(
   const request = call.request.toObject()
   const client = await db.client.findFirst({
     where: {
-      id: request.id || undefined,
-    },
+      id: request.id || undefined
+    }
   })
 
   if (!client) {
     return cb({
-      code: grpc.status.NOT_FOUND,
+      code: grpc.status.NOT_FOUND
     })
   }
 
