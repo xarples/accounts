@@ -1,4 +1,5 @@
 import { FastifyPluginAsync } from 'fastify'
+
 import {
   createClient as createClientSchema,
   getClient as getClientSchema,
@@ -7,6 +8,7 @@ import {
   updateSecret as updateClientSecretSchema,
   deleteClient as deleteClientSchema
 } from './schemas'
+
 import { CreateRoute, GetRoute, ListRoute, UpdateRoute } from './types'
 
 const routes: FastifyPluginAsync = async fastify => {
@@ -42,7 +44,7 @@ const routes: FastifyPluginAsync = async fastify => {
 
   fastify.get<GetRoute>(
     '/clients/:id',
-    { schema: createClientSchema },
+    { schema: getClientSchema },
     async (request, reply) => {
       const client = await fastify.clientService.get({
         id: request.params.id

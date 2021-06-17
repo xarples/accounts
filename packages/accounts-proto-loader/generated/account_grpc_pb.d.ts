@@ -5,7 +5,6 @@
 /* eslint-disable */
 
 import * as grpc from "@grpc/grpc-js";
-import {handleClientStreamingCall} from "@grpc/grpc-js/build/src/server-call";
 import * as account_pb from "./account_pb";
 import * as user_pb from "./user_pb";
 import * as client_pb from "./client_pb";

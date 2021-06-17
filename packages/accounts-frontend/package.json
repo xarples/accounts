@@ -5,12 +5,15 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon",
+    "build:nuxt": "nuxt build",
+    "build:server": "tsc --build tsconfig.server.json",
+    "build": "npm run build:nuxt && npm run build:server",
+    "start": "NODE_ENV=production node dist/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "xarples",
   "license": "MIT",
   "dependencies": {
-    "@vueuse/head": "^0.5.1",
     "@xarples/accounts-client": "^0.0.0",
     "@xarples/accounts-proto-loader": "^0.0.0",
     "@xarples/accounts-utils": "^0.0.0",
@@ -19,17 +22,10 @@
     "fastify-express": "^0.3.2",
     "fastify-formbody": "^5.0.0",
     "fastify-session": "^5.2.1",
-    "fastify-static": "^4.2.2",
-    "fastify-vite": "^2.1.3",
-    "nuxt": "^2.15.6",
-    "vite": "^2.3.3",
-    "vue": "^3.0.11",
-    "vue-router": "^4.0.8"
+    "nuxt": "^2.15.6"
   },
   "devDependencies": {
     "@nuxt/types": "^2.15.6",
-    "@vitejs/plugin-vue": "^1.2.0",
-    "@vitejs/plugin-vue-jsx": "^1.1.2",
-    "@vue/compiler-sfc": "^3.0.7"
+    "@nuxt/typescript-build": "^2.1.0"
   }
 }

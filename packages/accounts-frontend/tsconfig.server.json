@@ -5,11 +5,12 @@
     "moduleResolution": "Node",
     "lib": ["ESNext", "ESNext.AsyncIterable", "DOM"],
     "esModuleInterop": true,
-    "allowJs": true,
+    // "allowJs": true,
     "sourceMap": true,
     "strict": true,
-    "noEmit": true,
-    "baseUrl": ".",
+    "outDir": "./dist",
+    "rootDir": "./server",
+    // "baseUrl": ".",
     "paths": {
       "~/*": ["./*"],
       "@/*": ["./*"]
