@@ -3,11 +3,11 @@ import fastifyFormbody from 'fastify-formbody'
 import fastifyCookie from 'fastify-cookie'
 import fastifySession from 'fastify-session'
 
-import oauth from './oauth'
+import clients from './clients'
 import nuxt from './nuxt'
 
 // const isDev = process.env.NODE_ENV !== 'production'
-const port = process.env.PORT || 5000
+const port = process.env.PORT || 5001
 const server = fastify({
   logger: true
 })
@@ -19,7 +19,7 @@ server.register(fastifySession, {
   cookie: { secure: false }
 })
 
-server.register(oauth)
+server.register(clients)
 server.register(nuxt)
 
 async function main() {

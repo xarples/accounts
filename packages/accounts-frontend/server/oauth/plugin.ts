@@ -1,6 +1,7 @@
 import { FastifyPluginAsync } from 'fastify'
+import fp from 'fastify-plugin'
 
-const routes: FastifyPluginAsync = async fastify => {
+const plugin: FastifyPluginAsync = async (fastify, options) => {
   fastify.get('/.well-known/oauth-authorization-server', async () => {
     return {
       issuer: 'https://accounts.xarples.com',
@@ -21,6 +22,10 @@ const routes: FastifyPluginAsync = async fastify => {
       ui_locales_supported: ['en-US']
     }
   })
+
+  fastify.post('/authorize', (request, reply) => {
+    reply.send({})
+  })
 }
 
-export default routes
+export default fp(plugin, '3.x')

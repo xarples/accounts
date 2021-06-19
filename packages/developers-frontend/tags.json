@@ -1,0 +1,8 @@
+{
+  "foo-tag": {
+    "attributes": [
+      "foo-attr"
+    ],
+    "description": "A foo tag"
+  }
+}

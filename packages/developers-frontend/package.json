@@ -1,5 +1,5 @@
 {
-  "name": "@xarples/accounts-frontend",
+  "name": "@xarples/developers-frontend",
   "version": "0.0.0",
   "description": "Auth server",
   "main": "index.js",

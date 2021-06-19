@@ -12,7 +12,8 @@ generator client {
 
 model User {
   id         String   @id @default(cuid())
-  username   String   @unique
+  first_name String
+  last_name  String
   password   String   @unique
   email      String   @unique
   clients    Client[]
@@ -44,6 +45,25 @@ model Client {
   User User? @relation(fields: [user_id], references: [id])
 
   @@map(name: "clients")
+}
+
+model AuhtorizationCode {
+  id String @id @default(cuid())
+
+
+  @@map(name: "authorization_codes")
+}
+
+model AccessToken {
+  id String @id @default(cuid())
+
+  @@map(name: "access_tokens")
+}
+
+model RefreshToken {
+  id String @id @default(cuid())
+
+  @@map(name: "refresh_tokens")
 }
 
 model Scope {
