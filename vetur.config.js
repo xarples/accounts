@@ -35,6 +35,13 @@ module.exports = {
       // It is relative to root property.
       // Notice: It won't actually do it. You need to use `require.context` or `Vue.component`
       globalComponents: ['./components/**/*.vue']
+    },
+    {
+      root: './packages/developers-frontend',
+      package: './package.json',
+      tsconfig: './tsconfig.json',
+      snippetFolder: './.vscode/vetur/snippets',
+      globalComponents: ['./components/**/*.vue']
     }
   ]
 }
