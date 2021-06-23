@@ -4,7 +4,9 @@ import fp from 'fastify-plugin'
 import { loadNuxt, build } from 'nuxt'
 
 declare module 'fastify' {
-  interface FastifyInstance {}
+  interface FastifyInstance {
+    nuxt: any
+  }
 }
 
 const isDev = process.env.NODE_ENV !== 'production'
@@ -16,9 +18,11 @@ const plugin: FastifyPluginAsync = async fastify => {
     build(nuxt)
   }
 
-  fastify.all('*', (request, reply) => {
+  fastify.get('*', (request, reply) => {
     nuxt.render(request.raw, reply.raw)
   })
+
+  fastify.decorate('nuxt', nuxt)
 }
 
 export default fp(plugin, '3.x')

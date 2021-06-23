@@ -25,6 +25,7 @@
     "fastify-express": "^0.3.2",
     "fastify-formbody": "^5.0.0",
     "fastify-session": "^5.2.1",
+    "fluent-json-schema": "^3.0.0",
     "nuxt": "^2.15.6"
   },
   "devDependencies": {

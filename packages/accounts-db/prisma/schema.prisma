@@ -24,11 +24,12 @@ model User {
 }
 
 model Client {
-  id                         String   @id @default(cuid())
-  secret                     String?  @unique @default(cuid())
+  id                         String      @id @default(cuid())
+  secret                     String?     @unique @default(cuid())
   name                       String
-  description                String?
-  token_endpoint_auth_method String?  @default("client_secret_basic")
+  description                String
+  type                       ClientType? @default(confidential)
+  token_endpoint_auth_method String?     @default("client_secret_basic")
   scope                      String?
   contacts                   String[]
   grant_types                String[]
@@ -39,17 +40,23 @@ model Client {
   policy_uri                 String?
   tos_uri                    String?
   user_id                    String?
-  created_at                 DateTime @default(now())
-  updated_at                 DateTime @updatedAt
+  created_at                 DateTime    @default(now())
+  updated_at                 DateTime    @updatedAt
 
-  User User? @relation(fields: [user_id], references: [id])
+  User              User?               @relation(fields: [user_id], references: [id])
+  AuhtorizationCode AuhtorizationCode[]
 
   @@map(name: "clients")
 }
 
 model AuhtorizationCode {
-  id String @id @default(cuid())
+  id                    String             @id @default(cuid())
+  client_id             String
+  code                  String             @default(cuid())
+  code_challenge        String
+  code_challenge_method CodeChallegeMethod @default(plain)
 
+  Client Client @relation(fields: [client_id], references: [id])
 
   @@map(name: "authorization_codes")
 }
@@ -72,4 +79,15 @@ model Scope {
   description String
   created_at  DateTime @default(now())
   updated_at  DateTime @updatedAt
+}
+
+enum ClientType {
+  confidential
+  credentialed
+  public
+}
+
+enum CodeChallegeMethod {
+  plain
+  S256
 }
