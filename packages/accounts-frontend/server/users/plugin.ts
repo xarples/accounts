@@ -1,11 +1,13 @@
 import { FastifyPluginAsync } from 'fastify'
 import fp from 'fastify-plugin'
+import { authPreHandler } from './hooks'
 import UserService from './service'
 import { PostSignInRoute, PostSignUpRoute } from './types'
 
 declare module 'fastify' {
   interface FastifyInstance {
     userService: UserService
+    authPreHandler: typeof authPreHandler
   }
 }
 
@@ -13,9 +15,12 @@ const service = new UserService()
 
 const plugin: FastifyPluginAsync = async (fastify, options) => {
   fastify.decorate('userService', service)
+  fastify.decorate('authPreHandler', authPreHandler)
 
-  fastify.get('/logout', (request, reply) => {
-    if (request.session.user) {
+  fastify.get(
+    '/logout',
+    { preHandler: fastify.authPreHandler },
+    (request, reply) => {
       request.destroySession(err => {
         if (err) {
           reply.status(500)
@@ -24,10 +29,8 @@ const plugin: FastifyPluginAsync = async (fastify, options) => {
           reply.redirect('/')
         }
       })
-    } else {
-      reply.redirect('/')
     }
-  })
+  )
 
   fastify.post<PostSignInRoute>('/signin', async (request, reply) => {
     const user = await fastify.userService.signIn(request.body)
