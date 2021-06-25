@@ -76,7 +76,7 @@ var AccountService = exports.AccountService = {
   listUsers: {
     path: '/auth.Account/ListUsers',
     requestStream: false,
-    responseStream: true,
+    responseStream: false,
     requestType: user_pb.User,
     responseType: user_pb.UserList,
     requestSerialize: serialize_user_User,
@@ -86,6 +86,17 @@ var AccountService = exports.AccountService = {
   },
   updateUser: {
     path: '/auth.Account/UpdateUser',
+    requestStream: false,
+    responseStream: false,
+    requestType: user_pb.User,
+    responseType: user_pb.User,
+    requestSerialize: serialize_user_User,
+    requestDeserialize: deserialize_user_User,
+    responseSerialize: serialize_user_User,
+    responseDeserialize: deserialize_user_User,
+  },
+  deleteUser: {
+    path: '/auth.Account/DeleteUser',
     requestStream: false,
     responseStream: false,
     requestType: user_pb.User,

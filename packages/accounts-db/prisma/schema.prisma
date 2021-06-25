@@ -28,9 +28,8 @@ model Client {
   secret                     String?     @unique @default(cuid())
   name                       String
   description                String
-  type                       ClientType? @default(confidential)
+  type                       ClientType? @default(web)
   token_endpoint_auth_method String?     @default("client_secret_basic")
-  scope                      String?
   contacts                   String[]
   grant_types                String[]
   response_types             String[]
@@ -43,8 +42,11 @@ model Client {
   created_at                 DateTime    @default(now())
   updated_at                 DateTime    @updatedAt
 
-  User              User?               @relation(fields: [user_id], references: [id])
-  AuhtorizationCode AuhtorizationCode[]
+  User               User?               @relation(fields: [user_id], references: [id])
+  AuhtorizationCodes AuhtorizationCode[]
+  Scopes             Scope[]
+  AccessTokens       AccessToken[]
+  RefreshTokens      RefreshToken[]
 
   @@map(name: "clients")
 }
@@ -62,13 +64,21 @@ model AuhtorizationCode {
 }
 
 model AccessToken {
-  id String @id @default(cuid())
+  id        String @id @default(cuid())
+  client_id String
+  token     String @default(cuid())
+
+  Client Client @relation(fields: [client_id], references: [id])
 
   @@map(name: "access_tokens")
 }
 
 model RefreshToken {
-  id String @id @default(cuid())
+  id        String @id @default(cuid())
+  client_id String
+  token     String @default(cuid())
+
+  Client Client @relation(fields: [client_id], references: [id])
 
   @@map(name: "refresh_tokens")
 }
@@ -79,12 +89,16 @@ model Scope {
   description String
   created_at  DateTime @default(now())
   updated_at  DateTime @updatedAt
+
+  Client Client[]
+
+  @@map(name: "scopes")
 }
 
 enum ClientType {
-  confidential
-  credentialed
-  public
+  web
+  browser
+  native
 }
 
 enum CodeChallegeMethod {

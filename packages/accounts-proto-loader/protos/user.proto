@@ -4,11 +4,12 @@ package user;
 
 message User {
   string id = 1;
-  string username = 2;
-  string password = 3;
-  string email = 4;
-  string created_at = 5;
-  string updated_at = 6;
+  string first_name = 2;
+  string last_name = 3;
+  string password = 4;
+  string email = 5;
+  string created_at = 6;
+  string updated_at = 7;
 }
 
 message UserList {

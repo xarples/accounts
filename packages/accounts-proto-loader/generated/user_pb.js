@@ -92,11 +92,12 @@ proto.user.User.prototype.toObject = function(opt_includeInstance) {
 proto.user.User.toObject = function(includeInstance, msg) {
   var f, obj = {
     id: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    username: jspb.Message.getFieldWithDefault(msg, 2, ""),
-    password: jspb.Message.getFieldWithDefault(msg, 3, ""),
-    email: jspb.Message.getFieldWithDefault(msg, 4, ""),
-    createdAt: jspb.Message.getFieldWithDefault(msg, 5, ""),
-    updatedAt: jspb.Message.getFieldWithDefault(msg, 6, "")
+    firstName: jspb.Message.getFieldWithDefault(msg, 2, ""),
+    lastName: jspb.Message.getFieldWithDefault(msg, 3, ""),
+    password: jspb.Message.getFieldWithDefault(msg, 4, ""),
+    email: jspb.Message.getFieldWithDefault(msg, 5, ""),
+    createdAt: jspb.Message.getFieldWithDefault(msg, 6, ""),
+    updatedAt: jspb.Message.getFieldWithDefault(msg, 7, "")
   };
 
   if (includeInstance) {
@@ -139,21 +140,25 @@ proto.user.User.deserializeBinaryFromReader = function(msg, reader) {
       break;
     case 2:
       var value = /** @type {string} */ (reader.readString());
-      msg.setUsername(value);
+      msg.setFirstName(value);
       break;
     case 3:
       var value = /** @type {string} */ (reader.readString());
-      msg.setPassword(value);
+      msg.setLastName(value);
       break;
     case 4:
       var value = /** @type {string} */ (reader.readString());
-      msg.setEmail(value);
+      msg.setPassword(value);
       break;
     case 5:
       var value = /** @type {string} */ (reader.readString());
-      msg.setCreatedAt(value);
+      msg.setEmail(value);
       break;
     case 6:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setCreatedAt(value);
+      break;
+    case 7:
       var value = /** @type {string} */ (reader.readString());
       msg.setUpdatedAt(value);
       break;
@@ -193,38 +198,45 @@ proto.user.User.serializeBinaryToWriter = function(message, writer) {
       f
     );
   }
-  f = message.getUsername();
+  f = message.getFirstName();
   if (f.length > 0) {
     writer.writeString(
       2,
       f
     );
   }
-  f = message.getPassword();
+  f = message.getLastName();
   if (f.length > 0) {
     writer.writeString(
       3,
       f
     );
   }
-  f = message.getEmail();
+  f = message.getPassword();
   if (f.length > 0) {
     writer.writeString(
       4,
       f
     );
   }
-  f = message.getCreatedAt();
+  f = message.getEmail();
   if (f.length > 0) {
     writer.writeString(
       5,
       f
     );
   }
-  f = message.getUpdatedAt();
+  f = message.getCreatedAt();
   if (f.length > 0) {
     writer.writeString(
       6,
+      f
+    );
+  }
+  f = message.getUpdatedAt();
+  if (f.length > 0) {
+    writer.writeString(
+      7,
       f
     );
   }
@@ -250,10 +262,10 @@ proto.user.User.prototype.setId = function(value) {
 
 
 /**
- * optional string username = 2;
+ * optional string first_name = 2;
  * @return {string}
  */
-proto.user.User.prototype.getUsername = function() {
+proto.user.User.prototype.getFirstName = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
 };
 
@@ -262,16 +274,16 @@ proto.user.User.prototype.getUsername = function() {
  * @param {string} value
  * @return {!proto.user.User} returns this
  */
-proto.user.User.prototype.setUsername = function(value) {
+proto.user.User.prototype.setFirstName = function(value) {
   return jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
 /**
- * optional string password = 3;
+ * optional string last_name = 3;
  * @return {string}
  */
-proto.user.User.prototype.getPassword = function() {
+proto.user.User.prototype.getLastName = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
 };
 
@@ -280,16 +292,16 @@ proto.user.User.prototype.getPassword = function() {
  * @param {string} value
  * @return {!proto.user.User} returns this
  */
-proto.user.User.prototype.setPassword = function(value) {
+proto.user.User.prototype.setLastName = function(value) {
   return jspb.Message.setProto3StringField(this, 3, value);
 };
 
 
 /**
- * optional string email = 4;
+ * optional string password = 4;
  * @return {string}
  */
-proto.user.User.prototype.getEmail = function() {
+proto.user.User.prototype.getPassword = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 4, ""));
 };
 
@@ -298,16 +310,16 @@ proto.user.User.prototype.getEmail = function() {
  * @param {string} value
  * @return {!proto.user.User} returns this
  */
-proto.user.User.prototype.setEmail = function(value) {
+proto.user.User.prototype.setPassword = function(value) {
   return jspb.Message.setProto3StringField(this, 4, value);
 };
 
 
 /**
- * optional string created_at = 5;
+ * optional string email = 5;
  * @return {string}
  */
-proto.user.User.prototype.getCreatedAt = function() {
+proto.user.User.prototype.getEmail = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 5, ""));
 };
 
@@ -316,16 +328,16 @@ proto.user.User.prototype.getCreatedAt = function() {
  * @param {string} value
  * @return {!proto.user.User} returns this
  */
-proto.user.User.prototype.setCreatedAt = function(value) {
+proto.user.User.prototype.setEmail = function(value) {
   return jspb.Message.setProto3StringField(this, 5, value);
 };
 
 
 /**
- * optional string updated_at = 6;
+ * optional string created_at = 6;
  * @return {string}
  */
-proto.user.User.prototype.getUpdatedAt = function() {
+proto.user.User.prototype.getCreatedAt = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 6, ""));
 };
 
@@ -334,8 +346,26 @@ proto.user.User.prototype.getUpdatedAt = function() {
  * @param {string} value
  * @return {!proto.user.User} returns this
  */
-proto.user.User.prototype.setUpdatedAt = function(value) {
+proto.user.User.prototype.setCreatedAt = function(value) {
   return jspb.Message.setProto3StringField(this, 6, value);
+};
+
+
+/**
+ * optional string updated_at = 7;
+ * @return {string}
+ */
+proto.user.User.prototype.getUpdatedAt = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 7, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.user.User} returns this
+ */
+proto.user.User.prototype.setUpdatedAt = function(value) {
+  return jspb.Message.setProto3StringField(this, 7, value);
 };
 
 

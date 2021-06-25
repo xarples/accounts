@@ -3,6 +3,7 @@ import fastifyFormbody from 'fastify-formbody'
 import fastifyCookie from 'fastify-cookie'
 import fastifySession from 'fastify-session'
 
+import users from './users'
 import oauth from './oauth'
 import nuxt from './nuxt'
 
@@ -19,6 +20,7 @@ server.register(fastifySession, {
   cookie: { secure: false }
 })
 
+server.register(users)
 server.register(oauth)
 server.register(nuxt)
 

@@ -73,11 +73,9 @@ export default class ClientService {
   }
 
   async delete(options: Options) {
-    const id = cuid()
     const message = new Client()
 
     message.setId(options.id!)
-    message.setSecret(id)
 
     const client = await deleteClient(message)
 
