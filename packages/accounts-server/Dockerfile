@@ -1,26 +1,33 @@
 FROM node:14-buster AS deps
 
+ARG GRPC_HEALTH_PROBE_VERSION=v0.3.1
+
 WORKDIR /usr/src/accounts
 
-COPY ./package*.json ./lerna.json ./tsconfig.json ./tsconfig.server.json ./
-COPY ./packages/accounts-client/package.json ./packages/accounts-client/
-COPY ./packages/accounts-frontend/package.json ./packages/accounts-frontend/
+COPY ./package*.json ./lerna.json ./tsconfig.json ./
+COPY ./packages/accounts-db/package.json ./packages/accounts-db/
 COPY ./packages/accounts-proto-loader/package.json ./packages/accounts-proto-loader/
+COPY ./packages/accounts-server/package.json ./packages/accounts-server/
+COPY ./packages/accounts-service/package.json ./packages/accounts-service/
 COPY ./packages/accounts-utils/package.json ./packages/accounts-utils/
 
 RUN npm install --production
 RUN cp -R node_modules node_modules_production
 RUN npm install
 
-COPY ./packages/accounts-client ./packages/accounts-client
-COPY ./packages/accounts-frontend ./packages/accounts-frontend
+COPY ./packages/accounts-db ./packages/accounts-db
 COPY ./packages/accounts-proto-loader ./packages/accounts-proto-loader
+COPY ./packages/accounts-server ./packages/accounts-server
+COPY ./packages/accounts-service ./packages/accounts-service
 COPY ./packages/accounts-utils ./packages/accounts-utils
 
 RUN npm run generate
 RUN npm run build
 
 RUN cp -R node_modules node_modules_development
+
+RUN wget -qO/bin/grpc_health_probe https://github.com/grpc-ecosystem/grpc-health-probe/releases/download/${GRPC_HEALTH_PROBE_VERSION}/grpc_health_probe-linux-amd64 && \
+  chmod +x /bin/grpc_health_probe
 
 FROM alpine:3.12 AS release
 
@@ -38,16 +45,19 @@ RUN apk add --no-cache libstdc++ \
 
 WORKDIR /usr/src/accounts
 
+COPY --from=deps /bin/grpc_health_probe /bin/
 COPY --from=deps /usr/src/accounts/node_modules_production ./node_modules
-COPY --from=deps /usr/src/accounts/packages/accounts-client/dist  ./packages/accounts-client/dist
-COPY --from=deps /usr/src/accounts/packages/accounts-client/package.json ./packages/accounts-client/
-COPY --from=deps /usr/src/accounts/packages/accounts-frontend/.nuxt  ./packages/accounts-frontend/.nuxt
-COPY --from=deps /usr/src/accounts/packages/accounts-frontend/dist  ./packages/accounts-frontend/dist
-COPY --from=deps /usr/src/accounts/packages/accounts-frontend/package.json ./packages/accounts-frontend/
-COPY --from=deps /usr/src/accounts/packages/accounts-frontend/nuxt.config.js ./packages/accounts-frontend/
+COPY --from=deps /usr/src/accounts/node_modules_development/@prisma/client/ ./node_modules/@prisma/client/
+COPY --from=deps /usr/src/accounts/node_modules_development/.prisma/client/ ./node_modules/.prisma/client/
+COPY --from=deps /usr/src/accounts/packages/accounts-db/dist  ./packages/accounts-db/dist
+COPY --from=deps /usr/src/accounts/packages/accounts-db/package.json ./packages/accounts-db/
 COPY --from=deps /usr/src/accounts/packages/accounts-proto-loader/dist ./packages/accounts-proto-loader/dist
 COPY --from=deps /usr/src/accounts/packages/accounts-proto-loader/generated ./packages/accounts-proto-loader/generated
 COPY --from=deps /usr/src/accounts/packages/accounts-proto-loader/package.json ./packages/accounts-proto-loader/
+COPY --from=deps /usr/src/accounts/packages/accounts-server/dist  ./packages/accounts-server/dist
+COPY --from=deps /usr/src/accounts/packages/accounts-server/package.json ./packages/accounts-server/
+COPY --from=deps /usr/src/accounts/packages/accounts-service/dist  ./packages/accounts-service/dist
+COPY --from=deps /usr/src/accounts/packages/accounts-service/package.json ./packages/accounts-service/
 COPY --from=deps /usr/src/accounts/packages/accounts-utils/dist  ./packages/accounts-utils/dist
 COPY --from=deps /usr/src/accounts/packages/accounts-utils/package.json ./packages/accounts-utils/
 
@@ -57,4 +67,4 @@ ENV HOST 0.0.0.0
 ENV PORT 5001
 ENV NODE_ENV production
 
-CMD [ "node", "./packages/accounts-frontend/dist/index.js" ]
+CMD [ "node", "./packages/accounts-server/dist/index.js" ]

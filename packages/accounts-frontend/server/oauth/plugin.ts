@@ -6,7 +6,7 @@ import { PostAuthorizeRoute, PostTokenRoute } from './types'
 
 declare module 'fastify' {
   interface FastifyInstance {
-    oauthSerivce: OauthService
+    oauthService: OauthService
   }
 }
 
@@ -40,14 +40,11 @@ const plugin: FastifyPluginAsync = async (fastify, options) => {
     reply.send({})
   })
 
-  fastify.get(
-    '/.well-known/oauth-authorization-server',
-    async (request, reply) => {
-      const metadata = await fastify.oauthSerivce.getMetadata()
+  fastify.get('/.well-known/oauth-authorization-server', async (_, reply) => {
+    const metadata = await fastify.oauthService.getMetadata()
 
-      reply.send(metadata)
-    }
-  )
+    reply.send(metadata)
+  })
 }
 
 export default fp(plugin, '3.x')

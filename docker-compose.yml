@@ -1,17 +1,42 @@
 version: '3.9'
 
 services:
-  web:
-    build: .
+  postgres:
+    image: postgres
+    restart: always
     ports:
-      - '5000:5000'
-    volumes:
-      - .:/code
-      - logvolume01:/var/log
-    links:
-      - redis
-  redis:
-    image: redis
+      - 5432:5432
+    environment:
+      POSTGRES_USER: app
+      POSTGRES_PASSWORD: app
+      POSTGRES_DB: app
+    # volumes:
+    #   - postgres_data:/var/lib/postgresql/data
 
+  frontend:
+    container_name: accounts-frontend
+    build:
+      context: .
+      dockerfile: ./packages/accounts-frontend/development.Dockerfile
+    command: >
+      bash -c "
+        ./scripts/wait-for-it.sh rabbitmq:5672 --
+        yarn &&
+        yarn generate &&
+        yarn dev --stream --scope=@streaming-platform/admin
+      "
+    restart: on-failure
+    ports:
+      - 5000:5000
+    environment:
+      HOST: 0.0.0.0
+      PORT: 5000
+      NODE_ENV: development
     volumes:
+      - .:/usr/src/accounts
+      - /usr/src/accounts/node_modules
+
+    depends_on:
+      - server
+
   logvolume01: {}
