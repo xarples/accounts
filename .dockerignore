@@ -1,4 +1,11 @@
 .git
 .vscode
+.git
+.gitignore
+.dockerignore
+Dockerfile
+dist
+npm-debug.log
+README.md
 node_modules
-packages/*/node_modules
+**/node_modules

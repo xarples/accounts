@@ -8,6 +8,7 @@ export default function toUserMessage(user: User): UserMessage {
   message.setFirstName(user.first_name)
   message.setLastName(user.last_name)
   message.setEmail(user.email)
+  message.setPassword(user.password)
   message.setCreatedAt(user.created_at.toString())
   message.setUpdatedAt(user.updated_at.toString())
 

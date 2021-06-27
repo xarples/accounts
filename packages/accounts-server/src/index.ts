@@ -14,6 +14,6 @@ server.bindAsync(
   (err, port) => {
     if (err) throw err
     server.start()
-    console.log(`Server listening on http://${host}:${port}/`)
+    console.log(`Server listening on http://${host}:${port}`)
   }
 )

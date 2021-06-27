@@ -106,6 +106,17 @@ var AccountService = exports.AccountService = {
     responseSerialize: serialize_user_User,
     responseDeserialize: deserialize_user_User,
   },
+  signIn: {
+    path: '/auth.Account/SignIn',
+    requestStream: false,
+    responseStream: false,
+    requestType: user_pb.User,
+    responseType: user_pb.User,
+    requestSerialize: serialize_user_User,
+    requestDeserialize: deserialize_user_User,
+    responseSerialize: serialize_user_User,
+    responseDeserialize: deserialize_user_User,
+  },
   createClient: {
     path: '/auth.Account/CreateClient',
     requestStream: false,

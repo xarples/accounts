@@ -1,6 +1,6 @@
 import db from '@xarples/accounts-db'
 import { grpc, Client } from '@xarples/accounts-proto-loader'
-import { toClientMessage } from '@xarples/accounts-utils'
+import { toClientMessage } from './utils'
 
 export default async function createClient(
   call: grpc.ServerUnaryCall<Client, Client>,
@@ -10,7 +10,7 @@ export default async function createClient(
   const user = await db.client.create({
     data: {
       name: request.name,
-      description: request.description || undefined
+      description: request.description
       // token_endpoint_auth_method: request.tokenEndpointAuthMethod,
       // scope: request.scope,
       // contacts: request.contactsList,

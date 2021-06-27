@@ -10,8 +10,5 @@
     "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "dependencies": {
-    "@xarples/accounts-proto-loader": "^0.0.0",
-    "@xarples/accounts-db": "^0.0.0"
-  }
+  "dependencies": {}
 }

@@ -1,6 +1,6 @@
 import db from '@xarples/accounts-db'
 import { grpc, User } from '@xarples/accounts-proto-loader'
-import { toUserMessage } from '@xarples/accounts-utils'
+import { toUserMessage } from './utils'
 
 export default async function deleteUser(
   call: grpc.ServerUnaryCall<User, User>,

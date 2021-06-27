@@ -1,10 +1,13 @@
 FROM node:14-buster AS deps
+# FROM node:14.17.1-alpine3.12 AS deps
 
 ARG GRPC_HEALTH_PROBE_VERSION=v0.3.1
 
 WORKDIR /usr/src/accounts
 
-COPY ./package*.json ./lerna.json ./tsconfig.json ./
+RUN npm install --global npm
+
+COPY ./package*.json ./lerna.json ./
 COPY ./packages/accounts-db/package.json ./packages/accounts-db/
 COPY ./packages/accounts-proto-loader/package.json ./packages/accounts-proto-loader/
 COPY ./packages/accounts-server/package.json ./packages/accounts-server/
@@ -31,7 +34,7 @@ RUN wget -qO/bin/grpc_health_probe https://github.com/grpc-ecosystem/grpc-health
 
 FROM alpine:3.12 AS release
 
-ARG V=14.8.0
+ARG V=14.17.1
 ARG FILE=node-v$V-linux-x64-musl.tar.xz
 
 RUN apk add --no-cache libstdc++ \
@@ -61,7 +64,7 @@ COPY --from=deps /usr/src/accounts/packages/accounts-service/package.json ./pack
 COPY --from=deps /usr/src/accounts/packages/accounts-utils/dist  ./packages/accounts-utils/dist
 COPY --from=deps /usr/src/accounts/packages/accounts-utils/package.json ./packages/accounts-utils/
 
-EXPOSE 5000
+EXPOSE 5001
 
 ENV HOST 0.0.0.0
 ENV PORT 5001

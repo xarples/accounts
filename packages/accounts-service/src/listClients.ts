@@ -1,6 +1,6 @@
 import db from '@xarples/accounts-db'
 import { grpc, User, ClientList } from '@xarples/accounts-proto-loader'
-import { toClientMessage } from '@xarples/accounts-utils'
+import { toClientMessage } from './utils'
 
 export default async function listUsers(
   _: grpc.ServerUnaryCall<User, ClientList>,

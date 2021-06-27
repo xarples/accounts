@@ -8,6 +8,7 @@ const getUser = promisify<User, User>(client.getUser.bind(client))
 const listUsers = promisify<User, UserList>(client.listUsers.bind(client))
 const updateUser = promisify<User, User>(client.updateUser.bind(client))
 const deleteUser = promisify<User, User>(client.deleteUser.bind(client))
+const signIn = promisify<User, User>(client.signIn.bind(client))
 
 type Options = {
   [K in keyof User.AsObject]?: User.AsObject[K] // so that it retains the types
@@ -19,8 +20,8 @@ export default class UserService {
 
     message.setFirstName(options.firstName!)
     message.setLastName(options.lastName!)
-    message.setPassword(encrypt(options.password!))
-    message.setEmail(options.password!)
+    message.setPassword(options.password!)
+    message.setEmail(options.email!)
 
     const created = await createUser(message)
 
@@ -33,13 +34,12 @@ export default class UserService {
     message.setId(options.id!)
     message.setEmail(options.email!)
 
-    const created = await getUser(message)
+    const found = await getUser(message)
 
-    return this.reducer(created.toObject())
+    return this.reducer(found.toObject())
   }
 
   async list(options: Options) {
-    console.log(options)
     const message = new User()
     const messageList = await listUsers(message)
     const list = messageList
@@ -55,11 +55,7 @@ export default class UserService {
     message.setId(options.id!)
     message.setFirstName(options.firstName!)
     message.setLastName(options.lastName!)
-    message.setEmail(options.password!)
-
-    if (options.password) {
-      message.setPassword(encrypt(options.password))
-    }
+    message.setPassword(options.password!)
 
     const updated = await updateUser(message)
 
@@ -77,30 +73,29 @@ export default class UserService {
   }
 
   async signIn(options: Pick<Options, 'email' | 'password'>) {
-    const found = await this.get({ email: options.email })
+    try {
+      const message = new User()
 
-    if (!found) {
+      message.setLastName(options.email!)
+      message.setPassword(options.password!)
+
+      const found = await signIn(message)
+
+      return this.reducer(found.toObject())
+    } catch (error) {
       throw new Error('Wrong credentials')
     }
-
-    const encryptedPassword = encrypt(options.password!)
-
-    if (encryptedPassword !== found.password) {
-      throw new Error('Wrong credentials')
-    }
-
-    return found
   }
 
   reducer(options: User.AsObject) {
     return {
       id: options.id,
-      first_name: options.firstName,
-      last_name: options.lastName,
+      firstName: options.firstName,
+      lastName: options.lastName,
       email: options.email,
       password: options.password,
-      created_at: options.createdAt,
-      updated_at: options.updatedAt
+      createdAt: options.createdAt,
+      updatedAt: options.updatedAt
     }
   }
 }

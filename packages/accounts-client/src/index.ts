@@ -1,8 +1,9 @@
 import { AccountClient, grpc } from '@xarples/accounts-proto-loader'
 
-const port = process.env.GRPC_PORT ?? 5001
+const host = process.env.GRPC_SERVER_HOST || '127.0.0.1'
+const port = process.env.GRPC_SERVER_PORT || 5001
 const client = new AccountClient(
-  `localhost:${port}`,
+  `${host}:${port}`,
   grpc.credentials.createInsecure()
 )
 

@@ -17,7 +17,11 @@ const plugin: FastifyPluginAsync = async (fastify, options) => {
 
   fastify.get(
     '/authorize',
-    { schema: getAuthorizeSchema, attachValidation: true },
+    {
+      preHandler: fastify.authPreHandler,
+      schema: getAuthorizeSchema,
+      attachValidation: true
+    },
     (request, reply) => {
       if (request.validationError) {
         reply.code(400).send({

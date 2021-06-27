@@ -1,7 +1,20 @@
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api'
+import { useSignIn } from '~/components/users/hooks'
 
-export default defineComponent({})
+export default defineComponent({
+  setup() {
+    return {
+      handleSubmit(e: Event) {
+        const form = new FormData(e.target as HTMLFormElement)
+        const email = form.get('email') as string
+        const password = form.get('password') as string
+
+        useSignIn({ email, password })
+      }
+    }
+  }
+})
 </script>
 
 <template>
@@ -14,10 +27,11 @@ export default defineComponent({})
           To keep conected with us please login with your personal info To keep
           conected with us please.
         </p>
-        <b-form>
+        <b-form @submit.prevent="handleSubmit">
           <b-form-group label="Email address:" label-for="email">
             <b-form-input
               id="email"
+              name="email"
               type="email"
               placeholder="Enter email"
               required
@@ -27,13 +41,14 @@ export default defineComponent({})
           <b-form-group class="mb-5" label="Password:" label-for="password">
             <b-form-input
               id="password"
+              name="password"
               type="password"
               placeholder="Enter password"
               required
               size="lg"
             ></b-form-input>
           </b-form-group>
-          <b-button class="mb-4" block variant="primary" size="lg"
+          <b-button type="submit" class="mb-4" block variant="primary" size="lg"
             >Sign in</b-button
           >
           <p class="text-center">

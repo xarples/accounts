@@ -32,8 +32,5 @@
     "@nuxt/types": "^2.15.6",
     "@nuxt/typescript-build": "^2.1.0",
     "pino-pretty": "^5.0.2"
-  },
-  "vetur": {
-    "tags": "./tags.json"
   }
 }

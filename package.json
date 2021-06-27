@@ -8,6 +8,7 @@
     "bootstrap": "lerna bootstrap",
     "build": "lerna run build --stream",
     "dev": "lerna run dev --stream",
+    "generate": "lerna run generate --stream",
     "start": "lerna run start --stream"
   },
   "devDependencies": {

@@ -18,13 +18,7 @@ services:
     build:
       context: .
       dockerfile: ./packages/accounts-frontend/development.Dockerfile
-    command: >
-      bash -c "
-        ./scripts/wait-for-it.sh rabbitmq:5672 --
-        yarn &&
-        yarn generate &&
-        yarn dev --stream --scope=@streaming-platform/admin
-      "
+    # command: npm install && npm run build && npm run generate && npm run dev --stream --scope=@xarples/accounts-frontend
     restart: on-failure
     ports:
       - 5000:5000
@@ -32,11 +26,37 @@ services:
       HOST: 0.0.0.0
       PORT: 5000
       NODE_ENV: development
+      GRPC_SERVER_HOST: server
+      GRPC_SERVER_PORT: 5001
     volumes:
-      - .:/usr/src/accounts
+      - ./packages/accounts-client:/usr/src/accounts/packages/accounts-client
+      - ./packages/accounts-frontend:/usr/src/accounts/packages/accounts-frontend
+      - ./packages/accounts-proto-loader:/usr/src/accounts/packages/accounts-proto-loader
+      - ./packages/accounts-utils:/usr/src/accounts/packages/accounts-utils
       - /usr/src/accounts/node_modules
 
     depends_on:
       - server
 
-  logvolume01: {}
+  server:
+    container_name: accounts-server
+    build:
+      context: .
+      dockerfile: ./packages/accounts-server/development.Dockerfile
+    restart: on-failure
+    ports:
+      - 5001:5001
+    environment:
+      HOST: 0.0.0.0
+      PORT: 5001
+      NODE_ENV: development
+      DATABASE_URL: postgresql://app:app@postgres:5432/app?schema=public
+    volumes:
+      - ./packages/accounts-db:/usr/src/accounts/packages/accounts-db
+      - ./packages/accounts-proto-loader:/usr/src/accounts/packages/accounts-proto-loader
+      - ./packages/accounts-server:/usr/src/accounts/packages/accounts-server
+      - ./packages/accounts-service:/usr/src/accounts/packages/accounts-service
+      - ./packages/accounts-utils:/usr/src/accounts/packages/accounts-utils
+      - /usr/src/accounts/node_modules
+    depends_on:
+      - postgres
