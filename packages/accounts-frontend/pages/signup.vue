@@ -22,8 +22,8 @@ export default defineComponent({
 
 <template>
   <b-container fluid class="h-100">
-    <b-row class="h-100" align-v="center" align-h="between">
-      <b-col cols="4" offset="1">
+    <b-row class="h-100" align-v="center" align-h="center">
+      <b-col md="4">
         <h1 class="display-4 font-weight-bold">Hello,</h1>
         <h1 class="display-4 font-weight-bold">Welcome back</h1>
         <p>
@@ -90,14 +90,14 @@ export default defineComponent({
           </p>
         </b-form>
       </b-col>
-      <b-col
+      <!-- <b-col
         :style="{
           background:
             'url(https://dashboard.sleeknote.com/static/images/Login-Illustration-1.svg)'
         }"
         class="h-100"
         cols="6"
-      ></b-col>
+      ></b-col> -->
     </b-row>
   </b-container>
 </template>
