@@ -7,6 +7,7 @@ import clients from './clients'
 import nuxt from './nuxt'
 
 // const isDev = process.env.NODE_ENV !== 'production'
+const host = process.env.HOST || '127.0.0.1'
 const port = process.env.PORT || 5001
 const server = fastify({
   logger: true
@@ -24,7 +25,7 @@ server.register(nuxt)
 
 async function main() {
   try {
-    await server.listen(port)
+    await server.listen(port, host)
   } catch (error) {
     server.log.error(error)
     process.exit(1)

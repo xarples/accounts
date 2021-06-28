@@ -2,6 +2,7 @@ version: '3.9'
 
 services:
   postgres:
+    container_name: postgres
     image: postgres
     restart: always
     ports:
@@ -34,7 +35,6 @@ services:
       - ./packages/accounts-proto-loader:/usr/src/accounts/packages/accounts-proto-loader
       - ./packages/accounts-utils:/usr/src/accounts/packages/accounts-utils
       - /usr/src/accounts/node_modules
-
     depends_on:
       - server
 
@@ -60,3 +60,26 @@ services:
       - /usr/src/accounts/node_modules
     depends_on:
       - postgres
+
+  developers:
+    container_name: developers-frontend
+    build:
+      context: .
+      dockerfile: ./packages/developers-frontend/development.Dockerfile
+    restart: on-failure
+    ports:
+      - 5002:5002
+    environment:
+      HOST: 0.0.0.0
+      PORT: 5002
+      NODE_ENV: development
+      GRPC_SERVER_HOST: server
+      GRPC_SERVER_PORT: 5001
+    volumes:
+      - ./packages/accounts-client:/usr/src/accounts/packages/accounts-client
+      - ./packages/developers-frontend:/usr/src/accounts/packages/developers-frontend
+      - ./packages/accounts-proto-loader:/usr/src/accounts/packages/accounts-proto-loader
+      - ./packages/accounts-utils:/usr/src/accounts/packages/accounts-utils
+      - /usr/src/accounts/node_modules
+    depends_on:
+      - server
