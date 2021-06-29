@@ -6,7 +6,7 @@
   "scripts": {
     "build": "tsc",
     "generate": "prisma generate",
-    "push": "prisma db push",
+    "push": "prisma db push --accept-data-loss",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

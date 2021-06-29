@@ -2,6 +2,8 @@ export interface CreateRoute {
   Body: {
     name: string
     description: string
+    type: string
+    redirectUris: string[]
   }
 }
 

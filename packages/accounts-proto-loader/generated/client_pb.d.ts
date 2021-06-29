@@ -15,6 +15,8 @@ export class Client extends jspb.Message {
     setName(value: string): Client;
     getDescription(): string;
     setDescription(value: string): Client;
+    getType(): string;
+    setType(value: string): Client;
     getTokenEndpointAuthMethod(): string;
     setTokenEndpointAuthMethod(value: string): Client;
     getScope(): string;
@@ -23,18 +25,18 @@ export class Client extends jspb.Message {
     getContactsList(): Array<string>;
     setContactsList(value: Array<string>): Client;
     addContacts(value: string, index?: number): string;
-    clearGrantTypesList(): void;
-    getGrantTypesList(): Array<string>;
-    setGrantTypesList(value: Array<string>): Client;
-    addGrantTypes(value: string, index?: number): string;
-    clearResponseTypesList(): void;
-    getResponseTypesList(): Array<string>;
-    setResponseTypesList(value: Array<string>): Client;
-    addResponseTypes(value: string, index?: number): string;
-    clearRedirectUrisList(): void;
-    getRedirectUrisList(): Array<string>;
-    setRedirectUrisList(value: Array<string>): Client;
-    addRedirectUris(value: string, index?: number): string;
+    clearGrantTypeList(): void;
+    getGrantTypeList(): Array<string>;
+    setGrantTypeList(value: Array<string>): Client;
+    addGrantType(value: string, index?: number): string;
+    clearResponseTypeList(): void;
+    getResponseTypeList(): Array<string>;
+    setResponseTypeList(value: Array<string>): Client;
+    addResponseType(value: string, index?: number): string;
+    clearRedirectUriList(): void;
+    getRedirectUriList(): Array<string>;
+    setRedirectUriList(value: Array<string>): Client;
+    addRedirectUri(value: string, index?: number): string;
     getLogoUri(): string;
     setLogoUri(value: string): Client;
     getWebsiteUri(): string;
@@ -66,12 +68,13 @@ export namespace Client {
         secret: string,
         name: string,
         description: string,
+        type: string,
         tokenEndpointAuthMethod: string,
         scope: string,
         contactsList: Array<string>,
-        grantTypesList: Array<string>,
-        responseTypesList: Array<string>,
-        redirectUrisList: Array<string>,
+        grantTypeList: Array<string>,
+        responseTypeList: Array<string>,
+        redirectUriList: Array<string>,
         logoUri: string,
         websiteUri: string,
         policyUri: string,

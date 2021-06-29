@@ -65,7 +65,7 @@ if (goog.DEBUG && !COMPILED) {
  * @private {!Array<number>}
  * @const
  */
-proto.client.Client.repeatedFields_ = [7,8,9,10];
+proto.client.Client.repeatedFields_ = [8,9,10,11];
 
 
 
@@ -102,19 +102,20 @@ proto.client.Client.toObject = function(includeInstance, msg) {
     secret: jspb.Message.getFieldWithDefault(msg, 2, ""),
     name: jspb.Message.getFieldWithDefault(msg, 3, ""),
     description: jspb.Message.getFieldWithDefault(msg, 4, ""),
-    tokenEndpointAuthMethod: jspb.Message.getFieldWithDefault(msg, 5, ""),
-    scope: jspb.Message.getFieldWithDefault(msg, 6, ""),
-    contactsList: (f = jspb.Message.getRepeatedField(msg, 7)) == null ? undefined : f,
-    grantTypesList: (f = jspb.Message.getRepeatedField(msg, 8)) == null ? undefined : f,
-    responseTypesList: (f = jspb.Message.getRepeatedField(msg, 9)) == null ? undefined : f,
-    redirectUrisList: (f = jspb.Message.getRepeatedField(msg, 10)) == null ? undefined : f,
-    logoUri: jspb.Message.getFieldWithDefault(msg, 11, ""),
-    websiteUri: jspb.Message.getFieldWithDefault(msg, 12, ""),
-    policyUri: jspb.Message.getFieldWithDefault(msg, 13, ""),
-    tosUri: jspb.Message.getFieldWithDefault(msg, 14, ""),
-    userId: jspb.Message.getFieldWithDefault(msg, 15, ""),
-    createdAt: jspb.Message.getFieldWithDefault(msg, 16, ""),
-    updatedAt: jspb.Message.getFieldWithDefault(msg, 17, "")
+    type: jspb.Message.getFieldWithDefault(msg, 5, ""),
+    tokenEndpointAuthMethod: jspb.Message.getFieldWithDefault(msg, 6, ""),
+    scope: jspb.Message.getFieldWithDefault(msg, 7, ""),
+    contactsList: (f = jspb.Message.getRepeatedField(msg, 8)) == null ? undefined : f,
+    grantTypeList: (f = jspb.Message.getRepeatedField(msg, 9)) == null ? undefined : f,
+    responseTypeList: (f = jspb.Message.getRepeatedField(msg, 10)) == null ? undefined : f,
+    redirectUriList: (f = jspb.Message.getRepeatedField(msg, 11)) == null ? undefined : f,
+    logoUri: jspb.Message.getFieldWithDefault(msg, 12, ""),
+    websiteUri: jspb.Message.getFieldWithDefault(msg, 13, ""),
+    policyUri: jspb.Message.getFieldWithDefault(msg, 14, ""),
+    tosUri: jspb.Message.getFieldWithDefault(msg, 15, ""),
+    userId: jspb.Message.getFieldWithDefault(msg, 16, ""),
+    createdAt: jspb.Message.getFieldWithDefault(msg, 17, ""),
+    updatedAt: jspb.Message.getFieldWithDefault(msg, 18, "")
   };
 
   if (includeInstance) {
@@ -169,53 +170,57 @@ proto.client.Client.deserializeBinaryFromReader = function(msg, reader) {
       break;
     case 5:
       var value = /** @type {string} */ (reader.readString());
-      msg.setTokenEndpointAuthMethod(value);
+      msg.setType(value);
       break;
     case 6:
       var value = /** @type {string} */ (reader.readString());
-      msg.setScope(value);
+      msg.setTokenEndpointAuthMethod(value);
       break;
     case 7:
       var value = /** @type {string} */ (reader.readString());
-      msg.addContacts(value);
+      msg.setScope(value);
       break;
     case 8:
       var value = /** @type {string} */ (reader.readString());
-      msg.addGrantTypes(value);
+      msg.addContacts(value);
       break;
     case 9:
       var value = /** @type {string} */ (reader.readString());
-      msg.addResponseTypes(value);
+      msg.addGrantType(value);
       break;
     case 10:
       var value = /** @type {string} */ (reader.readString());
-      msg.addRedirectUris(value);
+      msg.addResponseType(value);
       break;
     case 11:
       var value = /** @type {string} */ (reader.readString());
-      msg.setLogoUri(value);
+      msg.addRedirectUri(value);
       break;
     case 12:
       var value = /** @type {string} */ (reader.readString());
-      msg.setWebsiteUri(value);
+      msg.setLogoUri(value);
       break;
     case 13:
       var value = /** @type {string} */ (reader.readString());
-      msg.setPolicyUri(value);
+      msg.setWebsiteUri(value);
       break;
     case 14:
       var value = /** @type {string} */ (reader.readString());
-      msg.setTosUri(value);
+      msg.setPolicyUri(value);
       break;
     case 15:
       var value = /** @type {string} */ (reader.readString());
-      msg.setUserId(value);
+      msg.setTosUri(value);
       break;
     case 16:
       var value = /** @type {string} */ (reader.readString());
-      msg.setCreatedAt(value);
+      msg.setUserId(value);
       break;
     case 17:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setCreatedAt(value);
+      break;
+    case 18:
       var value = /** @type {string} */ (reader.readString());
       msg.setUpdatedAt(value);
       break;
@@ -276,94 +281,101 @@ proto.client.Client.serializeBinaryToWriter = function(message, writer) {
       f
     );
   }
-  f = message.getTokenEndpointAuthMethod();
+  f = message.getType();
   if (f.length > 0) {
     writer.writeString(
       5,
       f
     );
   }
-  f = message.getScope();
+  f = message.getTokenEndpointAuthMethod();
   if (f.length > 0) {
     writer.writeString(
       6,
       f
     );
   }
-  f = message.getContactsList();
+  f = message.getScope();
   if (f.length > 0) {
-    writer.writeRepeatedString(
+    writer.writeString(
       7,
       f
     );
   }
-  f = message.getGrantTypesList();
+  f = message.getContactsList();
   if (f.length > 0) {
     writer.writeRepeatedString(
       8,
       f
     );
   }
-  f = message.getResponseTypesList();
+  f = message.getGrantTypeList();
   if (f.length > 0) {
     writer.writeRepeatedString(
       9,
       f
     );
   }
-  f = message.getRedirectUrisList();
+  f = message.getResponseTypeList();
   if (f.length > 0) {
     writer.writeRepeatedString(
       10,
       f
     );
   }
-  f = message.getLogoUri();
+  f = message.getRedirectUriList();
   if (f.length > 0) {
-    writer.writeString(
+    writer.writeRepeatedString(
       11,
       f
     );
   }
-  f = message.getWebsiteUri();
+  f = message.getLogoUri();
   if (f.length > 0) {
     writer.writeString(
       12,
       f
     );
   }
-  f = message.getPolicyUri();
+  f = message.getWebsiteUri();
   if (f.length > 0) {
     writer.writeString(
       13,
       f
     );
   }
-  f = message.getTosUri();
+  f = message.getPolicyUri();
   if (f.length > 0) {
     writer.writeString(
       14,
       f
     );
   }
-  f = message.getUserId();
+  f = message.getTosUri();
   if (f.length > 0) {
     writer.writeString(
       15,
       f
     );
   }
-  f = message.getCreatedAt();
+  f = message.getUserId();
   if (f.length > 0) {
     writer.writeString(
       16,
       f
     );
   }
-  f = message.getUpdatedAt();
+  f = message.getCreatedAt();
   if (f.length > 0) {
     writer.writeString(
       17,
+      f
+    );
+  }
+  f = message.getUpdatedAt();
+  if (f.length > 0) {
+    writer.writeString(
+      18,
       f
     );
   }
@@ -443,10 +455,10 @@ proto.client.Client.prototype.setDescription = function(value) {
 
 
 /**
- * optional string token_endpoint_auth_method = 5;
+ * optional string type = 5;
  * @return {string}
  */
-proto.client.Client.prototype.getTokenEndpointAuthMethod = function() {
+proto.client.Client.prototype.getType = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 5, ""));
 };
 
@@ -455,16 +467,16 @@ proto.client.Client.prototype.getTokenEndpointAuthMethod = function() {
  * @param {string} value
  * @return {!proto.client.Client} returns this
  */
-proto.client.Client.prototype.setTokenEndpointAuthMethod = function(value) {
+proto.client.Client.prototype.setType = function(value) {
   return jspb.Message.setProto3StringField(this, 5, value);
 };
 
 
 /**
- * optional string scope = 6;
+ * optional string token_endpoint_auth_method = 6;
  * @return {string}
  */
-proto.client.Client.prototype.getScope = function() {
+proto.client.Client.prototype.getTokenEndpointAuthMethod = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 6, ""));
 };
 
@@ -473,17 +485,35 @@ proto.client.Client.prototype.getScope = function() {
  * @param {string} value
  * @return {!proto.client.Client} returns this
  */
-proto.client.Client.prototype.setScope = function(value) {
+proto.client.Client.prototype.setTokenEndpointAuthMethod = function(value) {
   return jspb.Message.setProto3StringField(this, 6, value);
 };
 
 
 /**
- * repeated string contacts = 7;
+ * optional string scope = 7;
+ * @return {string}
+ */
+proto.client.Client.prototype.getScope = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 7, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.client.Client} returns this
+ */
+proto.client.Client.prototype.setScope = function(value) {
+  return jspb.Message.setProto3StringField(this, 7, value);
+};
+
+
+/**
+ * repeated string contacts = 8;
  * @return {!Array<string>}
  */
 proto.client.Client.prototype.getContactsList = function() {
-  return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 7));
+  return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 8));
 };
 
 
@@ -492,7 +522,7 @@ proto.client.Client.prototype.getContactsList = function() {
  * @return {!proto.client.Client} returns this
  */
 proto.client.Client.prototype.setContactsList = function(value) {
-  return jspb.Message.setField(this, 7, value || []);
+  return jspb.Message.setField(this, 8, value || []);
 };
 
 
@@ -502,7 +532,7 @@ proto.client.Client.prototype.setContactsList = function(value) {
  * @return {!proto.client.Client} returns this
  */
 proto.client.Client.prototype.addContacts = function(value, opt_index) {
-  return jspb.Message.addToRepeatedField(this, 7, value, opt_index);
+  return jspb.Message.addToRepeatedField(this, 8, value, opt_index);
 };
 
 
@@ -516,47 +546,10 @@ proto.client.Client.prototype.clearContactsList = function() {
 
 
 /**
- * repeated string grant_types = 8;
+ * repeated string grant_type = 9;
  * @return {!Array<string>}
  */
-proto.client.Client.prototype.getGrantTypesList = function() {
-  return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 8));
-};
-
-
-/**
- * @param {!Array<string>} value
- * @return {!proto.client.Client} returns this
- */
-proto.client.Client.prototype.setGrantTypesList = function(value) {
-  return jspb.Message.setField(this, 8, value || []);
-};
-
-
-/**
- * @param {string} value
- * @param {number=} opt_index
- * @return {!proto.client.Client} returns this
- */
-proto.client.Client.prototype.addGrantTypes = function(value, opt_index) {
-  return jspb.Message.addToRepeatedField(this, 8, value, opt_index);
-};
-
-
-/**
- * Clears the list making it empty but non-null.
- * @return {!proto.client.Client} returns this
- */
-proto.client.Client.prototype.clearGrantTypesList = function() {
-  return this.setGrantTypesList([]);
-};
-
-
-/**
- * repeated string response_types = 9;
- * @return {!Array<string>}
- */
-proto.client.Client.prototype.getResponseTypesList = function() {
+proto.client.Client.prototype.getGrantTypeList = function() {
   return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 9));
 };
 
@@ -565,7 +558,7 @@ proto.client.Client.prototype.getResponseTypesList = function() {
  * @param {!Array<string>} value
  * @return {!proto.client.Client} returns this
  */
-proto.client.Client.prototype.setResponseTypesList = function(value) {
+proto.client.Client.prototype.setGrantTypeList = function(value) {
   return jspb.Message.setField(this, 9, value || []);
 };
 
@@ -575,7 +568,7 @@ proto.client.Client.prototype.setResponseTypesList = function(value) {
  * @param {number=} opt_index
  * @return {!proto.client.Client} returns this
  */
-proto.client.Client.prototype.addResponseTypes = function(value, opt_index) {
+proto.client.Client.prototype.addGrantType = function(value, opt_index) {
   return jspb.Message.addToRepeatedField(this, 9, value, opt_index);
 };
 
@@ -584,16 +577,16 @@ proto.client.Client.prototype.addResponseTypes = function(value, opt_index) {
  * Clears the list making it empty but non-null.
  * @return {!proto.client.Client} returns this
  */
-proto.client.Client.prototype.clearResponseTypesList = function() {
-  return this.setResponseTypesList([]);
+proto.client.Client.prototype.clearGrantTypeList = function() {
+  return this.setGrantTypeList([]);
 };
 
 
 /**
- * repeated string redirect_uris = 10;
+ * repeated string response_type = 10;
  * @return {!Array<string>}
  */
-proto.client.Client.prototype.getRedirectUrisList = function() {
+proto.client.Client.prototype.getResponseTypeList = function() {
   return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 10));
 };
 
@@ -602,7 +595,7 @@ proto.client.Client.prototype.getRedirectUrisList = function() {
  * @param {!Array<string>} value
  * @return {!proto.client.Client} returns this
  */
-proto.client.Client.prototype.setRedirectUrisList = function(value) {
+proto.client.Client.prototype.setResponseTypeList = function(value) {
   return jspb.Message.setField(this, 10, value || []);
 };
 
@@ -612,7 +605,7 @@ proto.client.Client.prototype.setRedirectUrisList = function(value) {
  * @param {number=} opt_index
  * @return {!proto.client.Client} returns this
  */
-proto.client.Client.prototype.addRedirectUris = function(value, opt_index) {
+proto.client.Client.prototype.addResponseType = function(value, opt_index) {
   return jspb.Message.addToRepeatedField(this, 10, value, opt_index);
 };
 
@@ -621,34 +614,53 @@ proto.client.Client.prototype.addRedirectUris = function(value, opt_index) {
  * Clears the list making it empty but non-null.
  * @return {!proto.client.Client} returns this
  */
-proto.client.Client.prototype.clearRedirectUrisList = function() {
-  return this.setRedirectUrisList([]);
+proto.client.Client.prototype.clearResponseTypeList = function() {
+  return this.setResponseTypeList([]);
 };
 
 
 /**
- * optional string logo_uri = 11;
- * @return {string}
+ * repeated string redirect_uri = 11;
+ * @return {!Array<string>}
  */
-proto.client.Client.prototype.getLogoUri = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 11, ""));
+proto.client.Client.prototype.getRedirectUriList = function() {
+  return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 11));
+};
+
+
+/**
+ * @param {!Array<string>} value
+ * @return {!proto.client.Client} returns this
+ */
+proto.client.Client.prototype.setRedirectUriList = function(value) {
+  return jspb.Message.setField(this, 11, value || []);
 };
 
 
 /**
  * @param {string} value
+ * @param {number=} opt_index
  * @return {!proto.client.Client} returns this
  */
-proto.client.Client.prototype.setLogoUri = function(value) {
-  return jspb.Message.setProto3StringField(this, 11, value);
+proto.client.Client.prototype.addRedirectUri = function(value, opt_index) {
+  return jspb.Message.addToRepeatedField(this, 11, value, opt_index);
 };
 
 
 /**
- * optional string website_uri = 12;
+ * Clears the list making it empty but non-null.
+ * @return {!proto.client.Client} returns this
+ */
+proto.client.Client.prototype.clearRedirectUriList = function() {
+  return this.setRedirectUriList([]);
+};
+
+
+/**
+ * optional string logo_uri = 12;
  * @return {string}
  */
-proto.client.Client.prototype.getWebsiteUri = function() {
+proto.client.Client.prototype.getLogoUri = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 12, ""));
 };
 
@@ -657,16 +669,16 @@ proto.client.Client.prototype.getWebsiteUri = function() {
  * @param {string} value
  * @return {!proto.client.Client} returns this
  */
-proto.client.Client.prototype.setWebsiteUri = function(value) {
+proto.client.Client.prototype.setLogoUri = function(value) {
   return jspb.Message.setProto3StringField(this, 12, value);
 };
 
 
 /**
- * optional string policy_uri = 13;
+ * optional string website_uri = 13;
  * @return {string}
  */
-proto.client.Client.prototype.getPolicyUri = function() {
+proto.client.Client.prototype.getWebsiteUri = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 13, ""));
 };
 
@@ -675,16 +687,16 @@ proto.client.Client.prototype.getPolicyUri = function() {
  * @param {string} value
  * @return {!proto.client.Client} returns this
  */
-proto.client.Client.prototype.setPolicyUri = function(value) {
+proto.client.Client.prototype.setWebsiteUri = function(value) {
   return jspb.Message.setProto3StringField(this, 13, value);
 };
 
 
 /**
- * optional string tos_uri = 14;
+ * optional string policy_uri = 14;
  * @return {string}
  */
-proto.client.Client.prototype.getTosUri = function() {
+proto.client.Client.prototype.getPolicyUri = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 14, ""));
 };
 
@@ -693,16 +705,16 @@ proto.client.Client.prototype.getTosUri = function() {
  * @param {string} value
  * @return {!proto.client.Client} returns this
  */
-proto.client.Client.prototype.setTosUri = function(value) {
+proto.client.Client.prototype.setPolicyUri = function(value) {
   return jspb.Message.setProto3StringField(this, 14, value);
 };
 
 
 /**
- * optional string user_id = 15;
+ * optional string tos_uri = 15;
  * @return {string}
  */
-proto.client.Client.prototype.getUserId = function() {
+proto.client.Client.prototype.getTosUri = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 15, ""));
 };
 
@@ -711,16 +723,16 @@ proto.client.Client.prototype.getUserId = function() {
  * @param {string} value
  * @return {!proto.client.Client} returns this
  */
-proto.client.Client.prototype.setUserId = function(value) {
+proto.client.Client.prototype.setTosUri = function(value) {
   return jspb.Message.setProto3StringField(this, 15, value);
 };
 
 
 /**
- * optional string created_at = 16;
+ * optional string user_id = 16;
  * @return {string}
  */
-proto.client.Client.prototype.getCreatedAt = function() {
+proto.client.Client.prototype.getUserId = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 16, ""));
 };
 
@@ -729,16 +741,16 @@ proto.client.Client.prototype.getCreatedAt = function() {
  * @param {string} value
  * @return {!proto.client.Client} returns this
  */
-proto.client.Client.prototype.setCreatedAt = function(value) {
+proto.client.Client.prototype.setUserId = function(value) {
   return jspb.Message.setProto3StringField(this, 16, value);
 };
 
 
 /**
- * optional string updated_at = 17;
+ * optional string created_at = 17;
  * @return {string}
  */
-proto.client.Client.prototype.getUpdatedAt = function() {
+proto.client.Client.prototype.getCreatedAt = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 17, ""));
 };
 
@@ -747,8 +759,26 @@ proto.client.Client.prototype.getUpdatedAt = function() {
  * @param {string} value
  * @return {!proto.client.Client} returns this
  */
-proto.client.Client.prototype.setUpdatedAt = function(value) {
+proto.client.Client.prototype.setCreatedAt = function(value) {
   return jspb.Message.setProto3StringField(this, 17, value);
+};
+
+
+/**
+ * optional string updated_at = 18;
+ * @return {string}
+ */
+proto.client.Client.prototype.getUpdatedAt = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 18, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.client.Client} returns this
+ */
+proto.client.Client.prototype.setUpdatedAt = function(value) {
+  return jspb.Message.setProto3StringField(this, 18, value);
 };
 
 

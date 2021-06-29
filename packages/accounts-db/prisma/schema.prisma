@@ -98,7 +98,8 @@ model Scope {
 enum ClientType {
   web
   browser
-  native
+  ios
+  android
 }
 
 enum CodeChallegeMethod {

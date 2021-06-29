@@ -13,7 +13,7 @@ export default async function updateClient(
     },
     data: {
       secret: request.secret || undefined,
-      redirect_uris: request.redirectUrisList || undefined,
+      redirect_uris: request.redirectUriList || undefined,
       logo_uri: request.logoUri || undefined,
       policy_uri: request.policyUri || undefined,
       website_uri: request.websiteUri || undefined

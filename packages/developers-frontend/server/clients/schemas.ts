@@ -35,10 +35,15 @@ const errorObject = {
 export const createClient: FastifySchema = {
   body: {
     type: 'object',
-    required: ['name', 'description'],
+    required: ['name', 'description', 'type', 'redirectUris'],
     properties: {
       name: { type: 'string' },
-      description: { type: 'string' }
+      description: { type: 'string' },
+      type: { type: 'string' },
+      redirectUris: {
+        type: 'array',
+        items: { type: 'string' }
+      }
     }
   },
   response: {

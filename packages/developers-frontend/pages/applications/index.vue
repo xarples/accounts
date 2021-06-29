@@ -1,19 +1,25 @@
 <script lang="ts">
-import { defineComponent } from '@nuxtjs/composition-api'
+import { defineComponent, useAsync } from '@nuxtjs/composition-api'
+import { useClients } from '~/components/clients/hooks'
 
 export default defineComponent({
   setup() {
-    return {}
+    const clients = useAsync(useClients, 'clients')
+
+    return {
+      clients
+    }
   }
 })
 </script>
 
 <template>
   <b-container class="bv-example-row">
-    <b-row class="mb-4" align-h="end" align-v="center">
-      <!-- <b-col sm="auto">
-        <h1>Applications</h1>
-      </b-col> -->
+    <b-row class="mt-4 mb-4" align-h="between" align-v="center">
+      <b-col sm="auto">
+        <h2>Applications</h2>
+        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+      </b-col>
       <b-col sm="auto">
         <b-form inline>
           <b-form-input
@@ -26,25 +32,24 @@ export default defineComponent({
         </b-form>
       </b-col>
     </b-row>
-    <b-card>
-      <h2>Applications</h2>
-      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-      <b-row class="mb-4" v-for="i in 4" :key="i">
-        <b-col>
-          <b-card
-            title="Card title"
-            sub-title="Some quick example text."
-            img-src="https://picsum.photos/150/150/?image=25"
-            img-left
-          >
-            <b-card-text>
-              Some quick example text to build on the <em>card title</em> and
-              make up the bulk of the card's content.
-            </b-card-text>
-          </b-card>
-        </b-col>
-      </b-row>
-    </b-card>
+    <b-row class="mb-4">
+      <b-col
+        class="mb-4"
+        cols="4"
+        v-for="client in clients"
+        :key="client.client_id"
+      >
+        <b-card
+          class="shadow-sm"
+          :title="client.name"
+          :sub-title="`Client ID: ${client.client_id}`"
+        >
+          <b-card-text>
+            {{ client.description }}
+          </b-card-text>
+        </b-card>
+      </b-col>
+    </b-row>
   </b-container>
   <!-- <div>
     <b-button variant="primary">Create App</b-button>

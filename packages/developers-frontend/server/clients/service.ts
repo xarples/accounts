@@ -21,6 +21,8 @@ export default class ClientService {
 
     message.setName(options.name!)
     message.setDescription(options.description!)
+    message.setType(options.type!)
+    message.setRedirectUriList(options.redirectUriList!)
 
     const client = await createClient(message)
 
@@ -88,7 +90,7 @@ export default class ClientService {
       client_secret: options.secret,
       name: options.name,
       description: options.description,
-      redirect_uris: options.redirectUrisList,
+      redirect_uris: options.redirectUriList,
       client_secret_expires_at: 0,
       logoUri: options.logoUri,
       website_uri: options.websiteUri,

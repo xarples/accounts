@@ -6,20 +6,21 @@ message Client {
   string id  = 1; 
   string secret = 2;
   string name = 3;
-  string description  = 4;
-  string token_endpoint_auth_method  = 5;
-  string scope  = 6;
-  repeated string contacts  = 7;
-  repeated string grant_types  = 8;
-  repeated string response_types  = 9;
-  repeated string redirect_uris  = 10;
-  string logo_uri  = 11;
-  string website_uri  = 12;
-  string policy_uri  = 13;
-  string tos_uri  = 14;
-  string user_id  = 15;
-  string created_at = 16;
-  string updated_at = 17;
+  string description = 4;
+  string type = 5;
+  string token_endpoint_auth_method = 6;
+  string scope = 7;
+  repeated string contacts = 8;
+  repeated string grant_type = 9;
+  repeated string response_type = 10;
+  repeated string redirect_uri = 11;
+  string logo_uri = 12;
+  string website_uri = 13;
+  string policy_uri = 14;
+  string tos_uri = 15;
+  string user_id = 16;
+  string created_at = 17;
+  string updated_at = 18;
 }
 
 message ClientList {
