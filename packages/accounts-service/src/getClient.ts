@@ -8,8 +8,6 @@ export default async function getClient(
 ) {
   const request = call.request.toObject()
 
-  console.log(request)
-
   const client = await db.client.findUnique({
     where: {
       id: request.id || undefined,

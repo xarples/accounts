@@ -35,13 +35,16 @@ export const createClientSchema: FastifySchema = {
 }
 
 export const getClientSchema: FastifySchema = {
-  params: S.object().prop('id', S.string()),
+  params: S.object()
+    .prop('id', S.string())
+    .prop('client_id', S.string()),
   response: {
     200: clientSchema
   }
 }
 
 export const listClientsSchema: FastifySchema = {
+  querystring: S.object().prop('client_id', S.string()),
   response: {
     200: S.array().items(clientSchema)
   }

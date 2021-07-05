@@ -1,13 +1,18 @@
 <script lang="ts">
-import { defineComponent, useRoute } from '@nuxtjs/composition-api'
+import { defineComponent, useAsync, useRoute } from '@nuxtjs/composition-api'
+import { useClients } from '~/components/clients/hooks'
 
 export default defineComponent({
   layout: 'authenticated',
-  setup() {
+  setup(props, ctx) {
     const route = useRoute()
-
+    const clients = useAsync(
+      () => useClients({ clientId: route.value.query.client_id as string }),
+      'clients'
+    )
     return {
-      route
+      queryParams: route.value.query,
+      clients
     }
   }
 })
@@ -15,11 +20,16 @@ export default defineComponent({
 
 <template>
   <b-container fluid class="h-100">
-    <b-row class="h-100" align-h="center">
+    <b-row
+      class="h-100"
+      align-h="center"
+      v-for="client in clients"
+      :key="client.id"
+    >
       <b-col sm="9" md="5" xl="3">
-        <h3 class="font-weight-bold">Test Application</h3>
+        <h3 class="font-weight-bold">{{ client.name }}</h3>
         <p class="font-weight-bold">
-          You agree that Test Application will be able to:
+          You agree that {{ client.name }} will be able to:
         </p>
         <hr />
         <div>
@@ -52,7 +62,7 @@ export default defineComponent({
 
         <b-form method="post" action="/authorize/allow">
           <input
-            v-for="(value, key) in route.query"
+            v-for="(value, key) in queryParams"
             type="hidden"
             :name="key"
             :value="value"
@@ -65,7 +75,7 @@ export default defineComponent({
         </b-form>
         <b-form method="post" action="/authorize/deny">
           <input
-            v-for="(value, key) in route.query"
+            v-for="(value, key) in queryParams"
             type="hidden"
             :name="key"
             :value="value"

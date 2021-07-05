@@ -54,6 +54,7 @@ const plugin: FastifyPluginAsync = async (fastify, options) => {
         return
       }
 
+      // @ts-ignore
       fastify.nuxt.render(request.raw, reply.raw)
     }
   )
@@ -69,6 +70,8 @@ const plugin: FastifyPluginAsync = async (fastify, options) => {
           'error_description',
           'The resource owner or authorization server denied the request.'
         )
+
+        reply.redirect(302, `${request.body.redirect_uri}?${params.toString()}`)
 
         return
       }

@@ -12,8 +12,8 @@ export default defineComponent({
       options: [
         { value: null, text: 'Application Type' },
         { value: 'web', text: 'Web Application' },
-        { value: 'ios', text: 'IOS' },
-        { value: 'android', text: 'Android' }
+        { value: 'ios', text: 'IOS', disabled: true },
+        { value: 'android', text: 'Android', disabled: true }
       ]
     })
 

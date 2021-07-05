@@ -7,6 +7,7 @@ import {
   useRoute
 } from '@nuxtjs/composition-api'
 import { useClient } from '~/components/clients/hooks'
+import { useUpdateClient } from '~/components/clients/hooks/useUpdateClient'
 
 export default defineComponent({
   setup() {
@@ -17,7 +18,10 @@ export default defineComponent({
     )
 
     return {
-      client
+      client,
+      handleUpdate() {
+        useUpdateClient(client.value)
+      }
     }
   }
 })
@@ -64,14 +68,14 @@ export default defineComponent({
             ></b-form-textarea>
           </b-form-group>
 
-          <b-form-group label="Redirect URIs:" label-for="redirectUris">
+          <b-form-group label="Redirect URIs:" label-for="redirect_uris">
             <b-form-tags
-              input-id="redirectUris"
+              input-id="redirect_uris"
               placeholder="Enter a redirect URI"
               v-model="client.redirect_uris"
             ></b-form-tags>
           </b-form-group>
-          <b-button variant="primary">Update</b-button>
+          <b-button variant="primary" @click="handleUpdate">Update</b-button>
           <b-button variant="light">Cancel</b-button>
         </b-form>
       </b-col>

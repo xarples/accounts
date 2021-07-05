@@ -45,7 +45,9 @@ const routes: FastifyPluginAsync = async fastify => {
     '/clients',
     { schema: listClientsSchema },
     async (request, reply) => {
-      const clients = await fastify.clientService.list({})
+      const clients = await fastify.clientService.list({
+        clientId: request.query.client_id
+      })
 
       reply.code(200).send(clients)
     }

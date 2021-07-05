@@ -43,8 +43,10 @@ export default class ClientService {
   }
 
   async list(options: Options) {
-    console.log(options)
     const message = new Client()
+
+    message.setClientId(options.clientId!)
+
     const clientList = await listClients(message)
 
     return clientList
@@ -58,6 +60,7 @@ export default class ClientService {
     message.setId(options.id!)
     message.setName(options.name!)
     message.setDescription(options.description!)
+    message.setRedirectUriList(options.redirectUriList!)
 
     const client = await updateClient(message)
 

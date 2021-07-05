@@ -1,0 +1,16 @@
+{
+  "name": "@xarples/accounts-vue-hooks",
+  "version": "0.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "scripts": {
+    "build": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "swrv": "^0.9.4"
+  }
+}

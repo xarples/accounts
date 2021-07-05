@@ -9,13 +9,17 @@ export interface CreateRoute {
 
 export interface GetRoute {
   Params: {
-    id: string
+    id?: string
+    client_id?: string
   }
 }
 
 export interface ListRoute {
   Params: {
     id: string
+  }
+  Querystring: {
+    client_id: string
   }
 }
 
