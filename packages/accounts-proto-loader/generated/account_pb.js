@@ -15,7 +15,13 @@ var jspb = require('google-protobuf');
 var goog = jspb;
 var global = Function('return this')();
 
-var user_pb = require('./user_pb.js');
-goog.object.extend(proto, user_pb);
+var access$token_pb = require('./access-token_pb.js');
+goog.object.extend(proto, access$token_pb);
+var authorization$code_pb = require('./authorization-code_pb.js');
+goog.object.extend(proto, authorization$code_pb);
 var client_pb = require('./client_pb.js');
 goog.object.extend(proto, client_pb);
+var refresh$token_pb = require('./refresh-token_pb.js');
+goog.object.extend(proto, refresh$token_pb);
+var user_pb = require('./user_pb.js');
+goog.object.extend(proto, user_pb);

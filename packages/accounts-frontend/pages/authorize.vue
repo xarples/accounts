@@ -1,8 +1,15 @@
 <script lang="ts">
-import { defineComponent } from '@nuxtjs/composition-api'
+import { defineComponent, useRoute } from '@nuxtjs/composition-api'
 
 export default defineComponent({
-  layout: 'authenticated'
+  layout: 'authenticated',
+  setup() {
+    const route = useRoute()
+
+    return {
+      route
+    }
+  }
 })
 </script>
 
@@ -43,11 +50,28 @@ export default defineComponent({
           </span>
         </div>
 
-        <b-form>
-          <b-button class="mb-4" block variant="primary" size="lg"
+        <b-form method="post" action="/authorize/allow">
+          <input
+            v-for="(value, key) in route.query"
+            type="hidden"
+            :name="key"
+            :value="value"
+            :key="key"
+          />
+
+          <b-button type="submit" class="mb-4" block variant="primary" size="lg"
             >Allow</b-button
           >
-          <b-button class="mb-4" block variant="light" size="lg"
+        </b-form>
+        <b-form method="post" action="/authorize/deny">
+          <input
+            v-for="(value, key) in route.query"
+            type="hidden"
+            :name="key"
+            :value="value"
+            :key="key"
+          />
+          <b-button type="submit" class="mb-4" block variant="light" size="lg"
             >Cancel</b-button
           >
         </b-form>

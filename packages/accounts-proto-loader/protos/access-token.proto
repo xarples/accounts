@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package access_token;
+
+message AccessToken {
+  string id = 1;
+  string client_id = 2;
+  string token = 3;
+  string created_at = 6;
+  string updated_at = 7;
+}
+
+message AccessTokenList {
+  repeated AccessToken access_token = 1;
+}

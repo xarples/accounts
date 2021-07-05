@@ -12,11 +12,12 @@ export default async function updateClient(
       id: request.id || undefined
     },
     data: {
-      secret: request.secret || undefined,
-      redirect_uris: request.redirectUriList || undefined,
-      logo_uri: request.logoUri || undefined,
-      policy_uri: request.policyUri || undefined,
-      website_uri: request.websiteUri || undefined
+      name: request.name || undefined,
+      description: request.description || undefined,
+      redirect_uris: request.redirectUriList || undefined
+      // logo_uri: request.logoUri || undefined,
+      // policy_uri: request.policyUri || undefined,
+      // website_uri: request.websiteUri || undefined
     }
   })
 

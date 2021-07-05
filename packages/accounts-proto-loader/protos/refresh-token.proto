@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package refresh_token;
+
+message RefreshToken {
+  string id = 1;
+  string client_id = 2;
+  string token = 3;
+  string created_at = 6;
+  string updated_at = 7;
+}
+
+message RefreshTokenList {
+  repeated RefreshToken refresh_token = 1;
+}

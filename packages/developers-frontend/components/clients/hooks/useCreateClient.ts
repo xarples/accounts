@@ -2,7 +2,7 @@ interface IOptions {
   name: string
   description: string
   type: string
-  redirectUris: string[]
+  redirect_uris: string[]
 }
 
 export function useCreateClient(options: IOptions) {

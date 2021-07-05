@@ -5,9 +5,13 @@ import { useClients } from '~/components/clients/hooks'
 export default defineComponent({
   setup() {
     const clients = useAsync(useClients, 'clients')
+    const applicationTypes = {
+      web: 'Web Application'
+    }
 
     return {
-      clients
+      clients,
+      applicationTypes
     }
   }
 })
@@ -35,19 +39,34 @@ export default defineComponent({
     <b-row class="mb-4">
       <b-col
         class="mb-4"
-        cols="4"
+        cols="12"
         v-for="client in clients"
         :key="client.client_id"
       >
-        <b-card
+        <b-list-group>
+          <b-list-group-item href="#" class="flex-column align-items-start">
+            <div class="d-flex w-100 justify-content-between">
+              <h5 class="mb-1">{{ client.name }}</h5>
+              <small class="text-muted">3 days ago</small>
+            </div>
+            <p class="mb-1">
+              {{ client.description }}
+            </p>
+            <small class="text-muted">Client ID: {{ client.client_id }}</small>
+          </b-list-group-item>
+        </b-list-group>
+
+        <!-- <b-card
           class="shadow-sm"
           :title="client.name"
-          :sub-title="`Client ID: ${client.client_id}`"
+          :sub-title="client.description"
         >
           <b-card-text>
-            {{ client.description }}
+            <p>{{ applicationTypes[client.type] }}</p>
+            <p>Client ID: {{ client.client_id }}</p>
+            <p>{{ client.created_at }}</p>
           </b-card-text>
-        </b-card>
+        </b-card> -->
       </b-col>
     </b-row>
   </b-container>

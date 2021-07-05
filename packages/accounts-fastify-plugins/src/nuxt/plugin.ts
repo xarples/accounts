@@ -18,11 +18,11 @@ const plugin: FastifyPluginAsync = async fastify => {
     build(nuxt)
   }
 
-  fastify.get('*', (request, reply) => {
+  fastify.decorate('nuxt', nuxt)
+
+  fastify.all('*', (request, reply) => {
     nuxt.render(request.raw, reply.raw)
   })
-
-  fastify.decorate('nuxt', nuxt)
 }
 
 export default fp(plugin, '3.x')

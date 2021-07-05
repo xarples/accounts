@@ -27,7 +27,7 @@ export default defineComponent({
           name: name.value,
           description: description.value,
           type: applicationType.selected!,
-          redirectUris: redirectUris.value
+          redirect_uris: redirectUris.value
         })
       }
     }

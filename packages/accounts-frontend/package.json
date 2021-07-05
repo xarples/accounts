@@ -15,6 +15,7 @@
   "license": "MIT",
   "dependencies": {
     "@nuxtjs/composition-api": "^0.24.4",
+    "@xarples/accounts-fastify-plugins": "^0.0.0",
     "@xarples/accounts-client": "^0.0.0",
     "@xarples/accounts-proto-loader": "^0.0.0",
     "@xarples/accounts-utils": "^0.0.0",

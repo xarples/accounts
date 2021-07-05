@@ -1,7 +1,6 @@
 import { promisify } from 'util'
 import client from '@xarples/accounts-client'
 import { Client, ClientList } from '@xarples/accounts-proto-loader'
-import { cuid } from '@xarples/accounts-utils'
 
 const createClient = promisify<Client, Client>(client.createClient.bind(client))
 const getClient = promisify<Client, Client>(client.getClient.bind(client))
@@ -9,6 +8,9 @@ const listClients = promisify<Client, ClientList>(
   client.listClients.bind(client)
 )
 const updateClient = promisify<Client, Client>(client.updateClient.bind(client))
+const updateClientSecret = promisify<Client, Client>(
+  client.updateClientSecret.bind(client)
+)
 const deleteClient = promisify<Client, Client>(client.deleteClient.bind(client))
 
 type Options = {
@@ -43,11 +45,10 @@ export default class ClientService {
     console.log(options)
     const message = new Client()
     const clientList = await listClients(message)
-    const clients = clientList
+
+    return clientList
       .getClientList()
       .map(client => this.reducer(client.toObject()))
-
-    return clients
   }
 
   async update(options: Options) {
@@ -63,13 +64,11 @@ export default class ClientService {
   }
 
   async updateSecret(options: Options) {
-    const id = cuid()
     const message = new Client()
 
     message.setId(options.id!)
-    message.setSecret(id)
 
-    const client = await updateClient(message)
+    const client = await updateClientSecret(message)
 
     return this.reducer(client.toObject())
   }
@@ -86,13 +85,15 @@ export default class ClientService {
 
   reducer(options: Client.AsObject) {
     return {
-      client_id: options.id,
-      client_secret: options.secret,
+      id: options.id,
+      client_id: options.clientId,
+      client_secret: options.clientSecret,
       name: options.name,
       description: options.description,
+      type: options.type,
       redirect_uris: options.redirectUriList,
       client_secret_expires_at: 0,
-      logoUri: options.logoUri,
+      logo_uri: options.logoUri,
       website_uri: options.websiteUri,
       policy_uri: options.policyUri,
       tos_uri: options.tosUri,

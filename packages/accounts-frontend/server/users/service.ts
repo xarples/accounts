@@ -1,7 +1,6 @@
 import { promisify } from 'util'
 import client from '@xarples/accounts-client'
 import { User, UserList } from '@xarples/accounts-proto-loader'
-import { encrypt } from '@xarples/accounts-utils'
 
 const createUser = promisify<User, User>(client.createUser.bind(client))
 const getUser = promisify<User, User>(client.getUser.bind(client))
@@ -62,7 +61,7 @@ export default class UserService {
     return this.reducer(updated.toObject())
   }
 
-  async delete(options: Options) {
+  async delete(options: Pick<Options, 'id'>) {
     const message = new User()
 
     message.setId(options.id!)
@@ -90,12 +89,11 @@ export default class UserService {
   reducer(options: User.AsObject) {
     return {
       id: options.id,
-      firstName: options.firstName,
-      lastName: options.lastName,
+      first_name: options.firstName,
+      last_name: options.lastName,
       email: options.email,
-      password: options.password,
-      createdAt: options.createdAt,
-      updatedAt: options.updatedAt
+      created_at: options.createdAt,
+      updated_at: options.updatedAt
     }
   }
 }

@@ -1,4 +1,4 @@
-export default function base64URLEncode(buffer: Buffer) {
+export function base64URLEncode(buffer: Buffer) {
   return buffer
     .toString('base64')
     .replace(/\+/g, '-')

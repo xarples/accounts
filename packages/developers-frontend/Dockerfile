@@ -6,6 +6,7 @@ WORKDIR /usr/src/accounts
 RUN npm install --global npm
 
 COPY ./package*.json ./lerna.json ./
+COPY ./packages/accounts-fastify-plugins/package.json ./packages/accounts-fastify-plugins/
 COPY ./packages/accounts-client/package.json ./packages/accounts-client/
 COPY ./packages/developers-frontend/package.json ./packages/developers-frontend/
 COPY ./packages/accounts-proto-loader/package.json ./packages/accounts-proto-loader/
@@ -15,6 +16,7 @@ RUN npm install --production
 RUN cp -R node_modules node_modules_production
 RUN npm install
 
+COPY ./packages/accounts-fastify-plugins ./packages/accounts-fastify-plugins
 COPY ./packages/accounts-client ./packages/accounts-client
 COPY ./packages/developers-frontend ./packages/developers-frontend
 COPY ./packages/accounts-proto-loader ./packages/accounts-proto-loader
@@ -42,6 +44,8 @@ RUN apk add --no-cache libstdc++ \
 WORKDIR /usr/src/accounts
 
 COPY --from=deps /usr/src/accounts/node_modules_production ./node_modules
+COPY --from=deps /usr/src/accounts/packages/accounts-fastify-plugins/dist  ./packages/accounts-fastify-plugins/dist
+COPY --from=deps /usr/src/accounts/packages/accounts-fastify-plugins/package.json ./packages/accounts-fastify-plugins/
 COPY --from=deps /usr/src/accounts/packages/accounts-client/dist  ./packages/accounts-client/dist
 COPY --from=deps /usr/src/accounts/packages/accounts-client/package.json ./packages/accounts-client/
 COPY --from=deps /usr/src/accounts/packages/developers-frontend/.nuxt  ./packages/developers-frontend/.nuxt

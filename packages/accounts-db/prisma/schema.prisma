@@ -25,7 +25,8 @@ model User {
 
 model Client {
   id                         String      @id @default(cuid())
-  secret                     String?     @unique @default(cuid())
+  client_id                  String?     @unique @default(cuid())
+  client_secret              String?     @unique @default(cuid())
   name                       String
   description                String
   type                       ClientType? @default(web)
@@ -43,7 +44,7 @@ model Client {
   updated_at                 DateTime    @updatedAt
 
   User               User?               @relation(fields: [user_id], references: [id])
-  AuhtorizationCodes AuhtorizationCode[]
+  AuthorizationCodes AuthorizationCode[]
   Scopes             Scope[]
   AccessTokens       AccessToken[]
   RefreshTokens      RefreshToken[]
@@ -51,15 +52,16 @@ model Client {
   @@map(name: "clients")
 }
 
-model AuhtorizationCode {
-  id                    String             @id @default(cuid())
+model AuthorizationCode {
+  id                    String              @id @default(cuid())
   client_id             String
-  code                  String             @default(cuid())
+  code                  String              @default(cuid())
   code_challenge        String
-  code_challenge_method CodeChallegeMethod @default(plain)
+  code_challenge_method CodeChallengeMethod @default(plain)
 
-  Client Client @relation(fields: [client_id], references: [id])
-
+  Client     Client   @relation(fields: [client_id], references: [id])
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
   @@map(name: "authorization_codes")
 }
 
@@ -68,8 +70,9 @@ model AccessToken {
   client_id String
   token     String @default(cuid())
 
-  Client Client @relation(fields: [client_id], references: [id])
-
+  Client     Client   @relation(fields: [client_id], references: [id])
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
   @@map(name: "access_tokens")
 }
 
@@ -77,9 +80,10 @@ model RefreshToken {
   id        String @id @default(cuid())
   client_id String
   token     String @default(cuid())
+  Client    Client @relation(fields: [client_id], references: [id])
 
-  Client Client @relation(fields: [client_id], references: [id])
-
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
   @@map(name: "refresh_tokens")
 }
 
@@ -87,10 +91,9 @@ model Scope {
   id          String   @id @default(cuid())
   name        String
   description String
+  Client      Client[]
   created_at  DateTime @default(now())
   updated_at  DateTime @updatedAt
-
-  Client Client[]
 
   @@map(name: "scopes")
 }
@@ -102,7 +105,7 @@ enum ClientType {
   android
 }
 
-enum CodeChallegeMethod {
+enum CodeChallengeMethod {
   plain
   S256
 }

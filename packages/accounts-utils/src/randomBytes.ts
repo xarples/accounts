@@ -1,5 +1,5 @@
 import crypto from 'crypto'
 
-export default function randomBytes(length: number) {
+export function randomBytes(length: number) {
   return crypto.randomBytes(length)
 }

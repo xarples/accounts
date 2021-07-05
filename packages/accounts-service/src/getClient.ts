@@ -7,9 +7,13 @@ export default async function getClient(
   cb: grpc.sendUnaryData<Client>
 ) {
   const request = call.request.toObject()
-  const client = await db.client.findFirst({
+
+  console.log(request)
+
+  const client = await db.client.findUnique({
     where: {
-      id: request.id || undefined
+      id: request.id || undefined,
+      client_id: request.clientId || undefined
     }
   })
 

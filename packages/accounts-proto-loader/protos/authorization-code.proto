@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package authorization_code;
+
+message AuthorizationCode {
+  string id = 1;
+  string client_id = 2;
+  string code = 3;
+  string code_challenge = 4;
+  string code_challenge_method = 5;
+  string created_at = 6;
+  string updated_at = 7;
+}
+
+message AuthorizationCodeList {
+  repeated AuthorizationCode authorization_code = 1;
+}

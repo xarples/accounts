@@ -2,8 +2,11 @@ syntax = "proto3";
 
 package auth;
 
-import "user.proto";
+import "access-token.proto";
+import "authorization-code.proto";
 import "client.proto";
+import "refresh-token.proto";
+import "user.proto";
 
 service Account{
   rpc CreateUser(user.User) returns (user.User) {}
@@ -13,10 +16,30 @@ service Account{
   rpc DeleteUser(user.User) returns (user.User) {}
   rpc SignIn(user.User) returns (user.User) {}
   rpc CreateClient(client.Client) returns (client.Client) {}
+  
   rpc GetClient(client.Client) returns (client.Client) {}
   rpc ListClients(client.Client) returns (client.ClientList) {}
   rpc UpdateClient(client.Client) returns (client.Client) {}
+  rpc UpdateClientSecret(client.Client) returns (client.Client) {}
   rpc DeleteClient(client.Client) returns (client.Client) {}
+
+  rpc CreateAccessToken(access_token.AccessToken) returns (access_token.AccessToken) {}
+  rpc GetAccessToken(access_token.AccessToken) returns (access_token.AccessToken) {}
+  rpc ListAccessTokens(access_token.AccessToken) returns (access_token.AccessTokenList) {}
+  rpc UpdateAccessToken(access_token.AccessToken) returns (access_token.AccessToken) {}
+  rpc DeleteAccessToken(access_token.AccessToken) returns (access_token.AccessToken) {}
+
+  rpc CreateAuthorizationCode(authorization_code.AuthorizationCode) returns (authorization_code.AuthorizationCode) {}
+  rpc GetAuthorizationCode(authorization_code.AuthorizationCode) returns (authorization_code.AuthorizationCode) {}
+  rpc ListAuthorizationCodes(authorization_code.AuthorizationCode) returns (authorization_code.AuthorizationCodeList) {}
+  rpc UpdateAuthorizationCode(authorization_code.AuthorizationCode) returns (authorization_code.AuthorizationCode) {}
+  rpc DeleteAuthorizationCode(authorization_code.AuthorizationCode) returns (authorization_code.AuthorizationCode) {}
+
+  rpc CreateRefreshToken(refresh_token.RefreshToken) returns (refresh_token.RefreshToken) {}
+  rpc GetRefreshToken(refresh_token.RefreshToken) returns (refresh_token.RefreshToken) {}
+  rpc ListRefreshTokens(refresh_token.RefreshToken) returns (refresh_token.RefreshTokenList) {}
+  rpc UpdateRefreshToken(refresh_token.RefreshToken) returns (refresh_token.RefreshToken) {}
+  rpc DeleteRefreshToken(refresh_token.RefreshToken) returns (refresh_token.RefreshToken) {}
 }
 
 
