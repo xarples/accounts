@@ -1,25 +1,22 @@
 import db, { CodeChallengeMethod } from '@xarples/accounts-db'
 import { randomBytes } from '@xarples/accounts-utils'
-import { grpc, AuthorizationCode } from '@xarples/accounts-proto-loader'
-import { toAuthorizationCodeMessage } from './utils'
+import { grpc, AccessToken } from '@xarples/accounts-proto-loader'
+import { toAccessTokenMessage } from './utils'
 
-export default async function createAuthorizationCode(
-  call: grpc.ServerUnaryCall<AuthorizationCode, AuthorizationCode>,
-  cb: grpc.sendUnaryData<AuthorizationCode>
+export default async function createAccessToken(
+  call: grpc.ServerUnaryCall<AccessToken, AccessToken>,
+  cb: grpc.sendUnaryData<AccessToken>
 ) {
   const request = call.request.toObject()
 
-  const code = await db.authorizationCode.create({
+  const token = await db.accessToken.create({
     data: {
       client_id: request.clientId,
-      code: randomBytes(32).toString('hex'),
-      code_challenge: request.codeChallenge,
-      code_challenge_method:
-        CodeChallengeMethod[request.codeChallengeMethod as CodeChallengeMethod]
+      token: randomBytes(32).toString('hex')
     }
   })
 
-  const message = toAuthorizationCodeMessage(code)
+  const message = toAccessTokenMessage(token)
 
   cb(null, message)
 }

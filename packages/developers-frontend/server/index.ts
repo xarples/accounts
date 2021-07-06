@@ -2,7 +2,7 @@ import fastify from 'fastify'
 import fastifyFormbody from 'fastify-formbody'
 import fastifyCookie from 'fastify-cookie'
 import fastifySession from 'fastify-session'
-import { clients, nuxt } from '@xarples/accounts-fastify-plugins'
+import { client, nuxt } from '@xarples/accounts-fastify-plugins'
 
 // const isDev = process.env.NODE_ENV !== 'production'
 const host = process.env.HOST || '127.0.0.1'
@@ -18,7 +18,7 @@ server.register(fastifySession, {
   cookie: { secure: false }
 })
 
-server.register(clients)
+server.register(client)
 server.register(nuxt)
 
 async function main() {

@@ -96,8 +96,9 @@ proto.authorization_code.AuthorizationCode.toObject = function(includeInstance, 
     code: jspb.Message.getFieldWithDefault(msg, 3, ""),
     codeChallenge: jspb.Message.getFieldWithDefault(msg, 4, ""),
     codeChallengeMethod: jspb.Message.getFieldWithDefault(msg, 5, ""),
-    createdAt: jspb.Message.getFieldWithDefault(msg, 6, ""),
-    updatedAt: jspb.Message.getFieldWithDefault(msg, 7, "")
+    redirectUri: jspb.Message.getFieldWithDefault(msg, 6, ""),
+    createdAt: jspb.Message.getFieldWithDefault(msg, 7, ""),
+    updatedAt: jspb.Message.getFieldWithDefault(msg, 8, "")
   };
 
   if (includeInstance) {
@@ -156,9 +157,13 @@ proto.authorization_code.AuthorizationCode.deserializeBinaryFromReader = functio
       break;
     case 6:
       var value = /** @type {string} */ (reader.readString());
-      msg.setCreatedAt(value);
+      msg.setRedirectUri(value);
       break;
     case 7:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setCreatedAt(value);
+      break;
+    case 8:
       var value = /** @type {string} */ (reader.readString());
       msg.setUpdatedAt(value);
       break;
@@ -226,17 +231,24 @@ proto.authorization_code.AuthorizationCode.serializeBinaryToWriter = function(me
       f
     );
   }
-  f = message.getCreatedAt();
+  f = message.getRedirectUri();
   if (f.length > 0) {
     writer.writeString(
       6,
       f
     );
   }
-  f = message.getUpdatedAt();
+  f = message.getCreatedAt();
   if (f.length > 0) {
     writer.writeString(
       7,
+      f
+    );
+  }
+  f = message.getUpdatedAt();
+  if (f.length > 0) {
+    writer.writeString(
+      8,
       f
     );
   }
@@ -334,10 +346,10 @@ proto.authorization_code.AuthorizationCode.prototype.setCodeChallengeMethod = fu
 
 
 /**
- * optional string created_at = 6;
+ * optional string redirect_uri = 6;
  * @return {string}
  */
-proto.authorization_code.AuthorizationCode.prototype.getCreatedAt = function() {
+proto.authorization_code.AuthorizationCode.prototype.getRedirectUri = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 6, ""));
 };
 
@@ -346,16 +358,16 @@ proto.authorization_code.AuthorizationCode.prototype.getCreatedAt = function() {
  * @param {string} value
  * @return {!proto.authorization_code.AuthorizationCode} returns this
  */
-proto.authorization_code.AuthorizationCode.prototype.setCreatedAt = function(value) {
+proto.authorization_code.AuthorizationCode.prototype.setRedirectUri = function(value) {
   return jspb.Message.setProto3StringField(this, 6, value);
 };
 
 
 /**
- * optional string updated_at = 7;
+ * optional string created_at = 7;
  * @return {string}
  */
-proto.authorization_code.AuthorizationCode.prototype.getUpdatedAt = function() {
+proto.authorization_code.AuthorizationCode.prototype.getCreatedAt = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 7, ""));
 };
 
@@ -364,8 +376,26 @@ proto.authorization_code.AuthorizationCode.prototype.getUpdatedAt = function() {
  * @param {string} value
  * @return {!proto.authorization_code.AuthorizationCode} returns this
  */
-proto.authorization_code.AuthorizationCode.prototype.setUpdatedAt = function(value) {
+proto.authorization_code.AuthorizationCode.prototype.setCreatedAt = function(value) {
   return jspb.Message.setProto3StringField(this, 7, value);
+};
+
+
+/**
+ * optional string updated_at = 8;
+ * @return {string}
+ */
+proto.authorization_code.AuthorizationCode.prototype.getUpdatedAt = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 8, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.authorization_code.AuthorizationCode} returns this
+ */
+proto.authorization_code.AuthorizationCode.prototype.setUpdatedAt = function(value) {
+  return jspb.Message.setProto3StringField(this, 8, value);
 };
 
 

@@ -1,0 +1,35 @@
+import db from '@xarples/accounts-db'
+import { grpc, AuthorizationCode } from '@xarples/accounts-proto-loader'
+import { toAuthorizationCodeMessage } from './utils'
+
+export default async function getAuthorizationCode(
+  call: grpc.ServerUnaryCall<AuthorizationCode, AuthorizationCode>,
+  cb: grpc.sendUnaryData<AuthorizationCode>
+) {
+  const request = call.request.toObject()
+
+  const authorizationCode = await db.authorizationCode.findUnique({
+    where: {
+      id: request.id || undefined,
+      code: request.code || undefined
+    },
+    include: {
+      Client: {
+        select: {
+          id: true,
+          client_id: true
+        }
+      }
+    }
+  })
+
+  if (!authorizationCode) {
+    return cb({
+      code: grpc.status.NOT_FOUND
+    })
+  }
+
+  const message = toAuthorizationCodeMessage(authorizationCode)
+
+  cb(null, message)
+}

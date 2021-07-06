@@ -8,8 +8,9 @@ message AuthorizationCode {
   string code = 3;
   string code_challenge = 4;
   string code_challenge_method = 5;
-  string created_at = 6;
-  string updated_at = 7;
+  string redirect_uri = 6;
+  string created_at = 7;
+  string updated_at = 8;
 }
 
 message AuthorizationCodeList {

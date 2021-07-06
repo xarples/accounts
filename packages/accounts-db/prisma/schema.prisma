@@ -55,35 +55,36 @@ model Client {
 model AuthorizationCode {
   id                    String              @id @default(cuid())
   client_id             String
-  code                  String              @default(cuid())
+  code                  String              @unique
   code_challenge        String
   code_challenge_method CodeChallengeMethod @default(plain)
+  redirect_uri          String
+  Client                Client              @relation(fields: [client_id], references: [id])
+  created_at            DateTime            @default(now())
+  updated_at            DateTime            @updatedAt
 
-  Client     Client   @relation(fields: [client_id], references: [id])
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
   @@map(name: "authorization_codes")
 }
 
 model AccessToken {
-  id        String @id @default(cuid())
-  client_id String
-  token     String @default(cuid())
-
+  id         String   @id @default(cuid())
+  client_id  String
+  token      String   @unique
   Client     Client   @relation(fields: [client_id], references: [id])
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
+
   @@map(name: "access_tokens")
 }
 
 model RefreshToken {
-  id        String @id @default(cuid())
-  client_id String
-  token     String @default(cuid())
-  Client    Client @relation(fields: [client_id], references: [id])
-
+  id         String   @id @default(cuid())
+  client_id  String
+  token      String   @unique
+  Client     Client   @relation(fields: [client_id], references: [id])
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
+
   @@map(name: "refresh_tokens")
 }
 

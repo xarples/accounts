@@ -23,3 +23,17 @@ export const getAuthorizeSchema: FastifySchema = {
     .prop('scope', S.string())
     .prop('state', S.string())
 }
+
+export const postTokenSchema: FastifySchema = {
+  body: S.object()
+    .prop(
+      'grant_type',
+      S.string()
+        .enum(['authorization_code'])
+        .required()
+    )
+    .prop('code', S.string().required())
+    .prop('redirect_uri', S.string().required())
+    .prop('client_id', S.string().required())
+    .prop('code_verifier', S.string().required())
+}

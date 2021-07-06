@@ -15,6 +15,7 @@ export default async function createAuthorizationCode(
       code_challenge: request.codeChallenge,
       code_challenge_method:
         CodeChallengeMethod[request.codeChallengeMethod as CodeChallengeMethod],
+      redirect_uri: request.redirectUri,
       Client: {
         connect: {
           client_id: request.clientId
@@ -22,7 +23,12 @@ export default async function createAuthorizationCode(
       }
     },
     include: {
-      Client: true
+      Client: {
+        select: {
+          id: true,
+          client_id: true
+        }
+      }
     }
   })
 

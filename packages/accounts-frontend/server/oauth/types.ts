@@ -25,4 +25,12 @@ export interface PostAuthorizeRoute {
   }
 }
 
-export interface PostTokenRoute {}
+export interface PostTokenRoute {
+  Body: {
+    code: string
+    code_verifier: string
+    client_id: string
+    grant_type: 'authorization_code'
+    redirect_uri: string
+  }
+}

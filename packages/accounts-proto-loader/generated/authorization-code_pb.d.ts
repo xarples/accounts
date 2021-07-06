@@ -17,6 +17,8 @@ export class AuthorizationCode extends jspb.Message {
     setCodeChallenge(value: string): AuthorizationCode;
     getCodeChallengeMethod(): string;
     setCodeChallengeMethod(value: string): AuthorizationCode;
+    getRedirectUri(): string;
+    setRedirectUri(value: string): AuthorizationCode;
     getCreatedAt(): string;
     setCreatedAt(value: string): AuthorizationCode;
     getUpdatedAt(): string;
@@ -39,6 +41,7 @@ export namespace AuthorizationCode {
         code: string,
         codeChallenge: string,
         codeChallengeMethod: string,
+        redirectUri: string,
         createdAt: string,
         updatedAt: string,
     }
