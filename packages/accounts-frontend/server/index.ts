@@ -2,9 +2,13 @@ import fastify from 'fastify'
 import fastifyFormbody from 'fastify-formbody'
 import fastifyCookie from 'fastify-cookie'
 import fastifySession from 'fastify-session'
-import { nuxt, client, basicAuth } from '@xarples/accounts-fastify-plugins'
+import {
+  basicAuth,
+  client,
+  user,
+  nuxt
+} from '@xarples/accounts-fastify-plugins'
 
-import users from './users'
 import oauth from './oauth'
 
 // const isDev = process.env.NODE_ENV !== 'production'
@@ -22,7 +26,7 @@ server.register(fastifySession, {
   saveUninitialized: false
 })
 server.register(basicAuth)
-server.register(users)
+server.register(user)
 server.register(oauth)
 server.register(client)
 server.register(nuxt)

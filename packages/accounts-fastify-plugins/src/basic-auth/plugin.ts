@@ -5,7 +5,7 @@ import {
   preValidationHookHandler
 } from 'fastify'
 import fp from 'fastify-plugin'
-import fastifyBasicAuth, { FastifyBasicAuthOptions } from 'fastify-basic-auth'
+import fastifyBasicAuth from 'fastify-basic-auth'
 import BasicAuthService from './service'
 
 declare module 'fastify' {
