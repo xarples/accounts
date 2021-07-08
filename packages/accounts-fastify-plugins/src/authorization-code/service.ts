@@ -78,7 +78,7 @@ export default class AuthorizationCodeService {
     return {
       id: options.id,
       client_id: options.clientId,
-      client_secret: options.code,
+      code: options.code,
       code_challenge: options.codeChallenge,
       code_challenge_method: options.codeChallengeMethod,
       redirect_uri: options.redirectUri,

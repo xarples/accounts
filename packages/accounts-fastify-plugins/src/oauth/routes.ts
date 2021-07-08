@@ -3,7 +3,7 @@ import fp from 'fastify-plugin'
 import { getAuthorizeSchema, postTokenSchema } from './schemas'
 import { GetAuthorizeRoute, PostAuthorizeRoute, PostTokenRoute } from './types'
 
-const plugin: FastifyPluginAsync = async (fastify, options) => {
+const plugin: FastifyPluginAsync = async fastify => {
   fastify.get<GetAuthorizeRoute>(
     '/authorize',
     {
@@ -70,13 +70,11 @@ const plugin: FastifyPluginAsync = async (fastify, options) => {
         return
       }
 
-      const authorizationCode = await fastify.oauthService.createAuthorizationCode(
-        {
-          clientId: request.body.client_id,
-          codeChallenge: request.body.code_challenge,
-          codeChallengeMethod: request.body.code_challenge_method
-        }
-      )
+      const authorizationCode = await fastify.authorizationCodeService.create({
+        clientId: request.body.client_id,
+        codeChallenge: request.body.code_challenge,
+        codeChallengeMethod: request.body.code_challenge_method
+      })
 
       const params = new URLSearchParams({
         code: authorizationCode.code,
@@ -109,12 +107,6 @@ const plugin: FastifyPluginAsync = async (fastify, options) => {
       reply.send({})
     }
   )
-
-  fastify.get('/.well-known/oauth-authorization-server', async (_, reply) => {
-    const metadata = await fastify.oauthService.getMetadata()
-
-    reply.send(metadata)
-  })
 }
 
 export default fp(plugin, '3.x')
