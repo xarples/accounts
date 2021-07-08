@@ -61,9 +61,12 @@ const plugin: FastifyPluginAsync = async fastify => {
         const params = new URLSearchParams({
           error: 'access_denied',
           error_description:
-            'The resource owner or authorization server denied the request.',
-          state: request.body.state || ''
+            'The resource owner or authorization server denied the request.'
         })
+
+        if (request.body.state) {
+          params.set('state', request.body.state)
+        }
 
         reply.redirect(302, `${request.body.redirect_uri}?${params.toString()}`)
 
@@ -73,13 +76,17 @@ const plugin: FastifyPluginAsync = async fastify => {
       const authorizationCode = await fastify.authorizationCodeService.create({
         clientId: request.body.client_id,
         codeChallenge: request.body.code_challenge,
-        codeChallengeMethod: request.body.code_challenge_method
+        codeChallengeMethod: request.body.code_challenge_method,
+        redirectUri: request.body.redirect_uri
       })
 
       const params = new URLSearchParams({
-        code: authorizationCode.code,
-        state: request.body.state || ''
+        code: authorizationCode.code
       })
+
+      if (request.body.state) {
+        params.set('state', request.body.state)
+      }
 
       reply.redirect(302, `${request.body.redirect_uri}?${params.toString()}`)
     }

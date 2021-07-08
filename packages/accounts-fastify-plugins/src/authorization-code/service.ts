@@ -31,9 +31,9 @@ export default class AuthorizationCodeService {
     const message = new AuthorizationCode()
 
     message.setClientId(options.clientId!)
-    message.setClientId(options.codeChallenge!)
-    message.setClientId(options.codeChallengeMethod!)
-    message.setClientId(options.redirectUri!)
+    message.setCodeChallenge(options.codeChallenge!)
+    message.setCodeChallengeMethod(options.codeChallengeMethod!)
+    message.setRedirectUri(options.redirectUri!)
 
     const created = await createAuthorizationCode(message)
 

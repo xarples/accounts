@@ -21,14 +21,6 @@ export default async function createAuthorizationCode(
           client_id: request.clientId
         }
       }
-    },
-    include: {
-      Client: {
-        select: {
-          id: true,
-          client_id: true
-        }
-      }
     }
   })
 

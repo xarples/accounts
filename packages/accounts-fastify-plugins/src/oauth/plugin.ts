@@ -1,18 +1,22 @@
 import { FastifyPluginAsync } from 'fastify'
 import fp from 'fastify-plugin'
 import routes from './routes'
-import OauthService from './service'
+import accessToken from '../access-token'
+import authorizationCode from '../authorization-code'
+import client from '../client'
+import oauthMetadata from '../oauth-metadata'
+import refreshToken from '../refresh-token'
 
 declare module 'fastify' {
-  interface FastifyInstance {
-    oauthService: OauthService
-  }
+  interface FastifyInstance {}
 }
 
-const service = new OauthService()
-
 const plugin: FastifyPluginAsync = async (fastify, options) => {
-  fastify.decorate('oauthService', service)
+  fastify.register(accessToken)
+  fastify.register(authorizationCode)
+  fastify.register(client)
+  fastify.register(oauthMetadata)
+  fastify.register(refreshToken)
   fastify.register(routes, { prefix: 'api' })
 }
 
