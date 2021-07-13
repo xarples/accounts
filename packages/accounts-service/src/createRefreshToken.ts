@@ -1,6 +1,7 @@
 import db from '@xarples/accounts-db'
 import { randomBytes } from '@xarples/accounts-utils'
 import { grpc, RefreshToken } from '@xarples/accounts-proto-loader'
+import { add } from 'date-fns'
 import { toRefreshTokenMessage } from './utils'
 
 export default async function createRefreshToken(
@@ -11,8 +12,20 @@ export default async function createRefreshToken(
 
   const token = await db.refreshToken.create({
     data: {
-      client_id: request.clientId,
-      token: randomBytes(32).toString('hex')
+      token: randomBytes(32).toString('hex'),
+      expires_in: add(new Date(), { months: 1 }),
+      Client: {
+        connect: {
+          client_id: request.clientId
+        }
+      }
+    },
+    include: {
+      Client: {
+        select: {
+          client_id: true
+        }
+      }
     }
   })
 

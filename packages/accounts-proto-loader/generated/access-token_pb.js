@@ -94,8 +94,9 @@ proto.access_token.AccessToken.toObject = function(includeInstance, msg) {
     id: jspb.Message.getFieldWithDefault(msg, 1, ""),
     clientId: jspb.Message.getFieldWithDefault(msg, 2, ""),
     token: jspb.Message.getFieldWithDefault(msg, 3, ""),
-    createdAt: jspb.Message.getFieldWithDefault(msg, 6, ""),
-    updatedAt: jspb.Message.getFieldWithDefault(msg, 7, "")
+    expiresIn: jspb.Message.getFieldWithDefault(msg, 4, ""),
+    createdAt: jspb.Message.getFieldWithDefault(msg, 5, ""),
+    updatedAt: jspb.Message.getFieldWithDefault(msg, 6, "")
   };
 
   if (includeInstance) {
@@ -144,11 +145,15 @@ proto.access_token.AccessToken.deserializeBinaryFromReader = function(msg, reade
       var value = /** @type {string} */ (reader.readString());
       msg.setToken(value);
       break;
-    case 6:
+    case 4:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setExpiresIn(value);
+      break;
+    case 5:
       var value = /** @type {string} */ (reader.readString());
       msg.setCreatedAt(value);
       break;
-    case 7:
+    case 6:
       var value = /** @type {string} */ (reader.readString());
       msg.setUpdatedAt(value);
       break;
@@ -202,17 +207,24 @@ proto.access_token.AccessToken.serializeBinaryToWriter = function(message, write
       f
     );
   }
+  f = message.getExpiresIn();
+  if (f.length > 0) {
+    writer.writeString(
+      4,
+      f
+    );
+  }
   f = message.getCreatedAt();
   if (f.length > 0) {
     writer.writeString(
-      6,
+      5,
       f
     );
   }
   f = message.getUpdatedAt();
   if (f.length > 0) {
     writer.writeString(
-      7,
+      6,
       f
     );
   }
@@ -274,11 +286,29 @@ proto.access_token.AccessToken.prototype.setToken = function(value) {
 
 
 /**
- * optional string created_at = 6;
+ * optional string expires_in = 4;
+ * @return {string}
+ */
+proto.access_token.AccessToken.prototype.getExpiresIn = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 4, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.access_token.AccessToken} returns this
+ */
+proto.access_token.AccessToken.prototype.setExpiresIn = function(value) {
+  return jspb.Message.setProto3StringField(this, 4, value);
+};
+
+
+/**
+ * optional string created_at = 5;
  * @return {string}
  */
 proto.access_token.AccessToken.prototype.getCreatedAt = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 6, ""));
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 5, ""));
 };
 
 
@@ -287,16 +317,16 @@ proto.access_token.AccessToken.prototype.getCreatedAt = function() {
  * @return {!proto.access_token.AccessToken} returns this
  */
 proto.access_token.AccessToken.prototype.setCreatedAt = function(value) {
-  return jspb.Message.setProto3StringField(this, 6, value);
+  return jspb.Message.setProto3StringField(this, 5, value);
 };
 
 
 /**
- * optional string updated_at = 7;
+ * optional string updated_at = 6;
  * @return {string}
  */
 proto.access_token.AccessToken.prototype.getUpdatedAt = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 7, ""));
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 6, ""));
 };
 
 
@@ -305,7 +335,7 @@ proto.access_token.AccessToken.prototype.getUpdatedAt = function() {
  * @return {!proto.access_token.AccessToken} returns this
  */
 proto.access_token.AccessToken.prototype.setUpdatedAt = function(value) {
-  return jspb.Message.setProto3StringField(this, 7, value);
+  return jspb.Message.setProto3StringField(this, 6, value);
 };
 
 

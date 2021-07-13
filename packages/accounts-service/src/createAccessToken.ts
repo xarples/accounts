@@ -1,6 +1,7 @@
-import db, { CodeChallengeMethod } from '@xarples/accounts-db'
+import db from '@xarples/accounts-db'
 import { randomBytes } from '@xarples/accounts-utils'
 import { grpc, AccessToken } from '@xarples/accounts-proto-loader'
+import { add } from 'date-fns'
 import { toAccessTokenMessage } from './utils'
 
 export default async function createAccessToken(
@@ -11,8 +12,13 @@ export default async function createAccessToken(
 
   const token = await db.accessToken.create({
     data: {
-      client_id: request.clientId,
-      token: randomBytes(32).toString('hex')
+      token: randomBytes(32).toString('hex'),
+      expires_in: add(new Date(), { hours: 1 }),
+      Client: {
+        connect: {
+          client_id: request.clientId
+        }
+      }
     }
   })
 

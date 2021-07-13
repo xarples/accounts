@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package authorization_code;
 
+import "client.proto";
+
 message AuthorizationCode {
   string id = 1;
   string client_id = 2;
@@ -9,8 +11,10 @@ message AuthorizationCode {
   string code_challenge = 4;
   string code_challenge_method = 5;
   string redirect_uri = 6;
-  string created_at = 7;
-  string updated_at = 8;
+  string expires_in = 7;
+  string created_at = 8;
+  string updated_at = 9;
+  client.Client client = 10;
 }
 
 message AuthorizationCodeList {

@@ -77,11 +77,12 @@ export class AuthorizationCodeService {
   reducer(options: AuthorizationCode.AsObject) {
     return {
       id: options.id,
-      client_id: options.clientId,
+      client_id: options.client?.clientId!,
       code: options.code,
       code_challenge: options.codeChallenge,
       code_challenge_method: options.codeChallengeMethod,
       redirect_uri: options.redirectUri,
+      expires_in: options.expiresIn,
       created_at: options.createdAt,
       updated_at: options.updatedAt
     }

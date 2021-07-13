@@ -14,6 +14,13 @@ export default async function listRefreshTokens(
   const refreshTokens = await db.refreshToken.findMany({
     where: {
       client_id: request.clientId || undefined
+    },
+    include: {
+      Client: {
+        select: {
+          client_id: true
+        }
+      }
     }
   })
 

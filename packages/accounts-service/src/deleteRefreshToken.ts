@@ -11,6 +11,13 @@ export default async function deleteRefreshToken(
     where: {
       id: request.id || undefined,
       token: request.token || undefined
+    },
+    include: {
+      Client: {
+        select: {
+          client_id: true
+        }
+      }
     }
   })
 

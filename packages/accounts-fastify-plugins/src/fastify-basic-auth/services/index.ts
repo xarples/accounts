@@ -13,6 +13,10 @@ export class BasicAuthService {
 
       const client = await getClient(message)
 
+      if (client.getType() !== 'web') {
+        return true
+      }
+
       if (client.getClientSecret() !== options.password) {
         throw new Error('Wrong credentials')
       }

@@ -29,11 +29,13 @@ export const postTokenSchema: FastifySchema = {
     .prop(
       'grant_type',
       S.string()
-        .enum(['authorization_code'])
+        .enum(['authorization_code', 'client_credentials', 'refresh_token'])
         .required()
     )
+
     .prop('code', S.string().required())
     .prop('redirect_uri', S.string().required())
     .prop('client_id', S.string().required())
     .prop('code_verifier', S.string().required())
+    .prop('refresh_token', S.string())
 }

@@ -9,6 +9,7 @@ export default function toAccessTokenMessage(
   message.setId(item.id)
   message.setClientId(item.client_id)
   message.setToken(item.token)
+  message.setExpiresIn(item.expires_in.toString())
   message.setCreatedAt(item.created_at.toString())
   message.setUpdatedAt(item.updated_at.toString())
 

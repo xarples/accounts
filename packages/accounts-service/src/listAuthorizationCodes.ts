@@ -14,6 +14,13 @@ export default async function listAuthorizationCodes(
   const authorizationCodes = await db.authorizationCode.findMany({
     where: {
       client_id: request.clientId || undefined
+    },
+    include: {
+      Client: {
+        select: {
+          client_id: true
+        }
+      }
     }
   })
 

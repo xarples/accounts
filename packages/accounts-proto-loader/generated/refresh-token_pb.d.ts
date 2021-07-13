@@ -5,6 +5,7 @@
 /* eslint-disable */
 
 import * as jspb from "google-protobuf";
+import * as client_pb from "./client_pb";
 
 export class RefreshToken extends jspb.Message { 
     getId(): string;
@@ -13,10 +14,17 @@ export class RefreshToken extends jspb.Message {
     setClientId(value: string): RefreshToken;
     getToken(): string;
     setToken(value: string): RefreshToken;
+    getExpiresIn(): string;
+    setExpiresIn(value: string): RefreshToken;
     getCreatedAt(): string;
     setCreatedAt(value: string): RefreshToken;
     getUpdatedAt(): string;
     setUpdatedAt(value: string): RefreshToken;
+
+    hasClient(): boolean;
+    clearClient(): void;
+    getClient(): client_pb.Client | undefined;
+    setClient(value?: client_pb.Client): RefreshToken;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): RefreshToken.AsObject;
@@ -33,8 +41,10 @@ export namespace RefreshToken {
         id: string,
         clientId: string,
         token: string,
+        expiresIn: string,
         createdAt: string,
         updatedAt: string,
+        client?: client_pb.Client.AsObject,
     }
 }
 

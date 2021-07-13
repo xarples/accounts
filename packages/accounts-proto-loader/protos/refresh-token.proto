@@ -2,12 +2,16 @@ syntax = "proto3";
 
 package refresh_token;
 
+import "client.proto";
+
 message RefreshToken {
   string id = 1;
   string client_id = 2;
   string token = 3;
-  string created_at = 6;
-  string updated_at = 7;
+  string expires_in = 4;
+  string created_at = 5;
+  string updated_at = 6;
+  client.Client client = 7;
 }
 
 message RefreshTokenList {

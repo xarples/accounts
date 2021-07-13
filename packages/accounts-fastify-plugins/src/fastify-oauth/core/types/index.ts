@@ -30,7 +30,8 @@ export interface PostTokenRoute {
     code: string
     code_verifier: string
     client_id: string
-    grant_type: 'authorization_code'
+    grant_type: 'authorization_code' | 'client_credentials' | 'refresh_token'
     redirect_uri: string
+    refresh_token?: string
   }
 }

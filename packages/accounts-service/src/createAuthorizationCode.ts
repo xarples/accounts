@@ -1,6 +1,7 @@
 import db, { CodeChallengeMethod } from '@xarples/accounts-db'
 import { randomBytes } from '@xarples/accounts-utils'
 import { grpc, AuthorizationCode } from '@xarples/accounts-proto-loader'
+import { add } from 'date-fns'
 import { toAuthorizationCodeMessage } from './utils'
 
 export default async function createAuthorizationCode(
@@ -16,9 +17,17 @@ export default async function createAuthorizationCode(
       code_challenge_method:
         CodeChallengeMethod[request.codeChallengeMethod as CodeChallengeMethod],
       redirect_uri: request.redirectUri,
+      expires_in: add(new Date(), { seconds: 30 }),
       Client: {
         connect: {
           client_id: request.clientId
+        }
+      }
+    },
+    include: {
+      Client: {
+        select: {
+          client_id: true
         }
       }
     }

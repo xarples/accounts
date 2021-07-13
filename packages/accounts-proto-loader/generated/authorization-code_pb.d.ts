@@ -5,6 +5,7 @@
 /* eslint-disable */
 
 import * as jspb from "google-protobuf";
+import * as client_pb from "./client_pb";
 
 export class AuthorizationCode extends jspb.Message { 
     getId(): string;
@@ -19,10 +20,17 @@ export class AuthorizationCode extends jspb.Message {
     setCodeChallengeMethod(value: string): AuthorizationCode;
     getRedirectUri(): string;
     setRedirectUri(value: string): AuthorizationCode;
+    getExpiresIn(): string;
+    setExpiresIn(value: string): AuthorizationCode;
     getCreatedAt(): string;
     setCreatedAt(value: string): AuthorizationCode;
     getUpdatedAt(): string;
     setUpdatedAt(value: string): AuthorizationCode;
+
+    hasClient(): boolean;
+    clearClient(): void;
+    getClient(): client_pb.Client | undefined;
+    setClient(value?: client_pb.Client): AuthorizationCode;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): AuthorizationCode.AsObject;
@@ -42,8 +50,10 @@ export namespace AuthorizationCode {
         codeChallenge: string,
         codeChallengeMethod: string,
         redirectUri: string,
+        expiresIn: string,
         createdAt: string,
         updatedAt: string,
+        client?: client_pb.Client.AsObject,
     }
 }
 

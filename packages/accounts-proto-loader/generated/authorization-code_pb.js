@@ -15,6 +15,8 @@ var jspb = require('google-protobuf');
 var goog = jspb;
 var global = Function('return this')();
 
+var client_pb = require('./client_pb.js');
+goog.object.extend(proto, client_pb);
 goog.exportSymbol('proto.authorization_code.AuthorizationCode', null, global);
 goog.exportSymbol('proto.authorization_code.AuthorizationCodeList', null, global);
 /**
@@ -97,8 +99,10 @@ proto.authorization_code.AuthorizationCode.toObject = function(includeInstance, 
     codeChallenge: jspb.Message.getFieldWithDefault(msg, 4, ""),
     codeChallengeMethod: jspb.Message.getFieldWithDefault(msg, 5, ""),
     redirectUri: jspb.Message.getFieldWithDefault(msg, 6, ""),
-    createdAt: jspb.Message.getFieldWithDefault(msg, 7, ""),
-    updatedAt: jspb.Message.getFieldWithDefault(msg, 8, "")
+    expiresIn: jspb.Message.getFieldWithDefault(msg, 7, ""),
+    createdAt: jspb.Message.getFieldWithDefault(msg, 8, ""),
+    updatedAt: jspb.Message.getFieldWithDefault(msg, 9, ""),
+    client: (f = msg.getClient()) && client_pb.Client.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -161,11 +165,20 @@ proto.authorization_code.AuthorizationCode.deserializeBinaryFromReader = functio
       break;
     case 7:
       var value = /** @type {string} */ (reader.readString());
-      msg.setCreatedAt(value);
+      msg.setExpiresIn(value);
       break;
     case 8:
       var value = /** @type {string} */ (reader.readString());
+      msg.setCreatedAt(value);
+      break;
+    case 9:
+      var value = /** @type {string} */ (reader.readString());
       msg.setUpdatedAt(value);
+      break;
+    case 10:
+      var value = new client_pb.Client;
+      reader.readMessage(value,client_pb.Client.deserializeBinaryFromReader);
+      msg.setClient(value);
       break;
     default:
       reader.skipField();
@@ -238,18 +251,33 @@ proto.authorization_code.AuthorizationCode.serializeBinaryToWriter = function(me
       f
     );
   }
-  f = message.getCreatedAt();
+  f = message.getExpiresIn();
   if (f.length > 0) {
     writer.writeString(
       7,
       f
     );
   }
-  f = message.getUpdatedAt();
+  f = message.getCreatedAt();
   if (f.length > 0) {
     writer.writeString(
       8,
       f
+    );
+  }
+  f = message.getUpdatedAt();
+  if (f.length > 0) {
+    writer.writeString(
+      9,
+      f
+    );
+  }
+  f = message.getClient();
+  if (f != null) {
+    writer.writeMessage(
+      10,
+      f,
+      client_pb.Client.serializeBinaryToWriter
     );
   }
 };
@@ -364,10 +392,10 @@ proto.authorization_code.AuthorizationCode.prototype.setRedirectUri = function(v
 
 
 /**
- * optional string created_at = 7;
+ * optional string expires_in = 7;
  * @return {string}
  */
-proto.authorization_code.AuthorizationCode.prototype.getCreatedAt = function() {
+proto.authorization_code.AuthorizationCode.prototype.getExpiresIn = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 7, ""));
 };
 
@@ -376,16 +404,16 @@ proto.authorization_code.AuthorizationCode.prototype.getCreatedAt = function() {
  * @param {string} value
  * @return {!proto.authorization_code.AuthorizationCode} returns this
  */
-proto.authorization_code.AuthorizationCode.prototype.setCreatedAt = function(value) {
+proto.authorization_code.AuthorizationCode.prototype.setExpiresIn = function(value) {
   return jspb.Message.setProto3StringField(this, 7, value);
 };
 
 
 /**
- * optional string updated_at = 8;
+ * optional string created_at = 8;
  * @return {string}
  */
-proto.authorization_code.AuthorizationCode.prototype.getUpdatedAt = function() {
+proto.authorization_code.AuthorizationCode.prototype.getCreatedAt = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 8, ""));
 };
 
@@ -394,8 +422,63 @@ proto.authorization_code.AuthorizationCode.prototype.getUpdatedAt = function() {
  * @param {string} value
  * @return {!proto.authorization_code.AuthorizationCode} returns this
  */
-proto.authorization_code.AuthorizationCode.prototype.setUpdatedAt = function(value) {
+proto.authorization_code.AuthorizationCode.prototype.setCreatedAt = function(value) {
   return jspb.Message.setProto3StringField(this, 8, value);
+};
+
+
+/**
+ * optional string updated_at = 9;
+ * @return {string}
+ */
+proto.authorization_code.AuthorizationCode.prototype.getUpdatedAt = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 9, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.authorization_code.AuthorizationCode} returns this
+ */
+proto.authorization_code.AuthorizationCode.prototype.setUpdatedAt = function(value) {
+  return jspb.Message.setProto3StringField(this, 9, value);
+};
+
+
+/**
+ * optional client.Client client = 10;
+ * @return {?proto.client.Client}
+ */
+proto.authorization_code.AuthorizationCode.prototype.getClient = function() {
+  return /** @type{?proto.client.Client} */ (
+    jspb.Message.getWrapperField(this, client_pb.Client, 10));
+};
+
+
+/**
+ * @param {?proto.client.Client|undefined} value
+ * @return {!proto.authorization_code.AuthorizationCode} returns this
+*/
+proto.authorization_code.AuthorizationCode.prototype.setClient = function(value) {
+  return jspb.Message.setWrapperField(this, 10, value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.authorization_code.AuthorizationCode} returns this
+ */
+proto.authorization_code.AuthorizationCode.prototype.clearClient = function() {
+  return this.setClient(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.authorization_code.AuthorizationCode.prototype.hasClient = function() {
+  return jspb.Message.getField(this, 10) != null;
 };
 
 

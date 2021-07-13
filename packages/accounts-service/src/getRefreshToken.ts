@@ -16,7 +16,6 @@ export default async function getRefreshToken(
     include: {
       Client: {
         select: {
-          id: true,
           client_id: true
         }
       }

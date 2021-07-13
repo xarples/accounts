@@ -11,6 +11,13 @@ export default async function deleteAuthorizationCode(
     where: {
       id: request.id || undefined,
       code: request.code || undefined
+    },
+    include: {
+      Client: {
+        select: {
+          client_id: true
+        }
+      }
     }
   })
 

@@ -13,6 +13,8 @@ export class AccessToken extends jspb.Message {
     setClientId(value: string): AccessToken;
     getToken(): string;
     setToken(value: string): AccessToken;
+    getExpiresIn(): string;
+    setExpiresIn(value: string): AccessToken;
     getCreatedAt(): string;
     setCreatedAt(value: string): AccessToken;
     getUpdatedAt(): string;
@@ -33,6 +35,7 @@ export namespace AccessToken {
         id: string,
         clientId: string,
         token: string,
+        expiresIn: string,
         createdAt: string,
         updatedAt: string,
     }

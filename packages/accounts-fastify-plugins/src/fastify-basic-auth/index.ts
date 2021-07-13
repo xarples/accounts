@@ -24,7 +24,7 @@ const plugin: FastifyPluginAsync = async fastify => {
   fastify.decorate('basicAuthService', service)
 
   fastify.register(fastifyBasicAuth, {
-    async validate(username, password, req, reply, done) {
+    async validate(username, password) {
       await fastify.basicAuthService.authenticate({
         username,
         password

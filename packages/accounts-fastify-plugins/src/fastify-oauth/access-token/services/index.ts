@@ -69,6 +69,7 @@ export class AccessTokenService {
       id: options.id,
       client_id: options.clientId,
       token: options.token,
+      expires_in: options.expiresIn,
       created_at: options.createdAt,
       updated_at: options.updatedAt
     }
