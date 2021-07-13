@@ -22,6 +22,7 @@ export default function toRefreshTokenMessage(
   message.setExpiresIn(item.expires_in.toString())
   message.setCreatedAt(item.created_at.toString())
   message.setUpdatedAt(item.updated_at.toString())
+  message.setClient(clientMessage)
 
   return message
 }

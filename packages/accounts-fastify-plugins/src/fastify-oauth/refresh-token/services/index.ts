@@ -67,7 +67,7 @@ export class RefreshTokenService {
   reducer(options: RefreshToken.AsObject) {
     return {
       id: options.id,
-      client_id: options.client?.clientId,
+      client_id: options.client!.clientId,
       token: options.token,
       expires_in: options.expiresIn,
       created_at: options.createdAt,

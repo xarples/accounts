@@ -8,7 +8,7 @@ export default async function getAuthorizationCode(
 ) {
   const request = call.request.toObject()
 
-  const authorizationCode = await db.authorizationCode.findUnique({
+  const authorizationCode = await db.authorizationCode.findFirst({
     where: {
       id: request.id || undefined,
       code: request.code || undefined

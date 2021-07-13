@@ -6,22 +6,6 @@ import { getAuthorizeSchema, postTokenSchema } from '../schemas'
 import { GetAuthorizeRoute, PostAuthorizeRoute, PostTokenRoute } from '../types'
 
 const plugin: FastifyPluginAsync = async fastify => {
-  fastify.setErrorHandler((error, request, reply) => {
-    if (error.statusCode === 401) {
-      reply
-        .code(401)
-        .header('WWW-Authenticate', 'Basic')
-        .send({
-          error: 'invalid_client',
-          error_description: 'Client authentication failed'
-        })
-
-      return
-    }
-
-    fastify.errorHandler(error, request, reply)
-  })
-
   fastify.get<GetAuthorizeRoute>(
     '/authorize',
     {
@@ -144,12 +128,12 @@ const plugin: FastifyPluginAsync = async fastify => {
       if (request.body.grant_type === 'refresh_token') {
         const refreshToken = await fastify.refreshTokenService
           .get({
-            token: request.body.refresh_token
+            token: request.body.refresh_token || undefined
           })
           .catch(() => {
             reply.code(400).send({
               error: 'invalid_grant',
-              error_description: 'Refresh token is revoked'
+              error_description: 'Refresh token is invalid or revoked'
             })
 
             return
@@ -267,6 +251,22 @@ const plugin: FastifyPluginAsync = async fastify => {
       })
     }
   )
+
+  fastify.setErrorHandler((error, request, reply) => {
+    if (error.statusCode === 401) {
+      reply
+        .code(401)
+        .header('WWW-Authenticate', 'Basic')
+        .send({
+          error: 'invalid_client',
+          error_description: 'Client authentication failed'
+        })
+
+      return
+    }
+
+    fastify.errorHandler(error, request, reply)
+  })
 }
 
 export default fp(plugin, '3.x')

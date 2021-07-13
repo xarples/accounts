@@ -4,7 +4,7 @@ import {
   Client
 } from '@xarples/accounts-proto-loader'
 
-export default function toUserMessage(
+export default function toAuthorizationCodeMessage(
   item: AuthorizationCode & {
     Client: {
       client_id: string | null
@@ -21,6 +21,7 @@ export default function toUserMessage(
   message.setCode(item.code)
   message.setCodeChallenge(item.code_challenge)
   message.setCodeChallengeMethod(item.code_challenge_method)
+  message.setRedirectUri(item.redirect_uri)
   message.setExpiresIn(item.expires_in.toString())
   message.setCreatedAt(item.created_at.toString())
   message.setUpdatedAt(item.updated_at.toString())
