@@ -20,11 +20,15 @@ model User {
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 
+  AuthorizationCode AuthorizationCode[]
+  AccessToken       AccessToken[]
+  RefreshToken      RefreshToken[]
   @@map(name: "users")
 }
 
 model Client {
   id                         String      @id @default(cuid())
+  user_id                    String?
   client_id                  String?
   client_secret              String?
   name                       String
@@ -39,7 +43,6 @@ model Client {
   website_uri                String?
   policy_uri                 String?
   tos_uri                    String?
-  user_id                    String?
   created_at                 DateTime    @default(now())
   updated_at                 DateTime    @updatedAt
 
@@ -54,6 +57,7 @@ model Client {
 
 model AuthorizationCode {
   id                    String              @id @default(cuid())
+  user_id               String?
   client_id             String
   code                  String
   code_challenge        String
@@ -64,29 +68,40 @@ model AuthorizationCode {
   created_at            DateTime            @default(now())
   updated_at            DateTime            @updatedAt
 
+  User   User?   @relation(fields: [user_id], references: [id])
+  Scopes Scope[]
+
   @@map(name: "authorization_codes")
 }
 
 model AccessToken {
   id         String   @id @default(cuid())
+  user_id    String?
   client_id  String
   token      String   @unique
   Client     Client   @relation(fields: [client_id], references: [id])
   expires_in DateTime
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
+
+  User   User?   @relation(fields: [user_id], references: [id])
+  Scopes Scope[]
 
   @@map(name: "access_tokens")
 }
 
 model RefreshToken {
   id         String   @id @default(cuid())
+  user_id    String?
   client_id  String
   token      String   @unique
   Client     Client   @relation(fields: [client_id], references: [id])
   expires_in DateTime
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
+
+  User   User?   @relation(fields: [user_id], references: [id])
+  Scopes Scope[]
 
   @@map(name: "refresh_tokens")
 }
@@ -95,9 +110,13 @@ model Scope {
   id          String   @id @default(cuid())
   name        String
   description String
-  Client      Client[]
   created_at  DateTime @default(now())
   updated_at  DateTime @updatedAt
+
+  Clients            Client[]
+  AccessTokens       AccessToken[]
+  RefreshTokens      RefreshToken[]
+  AuthorizationCodes AuthorizationCode[]
 
   @@map(name: "scopes")
 }

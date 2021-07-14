@@ -39,3 +39,9 @@ export const postTokenSchema: FastifySchema = {
     .prop('code_verifier', S.string().required())
     .prop('refresh_token', S.string())
 }
+
+export const postIntrospectSchema: FastifySchema = {
+  body: S.object()
+    .prop('token', S.string().required())
+    .prop('token_type_hint', S.string().enum(['access_token', 'refresh_token']))
+}

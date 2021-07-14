@@ -2,8 +2,18 @@ import { FastifyPluginAsync } from 'fastify'
 import fp from 'fastify-plugin'
 import { calculateCodeChallenge } from '@xarples/accounts-utils'
 import { isAfter } from 'date-fns'
-import { getAuthorizeSchema, postTokenSchema } from '../schemas'
-import { GetAuthorizeRoute, PostAuthorizeRoute, PostTokenRoute } from '../types'
+import {
+  getAuthorizeSchema,
+  postTokenSchema,
+  postIntrospectSchema
+} from '../schemas'
+import {
+  GetAuthorizeRoute,
+  PostAuthorizeRoute,
+  PostIntrospectRoute,
+  PostTokenRoute
+} from '../types'
+import getUnixTime from 'date-fns/getUnixTime'
 
 const plugin: FastifyPluginAsync = async fastify => {
   fastify.get<GetAuthorizeRoute>(
@@ -250,6 +260,78 @@ const plugin: FastifyPluginAsync = async fastify => {
         refresh_token: refreshToken.token
       })
     }
+  )
+
+  fastify.post<PostIntrospectRoute>(
+    '/introspect',
+    {
+      onRequest: fastify.basicAuth,
+      schema: postIntrospectSchema
+    },
+    async (request, reply) => {
+      try {
+        let promise: ReturnType<typeof fastify.refreshTokenService.get>
+
+        const tokenTypeHint = request.body.token_type_hint
+
+        if (tokenTypeHint === 'access_token') {
+          promise = fastify.accessTokenService.get({
+            token: request.body.token
+          })
+        } else if (tokenTypeHint === 'refresh_token') {
+          promise = fastify.refreshTokenService.get({
+            token: request.body.token
+          })
+        } else {
+          const result = (
+            await Promise.allSettled([
+              fastify.accessTokenService.get({
+                token: request.body.token
+              }),
+              fastify.refreshTokenService.get({
+                token: request.body.token
+              })
+            ])
+          ).find(({ status }) => status === 'fulfilled')
+
+          if (result?.status === 'fulfilled') {
+            promise = Promise.resolve(result.value)
+          } else {
+            throw new Error('Token is expired or invalid')
+          }
+        }
+
+        const accessOrRefreshToken = await promise
+
+        if (isAfter(new Date(), new Date(accessOrRefreshToken.expires_in))) {
+          throw new Error('Token is expired')
+        }
+
+        reply.code(200).send({
+          active: true,
+          scope: 'read write dolphin',
+          client_id: accessOrRefreshToken.client_id,
+          username: 'replace_with_email',
+          token_type: tokenTypeHint,
+          exp: getUnixTime(new Date(accessOrRefreshToken.expires_in)),
+          iat: getUnixTime(new Date(accessOrRefreshToken.created_at)),
+          sub: 'replace_with_user_id',
+          aud: ['https://protected.example.com'],
+          iss: 'https://server.example.com',
+          jti: accessOrRefreshToken.id
+        })
+      } catch (error) {
+        reply.code(200).send({
+          active: false
+        })
+      }
+    }
+  )
+
+  fastify.post<PostIntrospectRoute>(
+    '/revoke',
+    { schema: postIntrospectSchema },
+    (request, reply) => {}
   )
 
   fastify.setErrorHandler((error, request, reply) => {

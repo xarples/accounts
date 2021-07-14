@@ -35,3 +35,10 @@ export interface PostTokenRoute {
     refresh_token?: string
   }
 }
+
+export interface PostIntrospectRoute {
+  Body: {
+    token: string
+    token_type_hint: 'access_token' | 'refresh_token'
+  }
+}
