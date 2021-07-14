@@ -7,13 +7,13 @@ declare module 'fastify' {
 }
 
 const plugin: FastifyPluginAsync = async fastify => {
-  fastify.post<PostSignUpRoute>('/users', async (request, reply) => {
+  fastify.post<PostSignUpRoute>('/api/users', async (request, reply) => {
     const user = await fastify.userService.create(request.body)
 
     reply.send(user)
   })
 
-  fastify.post<PostSignInRoute>('/users/signin', async (request, reply) => {
+  fastify.post<PostSignInRoute>('/api/users/signin', async (request, reply) => {
     const user = await fastify.userService.signIn(request.body)
 
     request.session.user = {
@@ -25,7 +25,7 @@ const plugin: FastifyPluginAsync = async fastify => {
   })
 
   fastify.get(
-    '/users/logout',
+    '/api/users/logout',
     { preHandler: fastify.authPreHandler },
     (request, reply) => {
       request.destroySession(err => {

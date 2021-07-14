@@ -29,9 +29,9 @@ model User {
 model Client {
   id                         String      @id @default(cuid())
   user_id                    String?
-  client_id                  String?
+  client_id                  String      @unique
   client_secret              String?
-  name                       String
+  name                       String      @unique
   description                String
   type                       ClientType? @default(web)
   token_endpoint_auth_method String?     @default("client_secret_basic")
@@ -59,7 +59,7 @@ model AuthorizationCode {
   id                    String              @id @default(cuid())
   user_id               String?
   client_id             String
-  code                  String
+  code                  String              @unique
   code_challenge        String
   code_challenge_method CodeChallengeMethod @default(plain)
   redirect_uri          String
@@ -108,7 +108,7 @@ model RefreshToken {
 
 model Scope {
   id          String   @id @default(cuid())
-  name        String
+  name        String   @unique
   description String
   created_at  DateTime @default(now())
   updated_at  DateTime @updatedAt

@@ -7,7 +7,8 @@
     "build": "tsc",
     "generate": "prisma generate",
     "push": "prisma db push --accept-data-loss --force-reset",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "seed": "ts-node ./src/seed.ts --compiler-options \"{\\\"module\\\":\\\"commonjs\\\"}\""
   },
   "keywords": [],
   "author": "",

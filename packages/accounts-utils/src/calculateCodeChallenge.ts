@@ -1,7 +1,7 @@
 import { codeChallenge } from './codeChallenge'
 
 interface Options {
-  codeChallengeMethod: string
+  codeChallengeMethod: 'plain' | 'S256'
   codeVerifier: string
 }
 

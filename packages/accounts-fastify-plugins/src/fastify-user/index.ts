@@ -16,7 +16,7 @@ const service = new UserService()
 const plugin: FastifyPluginAsync = async (fastify, options) => {
   fastify.decorate('userService', service)
   fastify.decorate('authPreHandler', authPreHandler)
-  fastify.register(routes, { prefix: 'api' })
+  fastify.register(routes)
 }
 
 export default fp(plugin, {

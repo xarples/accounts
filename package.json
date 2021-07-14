@@ -9,7 +9,9 @@
     "build": "lerna run build --stream",
     "dev": "lerna run dev --stream",
     "generate": "lerna run generate --stream",
-    "start": "lerna run start --stream"
+    "push": "lerna run push --stream",
+    "start": "lerna run start --stream",
+    "seed": "lerna run seed --stream"
   },
   "devDependencies": {
     "@nuxt/types": "^2.15.6",

@@ -223,7 +223,9 @@ const plugin: FastifyPluginAsync = async fastify => {
       }
 
       const codeChallenge = calculateCodeChallenge({
-        codeChallengeMethod: authorizationCode!.code_challenge_method,
+        codeChallengeMethod: authorizationCode!.code_challenge_method as
+          | 'plain'
+          | 'S256',
         codeVerifier: request.body.code_verifier
       })
 
