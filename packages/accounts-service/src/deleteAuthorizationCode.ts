@@ -7,7 +7,7 @@ export default async function deleteAuthorizationCode(
   cb: grpc.sendUnaryData<AuthorizationCode>
 ) {
   const request = call.request.toObject()
-  const AuthorizationCode = await db.authorizationCode.delete({
+  const authorizationCode = await db.authorizationCode.delete({
     where: {
       id: request.id || undefined,
       code: request.code || undefined
@@ -21,7 +21,7 @@ export default async function deleteAuthorizationCode(
     }
   })
 
-  const message = toAuthorizationCodeMessage(AuthorizationCode)
+  const message = toAuthorizationCodeMessage(authorizationCode)
 
   cb(null, message)
 }

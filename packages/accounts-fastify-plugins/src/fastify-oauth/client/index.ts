@@ -12,6 +12,11 @@ declare module 'fastify' {
 const service = new ClientService()
 
 const plugin: FastifyPluginAsync = async (fastify, options) => {
+  fastify.addHook('onRequest', (request, _, done) => {
+    service.setContext({ request, a: {} })
+    done()
+  })
+
   fastify.decorate('clientService', service)
   fastify.register(routes, { prefix: 'api' })
 }

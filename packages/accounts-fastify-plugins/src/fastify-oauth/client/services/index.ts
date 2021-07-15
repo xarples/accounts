@@ -1,6 +1,9 @@
 import { promisify } from 'util'
 import client from '@xarples/accounts-client'
-import { Client, ClientList } from '@xarples/accounts-proto-loader'
+import { Client, ClientList, grpc } from '@xarples/accounts-proto-loader'
+import { FastifyRequest } from 'fastify'
+import { IncomingMessage, Server } from 'http'
+import { RouteGenericInterface } from 'fastify/types/route'
 
 const createClient = promisify<Client, Client>(client.createClient.bind(client))
 const getClient = promisify<Client, Client>(client.getClient.bind(client))
@@ -17,18 +20,40 @@ type Options = {
   [K in keyof Client.AsObject]?: Client.AsObject[K] // so that it retains the types
 }
 
+interface Context {
+  request: FastifyRequest<RouteGenericInterface, Server, IncomingMessage>
+  a: any
+}
+
 export class ClientService {
+  context: Context | undefined
+
+  setContext(context: Context) {
+    this.context = context
+  }
+
   async create(options: Options) {
     const message = new Client()
+    const metadata = new grpc.Metadata()
+
+    metadata.set('authorization', this.context?.request?.session.accessToken)
+
+    console.log('----', this.context?.request?.session.accessToken)
 
     message.setName(options.name!)
     message.setDescription(options.description!)
     message.setType(options.type!)
     message.setRedirectUriList(options.redirectUriList!)
 
-    const client = await createClient(message)
+    return new Promise((resolve, reject) => {
+      client.createClient(message, metadata, (err, created) => {
+        if (err) {
+          return reject(err)
+        }
 
-    return this.reducer(client.toObject())
+        resolve(this.reducer(created.toObject()))
+      })
+    })
   }
 
   async get(options: Options) {

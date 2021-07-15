@@ -14,6 +14,11 @@ export default async function createRefreshToken(
     data: {
       token: randomBytes(32).toString('hex'),
       expires_in: add(new Date(), { months: 1 }),
+      AuthorizationCode: {
+        connect: {
+          id: request.authorizationCodeId
+        }
+      },
       Client: {
         connect: {
           client_id: request.clientId

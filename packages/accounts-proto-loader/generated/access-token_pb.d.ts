@@ -5,10 +5,13 @@
 /* eslint-disable */
 
 import * as jspb from "google-protobuf";
+import * as client_pb from "./client_pb";
 
 export class AccessToken extends jspb.Message { 
     getId(): string;
     setId(value: string): AccessToken;
+    getAuthorizationCodeId(): string;
+    setAuthorizationCodeId(value: string): AccessToken;
     getClientId(): string;
     setClientId(value: string): AccessToken;
     getToken(): string;
@@ -19,6 +22,11 @@ export class AccessToken extends jspb.Message {
     setCreatedAt(value: string): AccessToken;
     getUpdatedAt(): string;
     setUpdatedAt(value: string): AccessToken;
+
+    hasClient(): boolean;
+    clearClient(): void;
+    getClient(): client_pb.Client | undefined;
+    setClient(value?: client_pb.Client): AccessToken;
 
     serializeBinary(): Uint8Array;
     toObject(includeInstance?: boolean): AccessToken.AsObject;
@@ -33,11 +41,13 @@ export class AccessToken extends jspb.Message {
 export namespace AccessToken {
     export type AsObject = {
         id: string,
+        authorizationCodeId: string,
         clientId: string,
         token: string,
         expiresIn: string,
         createdAt: string,
         updatedAt: string,
+        client?: client_pb.Client.AsObject,
     }
 }
 

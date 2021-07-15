@@ -14,6 +14,7 @@
     "@xarples/accounts-db": "^0.0.0",
     "@xarples/accounts-proto-loader": "^0.0.0",
     "@xarples/accounts-utils": "^0.0.0",
+    "axios": "^0.21.1",
     "date-fns": "^2.22.1"
   },
   "devDependencies": {

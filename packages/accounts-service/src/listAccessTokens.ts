@@ -14,6 +14,13 @@ export default async function listAccessTokens(
   const accessTokens = await db.accessToken.findMany({
     where: {
       client_id: request.clientId || undefined
+    },
+    include: {
+      Client: {
+        select: {
+          client_id: true
+        }
+      }
     }
   })
 

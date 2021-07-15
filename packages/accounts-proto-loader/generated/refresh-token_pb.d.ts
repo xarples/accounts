@@ -10,6 +10,8 @@ import * as client_pb from "./client_pb";
 export class RefreshToken extends jspb.Message { 
     getId(): string;
     setId(value: string): RefreshToken;
+    getAuthorizationCodeId(): string;
+    setAuthorizationCodeId(value: string): RefreshToken;
     getClientId(): string;
     setClientId(value: string): RefreshToken;
     getToken(): string;
@@ -39,6 +41,7 @@ export class RefreshToken extends jspb.Message {
 export namespace RefreshToken {
     export type AsObject = {
         id: string,
+        authorizationCodeId: string,
         clientId: string,
         token: string,
         expiresIn: string,

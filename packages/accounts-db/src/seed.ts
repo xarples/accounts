@@ -32,6 +32,20 @@ async function main() {
     ],
     skipDuplicates: true
   })
+
+  await prisma.scope.createMany({
+    data: [
+      {
+        name: 'clients:read',
+        description: ''
+      },
+      {
+        name: 'clients:write',
+        description: ''
+      }
+    ],
+    skipDuplicates: true
+  })
 }
 
 main()

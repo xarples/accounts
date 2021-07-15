@@ -1,6 +1,6 @@
 import { FastifyPluginAsync } from 'fastify'
 import fp from 'fastify-plugin'
-import { calculateCodeChallenge } from '@xarples/accounts-utils'
+import { calculateCodeChallenge, decodeBasic } from '@xarples/accounts-utils'
 import { isAfter } from 'date-fns'
 import {
   getAuthorizeSchema,
@@ -248,11 +248,13 @@ const plugin: FastifyPluginAsync = async fastify => {
       }
 
       const accessToken = await fastify.accessTokenService.create({
-        clientId: request.body.client_id
+        clientId: request.body.client_id,
+        authorizationCodeId: authorizationCode!.id
       })
 
       const refreshToken = await fastify.refreshTokenService.create({
-        clientId: request.body.client_id
+        clientId: request.body.client_id,
+        authorizationCodeId: authorizationCode!.id
       })
 
       reply.send({
@@ -267,11 +269,20 @@ const plugin: FastifyPluginAsync = async fastify => {
   fastify.post<PostIntrospectRoute>(
     '/introspect',
     {
+      attachValidation: true,
       onRequest: fastify.basicAuth,
       schema: postIntrospectSchema
     },
     async (request, reply) => {
       try {
+        if (request.validationError) {
+          reply.code(200).send({
+            active: false
+          })
+
+          return
+        }
+
         let promise: ReturnType<typeof fastify.refreshTokenService.get>
 
         const tokenTypeHint = request.body.token_type_hint
@@ -332,8 +343,74 @@ const plugin: FastifyPluginAsync = async fastify => {
 
   fastify.post<PostIntrospectRoute>(
     '/revoke',
-    { schema: postIntrospectSchema },
-    (request, reply) => {}
+    {
+      attachValidation: true,
+      onRequest: fastify.basicAuth,
+      schema: postIntrospectSchema
+    },
+    async (request, reply) => {
+      try {
+        if (request.validationError) {
+          reply.code(200).send({
+            active: false
+          })
+
+          return
+        }
+
+        let promise: ReturnType<typeof fastify.refreshTokenService.get>
+
+        const tokenTypeHint = request.body.token_type_hint
+
+        if (tokenTypeHint === 'access_token') {
+          promise = fastify.accessTokenService.get({
+            token: request.body.token
+          })
+        } else if (tokenTypeHint === 'refresh_token') {
+          promise = fastify.refreshTokenService.get({
+            token: request.body.token
+          })
+        } else {
+          const result = (
+            await Promise.allSettled([
+              fastify.accessTokenService.get({
+                token: request.body.token
+              }),
+              fastify.refreshTokenService.get({
+                token: request.body.token
+              })
+            ])
+          ).find(({ status }) => status === 'fulfilled')
+
+          if (result?.status === 'fulfilled') {
+            promise = Promise.resolve(result.value)
+          } else {
+            throw new Error('Token is expired or invalid')
+          }
+        }
+
+        const accessOrRefreshToken = await promise
+
+        const credentials = decodeBasic(request.headers.authorization!)
+
+        if (accessOrRefreshToken.client_id !== credentials?.clientId) {
+          reply.code(400).send({
+            error: 'invalid_grant',
+            error_description: 'Invalid client_id'
+          })
+
+          return
+        }
+
+        await fastify.authorizationCodeService.delete({
+          id: accessOrRefreshToken.authorization_code_id
+        })
+
+        reply.code(200).send()
+      } catch (error) {
+        reply.code(200).send()
+      }
+    }
   )
 
   fastify.setErrorHandler((error, request, reply) => {

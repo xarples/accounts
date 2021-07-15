@@ -16,7 +16,6 @@ export default async function getAccessToken(
     include: {
       Client: {
         select: {
-          id: true,
           client_id: true
         }
       }

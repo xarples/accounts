@@ -14,9 +14,24 @@ export default async function createAccessToken(
     data: {
       token: randomBytes(32).toString('hex'),
       expires_in: add(new Date(), { hours: 1 }),
+      AuthorizationCode: {
+        connect: {
+          id: request.authorizationCodeId
+        }
+      },
       Client: {
         connect: {
           client_id: request.clientId
+        }
+      },
+      Scopes: {
+        connect: [{ name: 'clients:write' }]
+      }
+    },
+    include: {
+      Client: {
+        select: {
+          client_id: true
         }
       }
     }

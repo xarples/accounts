@@ -24,6 +24,7 @@ export class AccessTokenService {
   async create(options: Options) {
     const message = new AccessToken()
 
+    message.setAuthorizationCodeId(options.authorizationCodeId!)
     message.setClientId(options.clientId!)
     message.setToken(options.token!)
 
@@ -67,7 +68,8 @@ export class AccessTokenService {
   reducer(options: AccessToken.AsObject) {
     return {
       id: options.id,
-      client_id: options.clientId,
+      authorization_code_id: options.authorizationCodeId,
+      client_id: options.client!.clientId,
       token: options.token,
       expires_in: options.expiresIn,
       created_at: options.createdAt,

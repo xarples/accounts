@@ -17,6 +17,7 @@ export default function toRefreshTokenMessage(
   clientMessage.setClientId(item.Client.client_id!)
 
   message.setId(item.id)
+  message.setAuthorizationCodeId(item.authorization_code_id!)
   message.setClientId(item.client_id)
   message.setToken(item.token)
   message.setExpiresIn(item.expires_in.toString())

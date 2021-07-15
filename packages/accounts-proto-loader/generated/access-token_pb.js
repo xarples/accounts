@@ -15,6 +15,8 @@ var jspb = require('google-protobuf');
 var goog = jspb;
 var global = Function('return this')();
 
+var client_pb = require('./client_pb.js');
+goog.object.extend(proto, client_pb);
 goog.exportSymbol('proto.access_token.AccessToken', null, global);
 goog.exportSymbol('proto.access_token.AccessTokenList', null, global);
 /**
@@ -92,11 +94,13 @@ proto.access_token.AccessToken.prototype.toObject = function(opt_includeInstance
 proto.access_token.AccessToken.toObject = function(includeInstance, msg) {
   var f, obj = {
     id: jspb.Message.getFieldWithDefault(msg, 1, ""),
-    clientId: jspb.Message.getFieldWithDefault(msg, 2, ""),
-    token: jspb.Message.getFieldWithDefault(msg, 3, ""),
-    expiresIn: jspb.Message.getFieldWithDefault(msg, 4, ""),
-    createdAt: jspb.Message.getFieldWithDefault(msg, 5, ""),
-    updatedAt: jspb.Message.getFieldWithDefault(msg, 6, "")
+    authorizationCodeId: jspb.Message.getFieldWithDefault(msg, 2, ""),
+    clientId: jspb.Message.getFieldWithDefault(msg, 3, ""),
+    token: jspb.Message.getFieldWithDefault(msg, 4, ""),
+    expiresIn: jspb.Message.getFieldWithDefault(msg, 5, ""),
+    createdAt: jspb.Message.getFieldWithDefault(msg, 6, ""),
+    updatedAt: jspb.Message.getFieldWithDefault(msg, 7, ""),
+    client: (f = msg.getClient()) && client_pb.Client.toObject(includeInstance, f)
   };
 
   if (includeInstance) {
@@ -139,23 +143,32 @@ proto.access_token.AccessToken.deserializeBinaryFromReader = function(msg, reade
       break;
     case 2:
       var value = /** @type {string} */ (reader.readString());
-      msg.setClientId(value);
+      msg.setAuthorizationCodeId(value);
       break;
     case 3:
       var value = /** @type {string} */ (reader.readString());
-      msg.setToken(value);
+      msg.setClientId(value);
       break;
     case 4:
       var value = /** @type {string} */ (reader.readString());
-      msg.setExpiresIn(value);
+      msg.setToken(value);
       break;
     case 5:
       var value = /** @type {string} */ (reader.readString());
-      msg.setCreatedAt(value);
+      msg.setExpiresIn(value);
       break;
     case 6:
       var value = /** @type {string} */ (reader.readString());
+      msg.setCreatedAt(value);
+      break;
+    case 7:
+      var value = /** @type {string} */ (reader.readString());
       msg.setUpdatedAt(value);
+      break;
+    case 8:
+      var value = new client_pb.Client;
+      reader.readMessage(value,client_pb.Client.deserializeBinaryFromReader);
+      msg.setClient(value);
       break;
     default:
       reader.skipField();
@@ -193,39 +206,54 @@ proto.access_token.AccessToken.serializeBinaryToWriter = function(message, write
       f
     );
   }
-  f = message.getClientId();
+  f = message.getAuthorizationCodeId();
   if (f.length > 0) {
     writer.writeString(
       2,
       f
     );
   }
-  f = message.getToken();
+  f = message.getClientId();
   if (f.length > 0) {
     writer.writeString(
       3,
       f
     );
   }
-  f = message.getExpiresIn();
+  f = message.getToken();
   if (f.length > 0) {
     writer.writeString(
       4,
       f
     );
   }
-  f = message.getCreatedAt();
+  f = message.getExpiresIn();
   if (f.length > 0) {
     writer.writeString(
       5,
       f
     );
   }
-  f = message.getUpdatedAt();
+  f = message.getCreatedAt();
   if (f.length > 0) {
     writer.writeString(
       6,
       f
+    );
+  }
+  f = message.getUpdatedAt();
+  if (f.length > 0) {
+    writer.writeString(
+      7,
+      f
+    );
+  }
+  f = message.getClient();
+  if (f != null) {
+    writer.writeMessage(
+      8,
+      f,
+      client_pb.Client.serializeBinaryToWriter
     );
   }
 };
@@ -250,10 +278,10 @@ proto.access_token.AccessToken.prototype.setId = function(value) {
 
 
 /**
- * optional string client_id = 2;
+ * optional string authorization_code_id = 2;
  * @return {string}
  */
-proto.access_token.AccessToken.prototype.getClientId = function() {
+proto.access_token.AccessToken.prototype.getAuthorizationCodeId = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 2, ""));
 };
 
@@ -262,16 +290,16 @@ proto.access_token.AccessToken.prototype.getClientId = function() {
  * @param {string} value
  * @return {!proto.access_token.AccessToken} returns this
  */
-proto.access_token.AccessToken.prototype.setClientId = function(value) {
+proto.access_token.AccessToken.prototype.setAuthorizationCodeId = function(value) {
   return jspb.Message.setProto3StringField(this, 2, value);
 };
 
 
 /**
- * optional string token = 3;
+ * optional string client_id = 3;
  * @return {string}
  */
-proto.access_token.AccessToken.prototype.getToken = function() {
+proto.access_token.AccessToken.prototype.getClientId = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
 };
 
@@ -280,16 +308,16 @@ proto.access_token.AccessToken.prototype.getToken = function() {
  * @param {string} value
  * @return {!proto.access_token.AccessToken} returns this
  */
-proto.access_token.AccessToken.prototype.setToken = function(value) {
+proto.access_token.AccessToken.prototype.setClientId = function(value) {
   return jspb.Message.setProto3StringField(this, 3, value);
 };
 
 
 /**
- * optional string expires_in = 4;
+ * optional string token = 4;
  * @return {string}
  */
-proto.access_token.AccessToken.prototype.getExpiresIn = function() {
+proto.access_token.AccessToken.prototype.getToken = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 4, ""));
 };
 
@@ -298,16 +326,16 @@ proto.access_token.AccessToken.prototype.getExpiresIn = function() {
  * @param {string} value
  * @return {!proto.access_token.AccessToken} returns this
  */
-proto.access_token.AccessToken.prototype.setExpiresIn = function(value) {
+proto.access_token.AccessToken.prototype.setToken = function(value) {
   return jspb.Message.setProto3StringField(this, 4, value);
 };
 
 
 /**
- * optional string created_at = 5;
+ * optional string expires_in = 5;
  * @return {string}
  */
-proto.access_token.AccessToken.prototype.getCreatedAt = function() {
+proto.access_token.AccessToken.prototype.getExpiresIn = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 5, ""));
 };
 
@@ -316,16 +344,16 @@ proto.access_token.AccessToken.prototype.getCreatedAt = function() {
  * @param {string} value
  * @return {!proto.access_token.AccessToken} returns this
  */
-proto.access_token.AccessToken.prototype.setCreatedAt = function(value) {
+proto.access_token.AccessToken.prototype.setExpiresIn = function(value) {
   return jspb.Message.setProto3StringField(this, 5, value);
 };
 
 
 /**
- * optional string updated_at = 6;
+ * optional string created_at = 6;
  * @return {string}
  */
-proto.access_token.AccessToken.prototype.getUpdatedAt = function() {
+proto.access_token.AccessToken.prototype.getCreatedAt = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 6, ""));
 };
 
@@ -334,8 +362,63 @@ proto.access_token.AccessToken.prototype.getUpdatedAt = function() {
  * @param {string} value
  * @return {!proto.access_token.AccessToken} returns this
  */
-proto.access_token.AccessToken.prototype.setUpdatedAt = function(value) {
+proto.access_token.AccessToken.prototype.setCreatedAt = function(value) {
   return jspb.Message.setProto3StringField(this, 6, value);
+};
+
+
+/**
+ * optional string updated_at = 7;
+ * @return {string}
+ */
+proto.access_token.AccessToken.prototype.getUpdatedAt = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 7, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.access_token.AccessToken} returns this
+ */
+proto.access_token.AccessToken.prototype.setUpdatedAt = function(value) {
+  return jspb.Message.setProto3StringField(this, 7, value);
+};
+
+
+/**
+ * optional client.Client client = 8;
+ * @return {?proto.client.Client}
+ */
+proto.access_token.AccessToken.prototype.getClient = function() {
+  return /** @type{?proto.client.Client} */ (
+    jspb.Message.getWrapperField(this, client_pb.Client, 8));
+};
+
+
+/**
+ * @param {?proto.client.Client|undefined} value
+ * @return {!proto.access_token.AccessToken} returns this
+*/
+proto.access_token.AccessToken.prototype.setClient = function(value) {
+  return jspb.Message.setWrapperField(this, 8, value);
+};
+
+
+/**
+ * Clears the message field making it undefined.
+ * @return {!proto.access_token.AccessToken} returns this
+ */
+proto.access_token.AccessToken.prototype.clearClient = function() {
+  return this.setClient(undefined);
+};
+
+
+/**
+ * Returns whether this field is set.
+ * @return {boolean}
+ */
+proto.access_token.AccessToken.prototype.hasClient = function() {
+  return jspb.Message.getField(this, 8) != null;
 };
 
 

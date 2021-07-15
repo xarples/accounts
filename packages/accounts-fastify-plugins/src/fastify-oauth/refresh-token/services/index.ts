@@ -24,6 +24,7 @@ export class RefreshTokenService {
   async create(options: Options) {
     const message = new RefreshToken()
 
+    message.setAuthorizationCodeId(options.authorizationCodeId!)
     message.setClientId(options.clientId!)
     message.setToken(options.token!)
 
@@ -67,6 +68,7 @@ export class RefreshTokenService {
   reducer(options: RefreshToken.AsObject) {
     return {
       id: options.id,
+      authorization_code_id: options.authorizationCodeId,
       client_id: options.client!.clientId,
       token: options.token,
       expires_in: options.expiresIn,
