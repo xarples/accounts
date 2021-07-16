@@ -11,11 +11,15 @@ declare module 'fastify' {
   }
 }
 
-const plugin: FastifyPluginAsync = async (fastify, options) => {
+const plugin: FastifyPluginAsync<FastifySessionPlugin.Options> = async (
+  fastify,
+  options
+) => {
   fastify.register(fastifySession, {
-    secret: 'a secret with minimum length of 32 characters',
-    cookie: { secure: false },
-    saveUninitialized: false
+    // secret: 'a secret with minimum length of 32 characters',
+    // cookie: { secure: false },
+    // saveUninitialized: false,
+    ...options
   })
 }
 

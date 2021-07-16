@@ -6,15 +6,16 @@ import "client.proto";
 
 message AuthorizationCode {
   string id = 1;
-  string client_id = 2;
-  string code = 3;
-  string code_challenge = 4;
-  string code_challenge_method = 5;
-  string redirect_uri = 6;
-  string expires_in = 7;
-  string created_at = 8;
-  string updated_at = 9;
-  client.Client client = 10;
+  string user_id = 2;
+  string client_id = 3;
+  string code = 4;
+  string code_challenge = 5;
+  string code_challenge_method = 6;
+  string redirect_uri = 7;
+  string expires_in = 8;
+  string created_at = 9;
+  string updated_at = 10;
+  client.Client client = 11;
 }
 
 message AuthorizationCodeList {

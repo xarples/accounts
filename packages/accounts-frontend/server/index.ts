@@ -17,7 +17,12 @@ const server = fastify({
 
 server.register(fastifyFormbody)
 server.register(fastifyCookie)
-server.register(fastifySession)
+server.register(fastifySession, {
+  secret: 'a secret with minimum length of 32 characters',
+  cookie: { secure: false },
+  cookieName: 'accountsSessionId',
+  saveUninitialized: false
+})
 server.register(fastifyUser)
 server.register(fastifyOauth)
 server.register(fastifyNuxt)

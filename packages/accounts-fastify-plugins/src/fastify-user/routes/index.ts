@@ -13,6 +13,10 @@ const plugin: FastifyPluginAsync = async fastify => {
     reply.send(user)
   })
 
+  fastify.get('/api/users/me', async (request, reply) => {
+    reply.send(request.session.user)
+  })
+
   fastify.post<PostSignInRoute>('/api/users/signin', async (request, reply) => {
     const user = await fastify.userService.signIn(request.body)
 

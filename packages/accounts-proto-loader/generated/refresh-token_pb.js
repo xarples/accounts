@@ -95,11 +95,12 @@ proto.refresh_token.RefreshToken.toObject = function(includeInstance, msg) {
   var f, obj = {
     id: jspb.Message.getFieldWithDefault(msg, 1, ""),
     authorizationCodeId: jspb.Message.getFieldWithDefault(msg, 2, ""),
-    clientId: jspb.Message.getFieldWithDefault(msg, 3, ""),
-    token: jspb.Message.getFieldWithDefault(msg, 4, ""),
-    expiresIn: jspb.Message.getFieldWithDefault(msg, 5, ""),
-    createdAt: jspb.Message.getFieldWithDefault(msg, 6, ""),
-    updatedAt: jspb.Message.getFieldWithDefault(msg, 7, ""),
+    userId: jspb.Message.getFieldWithDefault(msg, 3, ""),
+    clientId: jspb.Message.getFieldWithDefault(msg, 4, ""),
+    token: jspb.Message.getFieldWithDefault(msg, 5, ""),
+    expiresIn: jspb.Message.getFieldWithDefault(msg, 6, ""),
+    createdAt: jspb.Message.getFieldWithDefault(msg, 7, ""),
+    updatedAt: jspb.Message.getFieldWithDefault(msg, 8, ""),
     client: (f = msg.getClient()) && client_pb.Client.toObject(includeInstance, f)
   };
 
@@ -147,25 +148,29 @@ proto.refresh_token.RefreshToken.deserializeBinaryFromReader = function(msg, rea
       break;
     case 3:
       var value = /** @type {string} */ (reader.readString());
-      msg.setClientId(value);
+      msg.setUserId(value);
       break;
     case 4:
       var value = /** @type {string} */ (reader.readString());
-      msg.setToken(value);
+      msg.setClientId(value);
       break;
     case 5:
       var value = /** @type {string} */ (reader.readString());
-      msg.setExpiresIn(value);
+      msg.setToken(value);
       break;
     case 6:
       var value = /** @type {string} */ (reader.readString());
-      msg.setCreatedAt(value);
+      msg.setExpiresIn(value);
       break;
     case 7:
       var value = /** @type {string} */ (reader.readString());
-      msg.setUpdatedAt(value);
+      msg.setCreatedAt(value);
       break;
     case 8:
+      var value = /** @type {string} */ (reader.readString());
+      msg.setUpdatedAt(value);
+      break;
+    case 9:
       var value = new client_pb.Client;
       reader.readMessage(value,client_pb.Client.deserializeBinaryFromReader);
       msg.setClient(value);
@@ -213,45 +218,52 @@ proto.refresh_token.RefreshToken.serializeBinaryToWriter = function(message, wri
       f
     );
   }
-  f = message.getClientId();
+  f = message.getUserId();
   if (f.length > 0) {
     writer.writeString(
       3,
       f
     );
   }
-  f = message.getToken();
+  f = message.getClientId();
   if (f.length > 0) {
     writer.writeString(
       4,
       f
     );
   }
-  f = message.getExpiresIn();
+  f = message.getToken();
   if (f.length > 0) {
     writer.writeString(
       5,
       f
     );
   }
-  f = message.getCreatedAt();
+  f = message.getExpiresIn();
   if (f.length > 0) {
     writer.writeString(
       6,
       f
     );
   }
-  f = message.getUpdatedAt();
+  f = message.getCreatedAt();
   if (f.length > 0) {
     writer.writeString(
       7,
       f
     );
   }
+  f = message.getUpdatedAt();
+  if (f.length > 0) {
+    writer.writeString(
+      8,
+      f
+    );
+  }
   f = message.getClient();
   if (f != null) {
     writer.writeMessage(
-      8,
+      9,
       f,
       client_pb.Client.serializeBinaryToWriter
     );
@@ -296,10 +308,10 @@ proto.refresh_token.RefreshToken.prototype.setAuthorizationCodeId = function(val
 
 
 /**
- * optional string client_id = 3;
+ * optional string user_id = 3;
  * @return {string}
  */
-proto.refresh_token.RefreshToken.prototype.getClientId = function() {
+proto.refresh_token.RefreshToken.prototype.getUserId = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
 };
 
@@ -308,16 +320,16 @@ proto.refresh_token.RefreshToken.prototype.getClientId = function() {
  * @param {string} value
  * @return {!proto.refresh_token.RefreshToken} returns this
  */
-proto.refresh_token.RefreshToken.prototype.setClientId = function(value) {
+proto.refresh_token.RefreshToken.prototype.setUserId = function(value) {
   return jspb.Message.setProto3StringField(this, 3, value);
 };
 
 
 /**
- * optional string token = 4;
+ * optional string client_id = 4;
  * @return {string}
  */
-proto.refresh_token.RefreshToken.prototype.getToken = function() {
+proto.refresh_token.RefreshToken.prototype.getClientId = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 4, ""));
 };
 
@@ -326,16 +338,16 @@ proto.refresh_token.RefreshToken.prototype.getToken = function() {
  * @param {string} value
  * @return {!proto.refresh_token.RefreshToken} returns this
  */
-proto.refresh_token.RefreshToken.prototype.setToken = function(value) {
+proto.refresh_token.RefreshToken.prototype.setClientId = function(value) {
   return jspb.Message.setProto3StringField(this, 4, value);
 };
 
 
 /**
- * optional string expires_in = 5;
+ * optional string token = 5;
  * @return {string}
  */
-proto.refresh_token.RefreshToken.prototype.getExpiresIn = function() {
+proto.refresh_token.RefreshToken.prototype.getToken = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 5, ""));
 };
 
@@ -344,16 +356,16 @@ proto.refresh_token.RefreshToken.prototype.getExpiresIn = function() {
  * @param {string} value
  * @return {!proto.refresh_token.RefreshToken} returns this
  */
-proto.refresh_token.RefreshToken.prototype.setExpiresIn = function(value) {
+proto.refresh_token.RefreshToken.prototype.setToken = function(value) {
   return jspb.Message.setProto3StringField(this, 5, value);
 };
 
 
 /**
- * optional string created_at = 6;
+ * optional string expires_in = 6;
  * @return {string}
  */
-proto.refresh_token.RefreshToken.prototype.getCreatedAt = function() {
+proto.refresh_token.RefreshToken.prototype.getExpiresIn = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 6, ""));
 };
 
@@ -362,16 +374,16 @@ proto.refresh_token.RefreshToken.prototype.getCreatedAt = function() {
  * @param {string} value
  * @return {!proto.refresh_token.RefreshToken} returns this
  */
-proto.refresh_token.RefreshToken.prototype.setCreatedAt = function(value) {
+proto.refresh_token.RefreshToken.prototype.setExpiresIn = function(value) {
   return jspb.Message.setProto3StringField(this, 6, value);
 };
 
 
 /**
- * optional string updated_at = 7;
+ * optional string created_at = 7;
  * @return {string}
  */
-proto.refresh_token.RefreshToken.prototype.getUpdatedAt = function() {
+proto.refresh_token.RefreshToken.prototype.getCreatedAt = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 7, ""));
 };
 
@@ -380,18 +392,36 @@ proto.refresh_token.RefreshToken.prototype.getUpdatedAt = function() {
  * @param {string} value
  * @return {!proto.refresh_token.RefreshToken} returns this
  */
-proto.refresh_token.RefreshToken.prototype.setUpdatedAt = function(value) {
+proto.refresh_token.RefreshToken.prototype.setCreatedAt = function(value) {
   return jspb.Message.setProto3StringField(this, 7, value);
 };
 
 
 /**
- * optional client.Client client = 8;
+ * optional string updated_at = 8;
+ * @return {string}
+ */
+proto.refresh_token.RefreshToken.prototype.getUpdatedAt = function() {
+  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 8, ""));
+};
+
+
+/**
+ * @param {string} value
+ * @return {!proto.refresh_token.RefreshToken} returns this
+ */
+proto.refresh_token.RefreshToken.prototype.setUpdatedAt = function(value) {
+  return jspb.Message.setProto3StringField(this, 8, value);
+};
+
+
+/**
+ * optional client.Client client = 9;
  * @return {?proto.client.Client}
  */
 proto.refresh_token.RefreshToken.prototype.getClient = function() {
   return /** @type{?proto.client.Client} */ (
-    jspb.Message.getWrapperField(this, client_pb.Client, 8));
+    jspb.Message.getWrapperField(this, client_pb.Client, 9));
 };
 
 
@@ -400,7 +430,7 @@ proto.refresh_token.RefreshToken.prototype.getClient = function() {
  * @return {!proto.refresh_token.RefreshToken} returns this
 */
 proto.refresh_token.RefreshToken.prototype.setClient = function(value) {
-  return jspb.Message.setWrapperField(this, 8, value);
+  return jspb.Message.setWrapperField(this, 9, value);
 };
 
 
@@ -418,7 +448,7 @@ proto.refresh_token.RefreshToken.prototype.clearClient = function() {
  * @return {boolean}
  */
 proto.refresh_token.RefreshToken.prototype.hasClient = function() {
-  return jspb.Message.getField(this, 8) != null;
+  return jspb.Message.getField(this, 9) != null;
 };
 
 

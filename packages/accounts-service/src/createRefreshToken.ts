@@ -19,6 +19,11 @@ export default async function createRefreshToken(
           id: request.authorizationCodeId
         }
       },
+      User: {
+        connect: {
+          id: request.userId
+        }
+      },
       Client: {
         connect: {
           client_id: request.clientId

@@ -9,6 +9,8 @@ import * as jspb from "google-protobuf";
 export class Client extends jspb.Message { 
     getId(): string;
     setId(value: string): Client;
+    getUserId(): string;
+    setUserId(value: string): Client;
     getClientId(): string;
     setClientId(value: string): Client;
     getClientSecret(): string;
@@ -47,8 +49,6 @@ export class Client extends jspb.Message {
     setPolicyUri(value: string): Client;
     getTosUri(): string;
     setTosUri(value: string): Client;
-    getUserId(): string;
-    setUserId(value: string): Client;
     getCreatedAt(): string;
     setCreatedAt(value: string): Client;
     getUpdatedAt(): string;
@@ -67,6 +67,7 @@ export class Client extends jspb.Message {
 export namespace Client {
     export type AsObject = {
         id: string,
+        userId: string,
         clientId: string,
         clientSecret: string,
         name: string,
@@ -82,7 +83,6 @@ export namespace Client {
         websiteUri: string,
         policyUri: string,
         tosUri: string,
-        userId: string,
         createdAt: string,
         updatedAt: string,
     }

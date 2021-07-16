@@ -12,6 +12,8 @@ export class RefreshToken extends jspb.Message {
     setId(value: string): RefreshToken;
     getAuthorizationCodeId(): string;
     setAuthorizationCodeId(value: string): RefreshToken;
+    getUserId(): string;
+    setUserId(value: string): RefreshToken;
     getClientId(): string;
     setClientId(value: string): RefreshToken;
     getToken(): string;
@@ -42,6 +44,7 @@ export namespace RefreshToken {
     export type AsObject = {
         id: string,
         authorizationCodeId: string,
+        userId: string,
         clientId: string,
         token: string,
         expiresIn: string,

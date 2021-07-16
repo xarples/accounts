@@ -42,3 +42,10 @@ export interface PostIntrospectRoute {
     token_type_hint: 'access_token' | 'refresh_token'
   }
 }
+
+export interface PostRevokeRoute {
+  Body: {
+    token: string
+    token_type_hint: 'access_token' | 'refresh_token'
+  }
+}

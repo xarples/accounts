@@ -18,6 +18,7 @@ export default function toAccessTokenMessage(
 
   message.setId(item.id)
   message.setAuthorizationCodeId(item.authorization_code_id!)
+  message.setUserId(item.user_id!)
   message.setClientId(item.client_id)
   message.setToken(item.token)
   message.setExpiresIn(item.expires_in.toString())

@@ -18,6 +18,11 @@ export default async function createAuthorizationCode(
         CodeChallengeMethod[request.codeChallengeMethod as CodeChallengeMethod],
       redirect_uri: request.redirectUri,
       expires_in: add(new Date(), { seconds: 30 }),
+      User: {
+        connect: {
+          id: request.userId
+        }
+      },
       Client: {
         connect: {
           client_id: request.clientId

@@ -45,3 +45,9 @@ export const postIntrospectSchema: FastifySchema = {
     .prop('token', S.string().required())
     .prop('token_type_hint', S.string().enum(['access_token', 'refresh_token']))
 }
+
+export const postRevokeSchema: FastifySchema = {
+  body: S.object()
+    .prop('token', S.string().required())
+    .prop('token_type_hint', S.string().enum(['access_token', 'refresh_token']))
+}

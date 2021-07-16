@@ -25,6 +25,7 @@ export class RefreshTokenService {
     const message = new RefreshToken()
 
     message.setAuthorizationCodeId(options.authorizationCodeId!)
+    message.setUserId(options.userId!)
     message.setClientId(options.clientId!)
     message.setToken(options.token!)
 
@@ -69,6 +70,7 @@ export class RefreshTokenService {
     return {
       id: options.id,
       authorization_code_id: options.authorizationCodeId,
+      user_id: options.userId,
       client_id: options.client!.clientId,
       token: options.token,
       expires_in: options.expiresIn,

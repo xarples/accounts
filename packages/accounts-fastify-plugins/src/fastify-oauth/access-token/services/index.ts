@@ -25,6 +25,7 @@ export class AccessTokenService {
     const message = new AccessToken()
 
     message.setAuthorizationCodeId(options.authorizationCodeId!)
+    message.setUserId(options.userId!)
     message.setClientId(options.clientId!)
     message.setToken(options.token!)
 
@@ -69,6 +70,7 @@ export class AccessTokenService {
     return {
       id: options.id,
       authorization_code_id: options.authorizationCodeId,
+      user_id: options.userId,
       client_id: options.client!.clientId,
       token: options.token,
       expires_in: options.expiresIn,

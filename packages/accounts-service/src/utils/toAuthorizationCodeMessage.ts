@@ -17,6 +17,7 @@ export default function toAuthorizationCodeMessage(
   clientMessage.setClientId(item.Client.client_id!)
 
   message.setId(item.id)
+  message.setUserId(item.user_id!)
   message.setClientId(item.client_id)
   message.setCode(item.code)
   message.setCodeChallenge(item.code_challenge)

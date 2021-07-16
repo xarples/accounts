@@ -12,11 +12,18 @@ export default async function createAccessToken(
 
   const token = await db.accessToken.create({
     data: {
+      // user_id: request.userId,
+      // authorization_code_id: request.authorizationCodeId,
       token: randomBytes(32).toString('hex'),
       expires_in: add(new Date(), { hours: 1 }),
       AuthorizationCode: {
         connect: {
           id: request.authorizationCodeId
+        }
+      },
+      User: {
+        connect: {
+          id: request.userId
         }
       },
       Client: {

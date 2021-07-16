@@ -12,6 +12,8 @@ export class AccessToken extends jspb.Message {
     setId(value: string): AccessToken;
     getAuthorizationCodeId(): string;
     setAuthorizationCodeId(value: string): AccessToken;
+    getUserId(): string;
+    setUserId(value: string): AccessToken;
     getClientId(): string;
     setClientId(value: string): AccessToken;
     getToken(): string;
@@ -42,6 +44,7 @@ export namespace AccessToken {
     export type AsObject = {
         id: string,
         authorizationCodeId: string,
+        userId: string,
         clientId: string,
         token: string,
         expiresIn: string,

@@ -38,8 +38,6 @@ export class ClientService {
 
     metadata.set('authorization', this.context?.request?.session.accessToken)
 
-    console.log('----', this.context?.request?.session.accessToken)
-
     message.setName(options.name!)
     message.setDescription(options.description!)
     message.setType(options.type!)

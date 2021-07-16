@@ -30,6 +30,7 @@ export class AuthorizationCodeService {
   async create(options: Options) {
     const message = new AuthorizationCode()
 
+    message.setUserId(options.userId!)
     message.setClientId(options.clientId!)
     message.setCodeChallenge(options.codeChallenge!)
     message.setCodeChallengeMethod(options.codeChallengeMethod!)
@@ -77,6 +78,7 @@ export class AuthorizationCodeService {
   reducer(options: AuthorizationCode.AsObject) {
     return {
       id: options.id,
+      user_id: options.userId,
       client_id: options.client?.clientId!,
       code: options.code,
       code_challenge: options.codeChallenge,

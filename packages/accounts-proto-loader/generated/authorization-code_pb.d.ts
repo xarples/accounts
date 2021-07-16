@@ -10,6 +10,8 @@ import * as client_pb from "./client_pb";
 export class AuthorizationCode extends jspb.Message { 
     getId(): string;
     setId(value: string): AuthorizationCode;
+    getUserId(): string;
+    setUserId(value: string): AuthorizationCode;
     getClientId(): string;
     setClientId(value: string): AuthorizationCode;
     getCode(): string;
@@ -45,6 +47,7 @@ export class AuthorizationCode extends jspb.Message {
 export namespace AuthorizationCode {
     export type AsObject = {
         id: string,
+        userId: string,
         clientId: string,
         code: string,
         codeChallenge: string,
