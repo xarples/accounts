@@ -9,7 +9,6 @@ export const authPreHandler: preHandlerHookHandler<
   RouteGenericInterface,
   unknown
 > = (request, reply, done) => {
-  // @ts-ignore
   if (!request.session.user) {
     reply.redirect('/signin')
 
