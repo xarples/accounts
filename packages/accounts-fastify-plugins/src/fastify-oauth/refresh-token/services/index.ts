@@ -1,6 +1,8 @@
 import { promisify } from 'util'
 import client from '@xarples/accounts-client'
 import { RefreshToken, RefreshTokenList } from '@xarples/accounts-proto-loader'
+import { RefreshTokenResponse } from '../types'
+import isAfter from 'date-fns/isAfter'
 
 const createRefreshToken = promisify<RefreshToken, RefreshToken>(
   client.createRefreshToken.bind(client)
@@ -35,14 +37,18 @@ export class RefreshTokenService {
   }
 
   async get(options: Options) {
-    const message = new RefreshToken()
+    try {
+      const message = new RefreshToken()
 
-    message.setId(options.id!)
-    message.setToken(options.token!)
+      message.setId(options.id!)
+      message.setToken(options.token!)
 
-    const found = await getRefreshToken(message)
+      const found = await getRefreshToken(message)
 
-    return this.reducer(found.toObject())
+      return this.reducer(found.toObject())
+    } catch (error) {
+      return null
+    }
   }
 
   async list(options: Options) {
@@ -66,7 +72,11 @@ export class RefreshTokenService {
     return this.reducer(deleted.toObject())
   }
 
-  reducer(options: RefreshToken.AsObject) {
+  isExpired(token: RefreshTokenResponse) {
+    return isAfter(new Date(), new Date(token.expires_in))
+  }
+
+  reducer(options: RefreshToken.AsObject): RefreshTokenResponse {
     return {
       id: options.id,
       authorization_code_id: options.authorizationCodeId,

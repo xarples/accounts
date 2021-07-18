@@ -4,6 +4,8 @@ import {
   AuthorizationCode,
   AuthorizationCodeList
 } from '@xarples/accounts-proto-loader'
+import isAfter from 'date-fns/isAfter'
+import { AuthorizationCodeResponse } from '../types'
 
 const createAuthorizationCode = promisify<AuthorizationCode, AuthorizationCode>(
   client.createAuthorizationCode.bind(client)
@@ -42,14 +44,18 @@ export class AuthorizationCodeService {
   }
 
   async get(options: Options) {
-    const message = new AuthorizationCode()
+    try {
+      const message = new AuthorizationCode()
 
-    message.setId(options.id!)
-    message.setCode(options.code!)
+      message.setId(options.id!)
+      message.setCode(options.code!)
 
-    const found = await getAuthorizationCode(message)
+      const found = await getAuthorizationCode(message)
 
-    return this.reducer(found.toObject())
+      return this.reducer(found.toObject())
+    } catch (error) {
+      return null
+    }
   }
 
   async list(options: Options) {
@@ -73,6 +79,10 @@ export class AuthorizationCodeService {
     const deleted = await deleteAuthorizationCode(message)
 
     return this.reducer(deleted.toObject())
+  }
+
+  async isExpired(code: AuthorizationCodeResponse) {
+    return isAfter(new Date(), new Date(code.expires_in))
   }
 
   reducer(options: AuthorizationCode.AsObject) {

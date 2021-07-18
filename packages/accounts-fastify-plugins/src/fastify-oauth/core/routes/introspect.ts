@@ -3,6 +3,8 @@ import fp from 'fastify-plugin'
 import { isAfter, getUnixTime } from 'date-fns'
 import { postIntrospectSchema } from '../schemas'
 import { PostIntrospectRoute } from '../types'
+import { AccessTokenResponse } from '../../access-token/types'
+import { RefreshTokenResponse } from '../../refresh-token/types'
 
 const plugin: FastifyPluginAsync = async fastify => {
   fastify.post<PostIntrospectRoute>(
@@ -22,54 +24,61 @@ const plugin: FastifyPluginAsync = async fastify => {
           return
         }
 
-        let promise: ReturnType<typeof fastify.refreshTokenService.get>
+        let accessOrRefreshToken:
+          | AccessTokenResponse
+          | RefreshTokenResponse
+          | null
 
         const tokenTypeHint = request.body.token_type_hint
 
         if (tokenTypeHint === 'access_token') {
-          promise = fastify.accessTokenService.get({
+          accessOrRefreshToken = await fastify.accessTokenService.get({
             token: request.body.token
           })
         } else if (tokenTypeHint === 'refresh_token') {
-          promise = fastify.refreshTokenService.get({
+          accessOrRefreshToken = await fastify.refreshTokenService.get({
             token: request.body.token
           })
         } else {
-          const result = (
-            await Promise.allSettled([
-              fastify.accessTokenService.get({
-                token: request.body.token
-              }),
-              fastify.refreshTokenService.get({
-                token: request.body.token
-              })
-            ])
-          ).find(({ status }) => status === 'fulfilled')
-
-          if (result?.status === 'fulfilled') {
-            promise = Promise.resolve(result.value)
-          } else {
-            throw new Error('Token is expired or invalid')
-          }
+          accessOrRefreshToken =
+            (await fastify.accessTokenService.get({
+              token: request.body.token
+            })) ||
+            (await fastify.refreshTokenService.get({
+              token: request.body.token
+            }))
         }
 
-        const accessOrRefreshToken = await promise
+        if (!accessOrRefreshToken) {
+          reply.code(400).send({
+            error: 'invalid_grant',
+            error_description: 'Invalid token'
+          })
 
-        if (isAfter(new Date(), new Date(accessOrRefreshToken.expires_in))) {
+          return
+        }
+
+        // it is possible to validate whether an access or refresh token has expired or not
+        // using the accessTokenService or the refreshTokenService.
+        if (fastify.accessTokenService.isExpired(accessOrRefreshToken)) {
           throw new Error('Token is expired')
         }
+
+        const user = await fastify.userService.get({
+          id: accessOrRefreshToken.user_id
+        })
 
         reply.code(200).send({
           active: true,
           scope: 'read write dolphin',
           client_id: accessOrRefreshToken.client_id,
-          username: 'replace_with_email',
+          username: user!.email,
           token_type: tokenTypeHint,
           exp: getUnixTime(new Date(accessOrRefreshToken.expires_in)),
           iat: getUnixTime(new Date(accessOrRefreshToken.created_at)),
-          sub: 'replace_with_user_id',
+          sub: accessOrRefreshToken.user_id,
           aud: ['https://protected.example.com'],
-          iss: 'https://server.example.com',
+          iss: 'https://authorization-server.com',
           jti: accessOrRefreshToken.id
         })
       } catch (error) {

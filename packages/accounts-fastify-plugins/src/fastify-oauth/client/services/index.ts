@@ -55,14 +55,18 @@ export class ClientService {
   }
 
   async get(options: Options) {
-    const message = new Client()
+    try {
+      const message = new Client()
 
-    message.setId(options.id!)
-    message.setClientId(options.clientId!)
+      message.setId(options.id!)
+      message.setClientId(options.clientId!)
 
-    const client = await getClient(message)
+      const client = await getClient(message)
 
-    return this.reducer(client.toObject())
+      return this.reducer(client.toObject())
+    } catch (error) {
+      return null
+    }
   }
 
   async list(options: Options) {

@@ -27,11 +27,11 @@ export interface PostAuthorizeRoute {
 
 export interface PostTokenRoute {
   Body: {
-    code: string
-    code_verifier: string
-    client_id: string
-    grant_type: 'authorization_code' | 'client_credentials' | 'refresh_token'
-    redirect_uri: string
+    code?: string
+    code_verifier?: string
+    client_id?: string
+    grant_type?: 'authorization_code' | 'client_credentials' | 'refresh_token'
+    redirect_uri?: string
     refresh_token?: string
   }
 }
@@ -46,6 +46,6 @@ export interface PostIntrospectRoute {
 export interface PostRevokeRoute {
   Body: {
     token: string
-    token_type_hint: 'access_token' | 'refresh_token'
+    token_type_hint?: 'access_token' | 'refresh_token'
   }
 }

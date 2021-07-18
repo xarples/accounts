@@ -3,6 +3,8 @@ import fp from 'fastify-plugin'
 import { decodeBasic } from '@xarples/accounts-utils'
 import { postRevokeSchema } from '../schemas'
 import { PostRevokeRoute } from '../types'
+import { AccessTokenResponse } from '../../access-token/types'
+import { RefreshTokenResponse } from '../../refresh-token/types'
 
 const plugin: FastifyPluginAsync = async fastify => {
   fastify.post<PostRevokeRoute>(
@@ -22,45 +24,46 @@ const plugin: FastifyPluginAsync = async fastify => {
           return
         }
 
-        let promise: ReturnType<typeof fastify.refreshTokenService.get>
+        let accessOrRefreshToken:
+          | AccessTokenResponse
+          | RefreshTokenResponse
+          | null
 
         const tokenTypeHint = request.body.token_type_hint
 
         if (tokenTypeHint === 'access_token') {
-          promise = fastify.accessTokenService.get({
+          accessOrRefreshToken = await fastify.accessTokenService.get({
             token: request.body.token
           })
         } else if (tokenTypeHint === 'refresh_token') {
-          promise = fastify.refreshTokenService.get({
+          accessOrRefreshToken = await fastify.refreshTokenService.get({
             token: request.body.token
           })
         } else {
-          const result = (
-            await Promise.allSettled([
-              fastify.accessTokenService.get({
-                token: request.body.token
-              }),
-              fastify.refreshTokenService.get({
-                token: request.body.token
-              })
-            ])
-          ).find(({ status }) => status === 'fulfilled')
-
-          if (result?.status === 'fulfilled') {
-            promise = Promise.resolve(result.value)
-          } else {
-            throw new Error('Token is expired or invalid')
-          }
+          accessOrRefreshToken =
+            (await fastify.accessTokenService.get({
+              token: request.body.token
+            })) ||
+            (await fastify.refreshTokenService.get({
+              token: request.body.token
+            }))
         }
 
-        const accessOrRefreshToken = await promise
+        if (!accessOrRefreshToken) {
+          reply.code(400).send({
+            error: 'invalid_grant',
+            error_description: 'Invalid token'
+          })
+
+          return
+        }
 
         const credentials = decodeBasic(request.headers.authorization!)
 
         if (accessOrRefreshToken.client_id !== credentials?.clientId) {
           reply.code(400).send({
             error: 'invalid_grant',
-            error_description: 'Invalid client_id'
+            error_description: 'Invalid client'
           })
 
           return

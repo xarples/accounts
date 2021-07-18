@@ -5,9 +5,9 @@ export default function toClientMessage(client: Client): ClientMessage {
   const message = new ClientMessage()
 
   message.setId(client.id)
-  message.setClientId(client.client_id!)
+  message.setClientId(client.client_id)
   message.setClientSecret(client.client_secret!)
-  message.setName(client.name)
+  message.setName(client.name!)
   message.setDescription(client.description!)
   message.setType(client.type!)
   message.setTokenEndpointAuthMethod(client.token_endpoint_auth_method!)

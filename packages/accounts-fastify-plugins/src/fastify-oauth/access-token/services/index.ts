@@ -1,6 +1,8 @@
 import { promisify } from 'util'
 import client from '@xarples/accounts-client'
 import { AccessToken, AccessTokenList } from '@xarples/accounts-proto-loader'
+import { isAfter } from 'date-fns'
+import { AccessTokenResponse } from '../types'
 
 const createAccessToken = promisify<AccessToken, AccessToken>(
   client.createAccessToken.bind(client)
@@ -35,14 +37,18 @@ export class AccessTokenService {
   }
 
   async get(options: Options) {
-    const message = new AccessToken()
+    try {
+      const message = new AccessToken()
 
-    message.setId(options.id!)
-    message.setToken(options.token!)
+      message.setId(options.id!)
+      message.setToken(options.token!)
 
-    const found = await getAccessToken(message)
+      const found = await getAccessToken(message)
 
-    return this.reducer(found.toObject())
+      return this.reducer(found.toObject())
+    } catch (error) {
+      return null
+    }
   }
 
   async list(options: Options) {
@@ -66,7 +72,11 @@ export class AccessTokenService {
     return this.reducer(deleted.toObject())
   }
 
-  reducer(options: AccessToken.AsObject) {
+  isExpired(token: AccessTokenResponse) {
+    return isAfter(new Date(), new Date(token.expires_in))
+  }
+
+  reducer(options: AccessToken.AsObject): AccessTokenResponse {
     return {
       id: options.id,
       authorization_code_id: options.authorizationCodeId,

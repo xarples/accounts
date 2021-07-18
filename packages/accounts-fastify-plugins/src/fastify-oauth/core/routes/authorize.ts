@@ -22,23 +22,23 @@ const plugin: FastifyPluginAsync = async fastify => {
           return
         }
 
-        const client = await fastify.clientService
-          .get({
-            clientId: request.query.client_id
-          })
-          .catch(() => {
-            reply.code(400).send({
-              error: 'invalid_request',
-              error_description: 'Invalid client'
-            })
+        const client = await fastify.clientService.get({
+          clientId: request.query.client_id
+        })
 
-            return
+        if (!client) {
+          reply.code(400).send({
+            error: 'invalid_request',
+            error_description: 'Invalid client'
           })
+
+          return
+        }
 
         if (!client?.redirect_uris.includes(request.query.redirect_uri)) {
           reply.code(400).send({
             error: 'invalid_request',
-            error_description: 'Invalid redirect_uri'
+            error_description: 'Invalid redirect URI'
           })
 
           return

@@ -28,14 +28,18 @@ export class UserService {
   }
 
   async get(options: Options) {
-    const message = new User()
+    try {
+      const message = new User()
 
-    message.setId(options.id!)
-    message.setEmail(options.email!)
+      message.setId(options.id!)
+      message.setEmail(options.email!)
 
-    const found = await getUser(message)
+      const found = await getUser(message)
 
-    return this.reducer(found.toObject())
+      return this.reducer(found.toObject())
+    } catch (error) {
+      return null
+    }
   }
 
   async list(options: Options) {

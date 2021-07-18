@@ -1,7 +1,6 @@
 import { FastifyPluginAsync } from 'fastify'
 import fp from 'fastify-plugin'
-import { calculateCodeChallenge } from '@xarples/accounts-utils'
-import { isAfter } from 'date-fns'
+import { calculateCodeChallenge, decodeBasic } from '@xarples/accounts-utils'
 import { postTokenSchema } from '../schemas'
 import { PostTokenRoute } from '../types'
 
@@ -16,7 +15,7 @@ const plugin: FastifyPluginAsync = async fastify => {
     async (request, reply) => {
       if (request.validationError) {
         reply.code(400).send({
-          error: 'invalid_request',
+          error: 'unsupported_grant_type',
           error_description: request.validationError.message
         })
 
@@ -24,8 +23,10 @@ const plugin: FastifyPluginAsync = async fastify => {
       }
 
       if (request.body.grant_type === 'client_credentials') {
+        const credentials = decodeBasic(request.headers.authorization!)
+
         const accessToken = await fastify.accessTokenService.create({
-          clientId: request.body.client_id
+          clientId: credentials!.clientId
         })
 
         reply.send({
@@ -38,32 +39,31 @@ const plugin: FastifyPluginAsync = async fastify => {
       }
 
       if (request.body.grant_type === 'refresh_token') {
-        const refreshToken = await fastify.refreshTokenService
-          .get({
-            token: request.body.refresh_token || undefined
-          })
-          .catch(() => {
-            reply.code(400).send({
-              error: 'invalid_grant',
-              error_description: 'Refresh token is invalid or revoked'
-            })
+        const refreshToken = await fastify.refreshTokenService.get({
+          token: request.body.refresh_token
+        })
 
-            return
-          })
-
-        if (refreshToken!.client_id !== request.body.client_id) {
+        if (!refreshToken) {
           reply.code(400).send({
             error: 'invalid_grant',
-            error_description: 'Invalid client_id'
+            error_description: 'Refresh token is invalid or revoked'
           })
 
           return
         }
 
-        const currentDate = new Date()
-        const expiresIn = new Date(refreshToken!.expires_in)
+        const credentials = decodeBasic(request.headers.authorization!)
 
-        if (isAfter(currentDate, expiresIn)) {
+        if (refreshToken!.client_id !== credentials!.clientId) {
+          reply.code(400).send({
+            error: 'invalid_grant',
+            error_description: 'Invalid client'
+          })
+
+          return
+        }
+
+        if (fastify.refreshTokenService.isExpired(refreshToken)) {
           reply.code(400).send({
             error: 'invalid_grant',
             error_description: 'Refresh token is expired'
@@ -78,14 +78,14 @@ const plugin: FastifyPluginAsync = async fastify => {
 
         const accessToken = await fastify.accessTokenService.create({
           authorizationCodeId: refreshToken!.authorization_code_id,
-          userId: authorizationCode.user_id,
-          clientId: request.body.client_id
+          userId: authorizationCode!.user_id,
+          clientId: credentials!.clientId
         })
 
         const nextRefreshToken = await fastify.refreshTokenService.create({
           authorizationCodeId: refreshToken!.authorization_code_id,
-          userId: authorizationCode.user_id,
-          clientId: request.body.client_id
+          userId: authorizationCode!.user_id,
+          clientId: credentials!.clientId
         })
 
         reply.send({
@@ -98,23 +98,20 @@ const plugin: FastifyPluginAsync = async fastify => {
         return
       }
 
-      const authorizationCode = await fastify.authorizationCodeService
-        .get({
-          code: request.body.code
-        })
-        .catch(() => {
-          reply.code(400).send({
-            error: 'invalid_grant',
-            error_description: 'Authorization code is revoked'
-          })
+      const authorizationCode = await fastify.authorizationCodeService.get({
+        code: request.body.code
+      })
 
-          return
+      if (!authorizationCode) {
+        reply.code(400).send({
+          error: 'invalid_grant',
+          error_description: 'Authorization code is revoked'
         })
 
-      const currentDate = new Date()
-      const expiresIn = new Date(authorizationCode!.expires_in)
+        return
+      }
 
-      if (isAfter(currentDate, expiresIn)) {
+      if (fastify.authorizationCodeService.isExpired(authorizationCode)) {
         reply.code(400).send({
           error: 'invalid_grant',
           error_description: 'Authorization code is expired'
@@ -123,10 +120,19 @@ const plugin: FastifyPluginAsync = async fastify => {
         return
       }
 
-      if (authorizationCode!.client_id !== request.body.client_id) {
+      if (request.body.client_id !== authorizationCode!.client_id) {
         reply.code(400).send({
           error: 'invalid_grant',
           error_description: 'Invalid client_id'
+        })
+
+        return
+      }
+
+      if (!request.body?.code_verifier) {
+        reply.code(400).send({
+          error: 'invalid_request',
+          error_description: 'Invalid code verifier'
         })
 
         return
@@ -141,8 +147,8 @@ const plugin: FastifyPluginAsync = async fastify => {
 
       if (codeChallenge !== authorizationCode!.code_challenge) {
         reply.code(400).send({
-          error: 'invalid_grant',
-          error_description: 'Invalid code_challenge'
+          error: 'invalid_request',
+          error_description: 'Invalid code challenge'
         })
 
         return
