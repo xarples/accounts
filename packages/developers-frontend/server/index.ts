@@ -3,8 +3,8 @@ import fastifyFormbody from 'fastify-formbody'
 import fastifyCookie from 'fastify-cookie'
 import {
   fastifySession,
-  fastifyNuxt,
-  fastifyOauth
+  fastifyNuxt
+  // fastifyOauth
 } from '@xarples/accounts-fastify-plugins'
 
 import routes from './routes'
@@ -23,7 +23,7 @@ server.register(fastifySession, {
   cookieName: 'developersSessionId',
   saveUninitialized: false
 })
-server.register(fastifyOauth)
+// server.register(fastifyOauth)
 server.register(routes)
 server.register(fastifyNuxt)
 

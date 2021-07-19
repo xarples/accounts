@@ -1,7 +1,7 @@
 import { AuthorizationCode } from '@xarples/accounts-db'
 import {
   AuthorizationCode as AuthorizationCodeMessage,
-  Client
+  Client as ClientMessage
 } from '@xarples/accounts-proto-loader'
 
 export default function toAuthorizationCodeMessage(
@@ -9,10 +9,13 @@ export default function toAuthorizationCodeMessage(
     Client: {
       client_id: string | null
     }
+    Scopes: {
+      name: string
+    }[]
   }
 ): AuthorizationCodeMessage {
-  const clientMessage = new Client()
   const message = new AuthorizationCodeMessage()
+  const clientMessage = new ClientMessage()
 
   clientMessage.setClientId(item.Client.client_id!)
 
@@ -27,6 +30,7 @@ export default function toAuthorizationCodeMessage(
   message.setCreatedAt(item.created_at.toString())
   message.setUpdatedAt(item.updated_at.toString())
   message.setClient(clientMessage)
+  message.setScopeList(item.Scopes.map(scope => scope.name))
 
   return message
 }

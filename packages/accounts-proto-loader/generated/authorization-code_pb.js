@@ -30,7 +30,7 @@ goog.exportSymbol('proto.authorization_code.AuthorizationCodeList', null, global
  * @constructor
  */
 proto.authorization_code.AuthorizationCode = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+  jspb.Message.initialize(this, opt_data, 0, -1, proto.authorization_code.AuthorizationCode.repeatedFields_, null);
 };
 goog.inherits(proto.authorization_code.AuthorizationCode, jspb.Message);
 if (goog.DEBUG && !COMPILED) {
@@ -61,6 +61,13 @@ if (goog.DEBUG && !COMPILED) {
    */
   proto.authorization_code.AuthorizationCodeList.displayName = 'proto.authorization_code.AuthorizationCodeList';
 }
+
+/**
+ * List of repeated fields within this message type.
+ * @private {!Array<number>}
+ * @const
+ */
+proto.authorization_code.AuthorizationCode.repeatedFields_ = [11];
 
 
 
@@ -103,6 +110,7 @@ proto.authorization_code.AuthorizationCode.toObject = function(includeInstance, 
     expiresIn: jspb.Message.getFieldWithDefault(msg, 8, ""),
     createdAt: jspb.Message.getFieldWithDefault(msg, 9, ""),
     updatedAt: jspb.Message.getFieldWithDefault(msg, 10, ""),
+    scopeList: (f = jspb.Message.getRepeatedField(msg, 11)) == null ? undefined : f,
     client: (f = msg.getClient()) && client_pb.Client.toObject(includeInstance, f)
   };
 
@@ -181,6 +189,10 @@ proto.authorization_code.AuthorizationCode.deserializeBinaryFromReader = functio
       msg.setUpdatedAt(value);
       break;
     case 11:
+      var value = /** @type {string} */ (reader.readString());
+      msg.addScope(value);
+      break;
+    case 12:
       var value = new client_pb.Client;
       reader.readMessage(value,client_pb.Client.deserializeBinaryFromReader);
       msg.setClient(value);
@@ -284,10 +296,17 @@ proto.authorization_code.AuthorizationCode.serializeBinaryToWriter = function(me
       f
     );
   }
+  f = message.getScopeList();
+  if (f.length > 0) {
+    writer.writeRepeatedString(
+      11,
+      f
+    );
+  }
   f = message.getClient();
   if (f != null) {
     writer.writeMessage(
-      11,
+      12,
       f,
       client_pb.Client.serializeBinaryToWriter
     );
@@ -476,12 +495,49 @@ proto.authorization_code.AuthorizationCode.prototype.setUpdatedAt = function(val
 
 
 /**
- * optional client.Client client = 11;
+ * repeated string scope = 11;
+ * @return {!Array<string>}
+ */
+proto.authorization_code.AuthorizationCode.prototype.getScopeList = function() {
+  return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 11));
+};
+
+
+/**
+ * @param {!Array<string>} value
+ * @return {!proto.authorization_code.AuthorizationCode} returns this
+ */
+proto.authorization_code.AuthorizationCode.prototype.setScopeList = function(value) {
+  return jspb.Message.setField(this, 11, value || []);
+};
+
+
+/**
+ * @param {string} value
+ * @param {number=} opt_index
+ * @return {!proto.authorization_code.AuthorizationCode} returns this
+ */
+proto.authorization_code.AuthorizationCode.prototype.addScope = function(value, opt_index) {
+  return jspb.Message.addToRepeatedField(this, 11, value, opt_index);
+};
+
+
+/**
+ * Clears the list making it empty but non-null.
+ * @return {!proto.authorization_code.AuthorizationCode} returns this
+ */
+proto.authorization_code.AuthorizationCode.prototype.clearScopeList = function() {
+  return this.setScopeList([]);
+};
+
+
+/**
+ * optional client.Client client = 12;
  * @return {?proto.client.Client}
  */
 proto.authorization_code.AuthorizationCode.prototype.getClient = function() {
   return /** @type{?proto.client.Client} */ (
-    jspb.Message.getWrapperField(this, client_pb.Client, 11));
+    jspb.Message.getWrapperField(this, client_pb.Client, 12));
 };
 
 
@@ -490,7 +546,7 @@ proto.authorization_code.AuthorizationCode.prototype.getClient = function() {
  * @return {!proto.authorization_code.AuthorizationCode} returns this
 */
 proto.authorization_code.AuthorizationCode.prototype.setClient = function(value) {
-  return jspb.Message.setWrapperField(this, 11, value);
+  return jspb.Message.setWrapperField(this, 12, value);
 };
 
 
@@ -508,7 +564,7 @@ proto.authorization_code.AuthorizationCode.prototype.clearClient = function() {
  * @return {boolean}
  */
 proto.authorization_code.AuthorizationCode.prototype.hasClient = function() {
-  return jspb.Message.getField(this, 11) != null;
+  return jspb.Message.getField(this, 12) != null;
 };
 
 

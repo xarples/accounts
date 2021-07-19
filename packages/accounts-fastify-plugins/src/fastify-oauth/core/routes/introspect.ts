@@ -1,13 +1,13 @@
 import { FastifyPluginAsync } from 'fastify'
 import fp from 'fastify-plugin'
-import { isAfter, getUnixTime } from 'date-fns'
+import { getUnixTime } from 'date-fns'
 import { postIntrospectSchema } from '../schemas'
-import { PostIntrospectRoute } from '../types'
+import { IntrospectRequest } from '../types'
 import { AccessTokenResponse } from '../../access-token/types'
 import { RefreshTokenResponse } from '../../refresh-token/types'
 
 const plugin: FastifyPluginAsync = async fastify => {
-  fastify.post<PostIntrospectRoute>(
+  fastify.post<IntrospectRequest>(
     '/introspect',
     {
       attachValidation: true,

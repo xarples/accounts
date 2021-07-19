@@ -24,6 +24,10 @@ export class AccessToken extends jspb.Message {
     setCreatedAt(value: string): AccessToken;
     getUpdatedAt(): string;
     setUpdatedAt(value: string): AccessToken;
+    clearScopeList(): void;
+    getScopeList(): Array<string>;
+    setScopeList(value: Array<string>): AccessToken;
+    addScope(value: string, index?: number): string;
 
     hasClient(): boolean;
     clearClient(): void;
@@ -50,6 +54,7 @@ export namespace AccessToken {
         expiresIn: string,
         createdAt: string,
         updatedAt: string,
+        scopeList: Array<string>,
         client?: client_pb.Client.AsObject,
     }
 }

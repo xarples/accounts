@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package scope;
+
+message Scope {
+  string id = 1;
+  string name = 2;
+  string description = 3;
+  string created_at = 4;
+  string updated_at = 5;
+}
+
+message ScopeList {
+  repeated Scope scope = 1;
+}

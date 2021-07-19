@@ -9,4 +9,5 @@ export interface AuthorizationCodeResponse {
   expires_in: string
   created_at: string
   updated_at: string
+  scopes: string[]
 }

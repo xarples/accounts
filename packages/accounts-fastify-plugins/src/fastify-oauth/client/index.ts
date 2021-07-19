@@ -13,7 +13,7 @@ const service = new ClientService()
 
 const plugin: FastifyPluginAsync = async (fastify, options) => {
   fastify.addHook('onRequest', (request, _, done) => {
-    service.setContext({ request, a: {} })
+    service.setContext({ request })
     done()
   })
 

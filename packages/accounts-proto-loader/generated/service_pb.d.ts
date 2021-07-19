@@ -1,5 +1,5 @@
 // package: auth
-// file: account.proto
+// file: service.proto
 
 /* tslint:disable */
 /* eslint-disable */

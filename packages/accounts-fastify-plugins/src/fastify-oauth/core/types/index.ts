@@ -1,4 +1,4 @@
-export interface GetAuthorizeRoute {
+export interface AuthorizationRequest {
   Querystring: {
     client_id: string
     code_challenge: string
@@ -10,7 +10,7 @@ export interface GetAuthorizeRoute {
   }
 }
 
-export interface PostAuthorizeRoute {
+export interface AuthorizationConsentRequest {
   Body: {
     client_id: string
     code_challenge: string
@@ -25,25 +25,26 @@ export interface PostAuthorizeRoute {
   }
 }
 
-export interface PostTokenRoute {
+export interface TokenRequest {
   Body: {
     code?: string
     code_verifier?: string
     client_id?: string
-    grant_type?: 'authorization_code' | 'client_credentials' | 'refresh_token'
+    grant_type: 'authorization_code' | 'client_credentials' | 'refresh_token'
     redirect_uri?: string
     refresh_token?: string
+    scope?: string
   }
 }
 
-export interface PostIntrospectRoute {
+export interface IntrospectRequest {
   Body: {
     token: string
     token_type_hint: 'access_token' | 'refresh_token'
   }
 }
 
-export interface PostRevokeRoute {
+export interface RevokeRequest {
   Body: {
     token: string
     token_type_hint?: 'access_token' | 'refresh_token'

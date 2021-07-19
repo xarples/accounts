@@ -17,6 +17,11 @@ export default async function deleteAuthorizationCode(
         select: {
           client_id: true
         }
+      },
+      Scopes: {
+        select: {
+          name: true
+        }
       }
     }
   })

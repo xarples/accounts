@@ -1,10 +1,10 @@
 import { FastifyPluginAsync } from 'fastify'
 import fp from 'fastify-plugin'
 import { getAuthorizeSchema } from '../schemas'
-import { GetAuthorizeRoute, PostAuthorizeRoute } from '../types'
+import { AuthorizationRequest, AuthorizationConsentRequest } from '../types'
 
 const plugin: FastifyPluginAsync = async fastify => {
-  fastify.get<GetAuthorizeRoute>(
+  fastify.get<AuthorizationRequest>(
     '/authorize',
     {
       // preHandler: fastify.authPreHandler,
@@ -54,7 +54,7 @@ const plugin: FastifyPluginAsync = async fastify => {
     }
   )
 
-  fastify.post<PostAuthorizeRoute>(
+  fastify.post<AuthorizationConsentRequest>(
     '/authorize/:consent',
     async (request, reply) => {
       if (request.params.consent === 'deny') {
@@ -78,7 +78,8 @@ const plugin: FastifyPluginAsync = async fastify => {
         clientId: request.body.client_id,
         codeChallenge: request.body.code_challenge,
         codeChallengeMethod: request.body.code_challenge_method,
-        redirectUri: request.body.redirect_uri
+        redirectUri: request.body.redirect_uri,
+        scopeList: request.body.scope?.split(' ')
       })
 
       const params = new URLSearchParams({

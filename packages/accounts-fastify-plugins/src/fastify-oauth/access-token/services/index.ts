@@ -30,6 +30,7 @@ export class AccessTokenService {
     message.setUserId(options.userId!)
     message.setClientId(options.clientId!)
     message.setToken(options.token!)
+    message.setScopeList(options.scopeList || [])
 
     const created = await createAccessToken(message)
 

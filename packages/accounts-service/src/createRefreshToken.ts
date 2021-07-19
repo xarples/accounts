@@ -28,6 +28,11 @@ export default async function createRefreshToken(
         connect: {
           client_id: request.clientId
         }
+      },
+      Scopes: {
+        connect: request.scopeList.map(scope => ({
+          name: scope
+        }))
       }
     },
     include: {

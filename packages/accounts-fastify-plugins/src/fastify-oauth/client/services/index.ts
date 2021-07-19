@@ -5,7 +5,7 @@ import { FastifyRequest } from 'fastify'
 import { IncomingMessage, Server } from 'http'
 import { RouteGenericInterface } from 'fastify/types/route'
 
-const createClient = promisify<Client, Client>(client.createClient.bind(client))
+// const createClient = promisify<Client, Client>(client.createClient.bind(client))
 const getClient = promisify<Client, Client>(client.getClient.bind(client))
 const listClients = promisify<Client, ClientList>(
   client.listClients.bind(client)
@@ -22,7 +22,6 @@ type Options = {
 
 interface Context {
   request: FastifyRequest<RouteGenericInterface, Server, IncomingMessage>
-  a: any
 }
 
 export class ClientService {
@@ -119,8 +118,8 @@ export class ClientService {
       id: options.id,
       client_id: options.clientId,
       client_secret: options.clientSecret,
-      name: options.name,
-      description: options.description,
+      client_name: options.name,
+      client_description: options.description,
       type: options.type,
       redirect_uris: options.redirectUriList,
       client_secret_expires_at: 0,

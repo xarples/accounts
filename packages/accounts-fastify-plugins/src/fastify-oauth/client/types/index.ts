@@ -1,20 +1,20 @@
-export interface CreateRoute {
+export interface CreateClientRequest {
   Body: {
-    name: string
-    description: string
+    client_name: string
+    client_description: string
     type: string
     redirect_uris: string[]
   }
 }
 
-export interface GetRoute {
+export interface GetClientRequest {
   Params: {
     id?: string
     client_id?: string
   }
 }
 
-export interface ListRoute {
+export interface ListClientsRequest {
   Params: {
     id: string
   }
@@ -23,10 +23,10 @@ export interface ListRoute {
   }
 }
 
-export interface UpdateRoute {
+export interface UpdateClientRequest {
   Body: {
-    name: string
-    description: string
+    client_name: string
+    client_description: string
     redirect_uris: string[]
   }
   Params: {
@@ -34,13 +34,13 @@ export interface UpdateRoute {
   }
 }
 
-export interface UpdateSecretRoute {
+export interface UpdateClientSecretRequest {
   Params: {
     id: string
   }
 }
 
-export interface DeleteRoute {
+export interface DeleteClientRequest {
   Params: {
     id: string
   }

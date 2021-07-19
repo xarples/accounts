@@ -10,16 +10,16 @@ import {
 } from '../schemas'
 
 import {
-  CreateRoute,
-  GetRoute,
-  ListRoute,
-  UpdateRoute,
-  UpdateSecretRoute,
-  DeleteRoute
+  CreateClientRequest,
+  GetClientRequest,
+  ListClientsRequest,
+  UpdateClientRequest,
+  UpdateClientSecretRequest,
+  DeleteClientRequest
 } from '../types'
 
 const routes: FastifyPluginAsync = async fastify => {
-  fastify.post<CreateRoute>(
+  fastify.post<CreateClientRequest>(
     '/clients',
     { schema: createClientSchema, attachValidation: true },
     async (request, reply) => {
@@ -31,8 +31,8 @@ const routes: FastifyPluginAsync = async fastify => {
       }
 
       const client = await fastify.clientService.create({
-        name: request.body.name,
-        description: request.body.description,
+        name: request.body.client_name,
+        description: request.body.client_description,
         type: request.body.type,
         redirectUriList: request.body.redirect_uris
       })
@@ -41,7 +41,7 @@ const routes: FastifyPluginAsync = async fastify => {
     }
   )
 
-  fastify.get<ListRoute>(
+  fastify.get<ListClientsRequest>(
     '/clients',
     { schema: listClientsSchema },
     async (request, reply) => {
@@ -53,7 +53,7 @@ const routes: FastifyPluginAsync = async fastify => {
     }
   )
 
-  fastify.get<GetRoute>(
+  fastify.get<GetClientRequest>(
     '/clients/:id',
     { schema: getClientSchema },
     async (request, reply) => {
@@ -65,7 +65,7 @@ const routes: FastifyPluginAsync = async fastify => {
     }
   )
 
-  fastify.put<UpdateRoute>(
+  fastify.put<UpdateClientRequest>(
     '/clients/:id',
     { schema: updateClientSchema, attachValidation: true },
     async (request, reply) => {
@@ -78,14 +78,14 @@ const routes: FastifyPluginAsync = async fastify => {
 
       return fastify.clientService.update({
         id: request.params.id,
-        name: request.body.name,
-        description: request.body.description,
+        name: request.body.client_name,
+        description: request.body.client_description,
         redirectUriList: request.body.redirect_uris
       })
     }
   )
 
-  fastify.patch<UpdateSecretRoute>(
+  fastify.patch<UpdateClientSecretRequest>(
     '/clients/:id/secret',
     { schema: updateClientSecretSchema },
     async request => {
@@ -95,7 +95,7 @@ const routes: FastifyPluginAsync = async fastify => {
     }
   )
 
-  fastify.delete<DeleteRoute>(
+  fastify.delete<DeleteClientRequest>(
     '/clients/:id',
     { schema: deleteClientSchema },
     async request => {

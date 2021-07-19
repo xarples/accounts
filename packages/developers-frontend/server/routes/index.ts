@@ -17,7 +17,8 @@ const clientId =
 const clientSecret =
   'ceac77ba4ceba7d0fc8011fa82383b3f64cc7a1580f000182b7aba77adc31607'
 const redirectUri = 'http://localhost:5002/callback'
-const oauthServerHost = `http://${process.env.ACCOUNTS_FRONTEND_HOST}:5000`
+const oauthServerHost = `${process.env.ACCOUNTS_FRONTEND_HOST}:5000`
+const scopes = ['clients:read', 'clients:write']
 
 const plugin: FastifyPluginAsync = async fastify => {
   fastify.get('/signin', async (request, reply) => {
@@ -34,10 +35,11 @@ const plugin: FastifyPluginAsync = async fastify => {
       redirect_uri: redirectUri,
       code_challenge: codeChallenge,
       code_challenge_method: 'S256',
+      scope: scopes.join(' '),
       state
     })
 
-    const url = `${oauthServerHost}/authorize?${params.toString()}`
+    const url = `http://localhost:5000/authorize?${params.toString()}`
 
     request.session.codeVerifier = _codeVerifier
     request.session.state = state
@@ -45,19 +47,19 @@ const plugin: FastifyPluginAsync = async fastify => {
     reply.redirect(url)
   })
 
-  fastify.get('/logout', (request, reply) => {
-    request.destroySession(err => {
-      if (err) {
-        reply.status(500)
-        reply.code(500).send('Internal Server Error')
-      } else {
-        reply.redirect('/')
-        // reply.redirect(
-        //   `http://${process.env.ACCOUNTS_FRONTEND_HOST}:5000/api/userslogout`
-        // )
-      }
-    })
-  })
+  // fastify.get('/logout', (request, reply) => {
+  //   request.destroySession(err => {
+  //     if (err) {
+  //       reply.status(500)
+  //       reply.code(500).send('Internal Server Error')
+  //     } else {
+  //       reply.redirect('/')
+  //       // reply.redirect(
+  //       //   `http://${process.env.ACCOUNTS_FRONTEND_HOST}:5000/api/userslogout`
+  //       // )
+  //     }
+  //   })
+  // })
 
   fastify.get('/callback', async (request, reply) => {
     try {

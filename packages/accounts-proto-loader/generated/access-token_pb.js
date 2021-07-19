@@ -30,7 +30,7 @@ goog.exportSymbol('proto.access_token.AccessTokenList', null, global);
  * @constructor
  */
 proto.access_token.AccessToken = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+  jspb.Message.initialize(this, opt_data, 0, -1, proto.access_token.AccessToken.repeatedFields_, null);
 };
 goog.inherits(proto.access_token.AccessToken, jspb.Message);
 if (goog.DEBUG && !COMPILED) {
@@ -61,6 +61,13 @@ if (goog.DEBUG && !COMPILED) {
    */
   proto.access_token.AccessTokenList.displayName = 'proto.access_token.AccessTokenList';
 }
+
+/**
+ * List of repeated fields within this message type.
+ * @private {!Array<number>}
+ * @const
+ */
+proto.access_token.AccessToken.repeatedFields_ = [9];
 
 
 
@@ -101,6 +108,7 @@ proto.access_token.AccessToken.toObject = function(includeInstance, msg) {
     expiresIn: jspb.Message.getFieldWithDefault(msg, 6, ""),
     createdAt: jspb.Message.getFieldWithDefault(msg, 7, ""),
     updatedAt: jspb.Message.getFieldWithDefault(msg, 8, ""),
+    scopeList: (f = jspb.Message.getRepeatedField(msg, 9)) == null ? undefined : f,
     client: (f = msg.getClient()) && client_pb.Client.toObject(includeInstance, f)
   };
 
@@ -171,6 +179,10 @@ proto.access_token.AccessToken.deserializeBinaryFromReader = function(msg, reade
       msg.setUpdatedAt(value);
       break;
     case 9:
+      var value = /** @type {string} */ (reader.readString());
+      msg.addScope(value);
+      break;
+    case 10:
       var value = new client_pb.Client;
       reader.readMessage(value,client_pb.Client.deserializeBinaryFromReader);
       msg.setClient(value);
@@ -260,10 +272,17 @@ proto.access_token.AccessToken.serializeBinaryToWriter = function(message, write
       f
     );
   }
+  f = message.getScopeList();
+  if (f.length > 0) {
+    writer.writeRepeatedString(
+      9,
+      f
+    );
+  }
   f = message.getClient();
   if (f != null) {
     writer.writeMessage(
-      9,
+      10,
       f,
       client_pb.Client.serializeBinaryToWriter
     );
@@ -416,12 +435,49 @@ proto.access_token.AccessToken.prototype.setUpdatedAt = function(value) {
 
 
 /**
- * optional client.Client client = 9;
+ * repeated string scope = 9;
+ * @return {!Array<string>}
+ */
+proto.access_token.AccessToken.prototype.getScopeList = function() {
+  return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 9));
+};
+
+
+/**
+ * @param {!Array<string>} value
+ * @return {!proto.access_token.AccessToken} returns this
+ */
+proto.access_token.AccessToken.prototype.setScopeList = function(value) {
+  return jspb.Message.setField(this, 9, value || []);
+};
+
+
+/**
+ * @param {string} value
+ * @param {number=} opt_index
+ * @return {!proto.access_token.AccessToken} returns this
+ */
+proto.access_token.AccessToken.prototype.addScope = function(value, opt_index) {
+  return jspb.Message.addToRepeatedField(this, 9, value, opt_index);
+};
+
+
+/**
+ * Clears the list making it empty but non-null.
+ * @return {!proto.access_token.AccessToken} returns this
+ */
+proto.access_token.AccessToken.prototype.clearScopeList = function() {
+  return this.setScopeList([]);
+};
+
+
+/**
+ * optional client.Client client = 10;
  * @return {?proto.client.Client}
  */
 proto.access_token.AccessToken.prototype.getClient = function() {
   return /** @type{?proto.client.Client} */ (
-    jspb.Message.getWrapperField(this, client_pb.Client, 9));
+    jspb.Message.getWrapperField(this, client_pb.Client, 10));
 };
 
 
@@ -430,7 +486,7 @@ proto.access_token.AccessToken.prototype.getClient = function() {
  * @return {!proto.access_token.AccessToken} returns this
 */
 proto.access_token.AccessToken.prototype.setClient = function(value) {
-  return jspb.Message.setWrapperField(this, 9, value);
+  return jspb.Message.setWrapperField(this, 10, value);
 };
 
 
@@ -448,7 +504,7 @@ proto.access_token.AccessToken.prototype.clearClient = function() {
  * @return {boolean}
  */
 proto.access_token.AccessToken.prototype.hasClient = function() {
-  return jspb.Message.getField(this, 9) != null;
+  return jspb.Message.getField(this, 10) != null;
 };
 
 

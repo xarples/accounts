@@ -2,10 +2,10 @@ import { FastifyPluginAsync } from 'fastify'
 import fp from 'fastify-plugin'
 import { calculateCodeChallenge, decodeBasic } from '@xarples/accounts-utils'
 import { postTokenSchema } from '../schemas'
-import { PostTokenRoute } from '../types'
+import { TokenRequest } from '../types'
 
 const plugin: FastifyPluginAsync = async fastify => {
-  fastify.post<PostTokenRoute>(
+  fastify.post<TokenRequest>(
     '/token',
     {
       attachValidation: true,
@@ -26,10 +26,11 @@ const plugin: FastifyPluginAsync = async fastify => {
         const credentials = decodeBasic(request.headers.authorization!)
 
         const accessToken = await fastify.accessTokenService.create({
-          clientId: credentials!.clientId
+          clientId: credentials!.clientId,
+          scopeList: request.body.scope?.split(' ')
         })
 
-        reply.send({
+        reply.code(200).send({
           access_token: accessToken.token,
           token_type: 'Bearer',
           expires_in: 3600
@@ -79,16 +80,18 @@ const plugin: FastifyPluginAsync = async fastify => {
         const accessToken = await fastify.accessTokenService.create({
           authorizationCodeId: refreshToken!.authorization_code_id,
           userId: authorizationCode!.user_id,
-          clientId: credentials!.clientId
+          clientId: credentials!.clientId,
+          scopeList: authorizationCode!.scopes
         })
 
         const nextRefreshToken = await fastify.refreshTokenService.create({
           authorizationCodeId: refreshToken!.authorization_code_id,
           userId: authorizationCode!.user_id,
-          clientId: credentials!.clientId
+          clientId: credentials!.clientId,
+          scopeList: authorizationCode!.scopes
         })
 
-        reply.send({
+        reply.code(200).send({
           access_token: accessToken.token,
           token_type: 'Bearer',
           expires_in: 3600,
@@ -166,16 +169,18 @@ const plugin: FastifyPluginAsync = async fastify => {
       const accessToken = await fastify.accessTokenService.create({
         authorizationCodeId: authorizationCode!.id,
         userId: authorizationCode!.user_id,
-        clientId: request.body.client_id
+        clientId: request.body.client_id,
+        scopeList: authorizationCode.scopes
       })
 
       const refreshToken = await fastify.refreshTokenService.create({
         authorizationCodeId: authorizationCode!.id,
         userId: authorizationCode!.user_id,
-        clientId: request.body.client_id
+        clientId: request.body.client_id,
+        scopeList: authorizationCode.scopes
       })
 
-      reply.send({
+      reply.code(200).send({
         access_token: accessToken.token,
         token_type: 'Bearer',
         expires_in: 3600,

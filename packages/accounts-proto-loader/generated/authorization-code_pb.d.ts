@@ -28,6 +28,10 @@ export class AuthorizationCode extends jspb.Message {
     setCreatedAt(value: string): AuthorizationCode;
     getUpdatedAt(): string;
     setUpdatedAt(value: string): AuthorizationCode;
+    clearScopeList(): void;
+    getScopeList(): Array<string>;
+    setScopeList(value: Array<string>): AuthorizationCode;
+    addScope(value: string, index?: number): string;
 
     hasClient(): boolean;
     clearClient(): void;
@@ -56,6 +60,7 @@ export namespace AuthorizationCode {
         expiresIn: string,
         createdAt: string,
         updatedAt: string,
+        scopeList: Array<string>,
         client?: client_pb.Client.AsObject,
     }
 }

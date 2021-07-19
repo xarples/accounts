@@ -2,7 +2,8 @@ import { promisify } from 'util'
 import client from '@xarples/accounts-client'
 import {
   AuthorizationCode,
-  AuthorizationCodeList
+  AuthorizationCodeList,
+  Scope
 } from '@xarples/accounts-proto-loader'
 import isAfter from 'date-fns/isAfter'
 import { AuthorizationCodeResponse } from '../types'
@@ -37,6 +38,7 @@ export class AuthorizationCodeService {
     message.setCodeChallenge(options.codeChallenge!)
     message.setCodeChallengeMethod(options.codeChallengeMethod!)
     message.setRedirectUri(options.redirectUri!)
+    message.setScopeList(options.scopeList || [])
 
     const created = await createAuthorizationCode(message)
 
@@ -81,11 +83,11 @@ export class AuthorizationCodeService {
     return this.reducer(deleted.toObject())
   }
 
-  async isExpired(code: AuthorizationCodeResponse) {
+  isExpired(code: AuthorizationCodeResponse) {
     return isAfter(new Date(), new Date(code.expires_in))
   }
 
-  reducer(options: AuthorizationCode.AsObject) {
+  reducer(options: AuthorizationCode.AsObject): AuthorizationCodeResponse {
     return {
       id: options.id,
       user_id: options.userId,
@@ -96,7 +98,8 @@ export class AuthorizationCodeService {
       redirect_uri: options.redirectUri,
       expires_in: options.expiresIn,
       created_at: options.createdAt,
-      updated_at: options.updatedAt
+      updated_at: options.updatedAt,
+      scopes: options.scopeList
     }
   }
 }

@@ -15,7 +15,8 @@ message AuthorizationCode {
   string expires_in = 8;
   string created_at = 9;
   string updated_at = 10;
-  client.Client client = 11;
+  repeated string scope = 11;
+  client.Client client = 12;
 }
 
 message AuthorizationCodeList {

@@ -13,7 +13,8 @@ message AccessToken {
   string expires_in = 6;
   string created_at = 7;
   string updated_at = 8;
-  client.Client client = 9;
+  repeated string scope = 9;
+  client.Client client = 10;
 }
 
 message AccessTokenList {

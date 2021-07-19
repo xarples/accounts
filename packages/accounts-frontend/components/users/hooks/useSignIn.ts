@@ -4,7 +4,7 @@ interface IOptions {
 }
 
 export function useSignIn(options: IOptions) {
-  return fetch('/api/users/signin', {
+  return fetch('/signin', {
     method: 'POST',
     headers: {
       Accept: 'application/json',

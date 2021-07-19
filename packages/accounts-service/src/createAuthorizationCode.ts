@@ -27,12 +27,22 @@ export default async function createAuthorizationCode(
         connect: {
           client_id: request.clientId
         }
+      },
+      Scopes: {
+        connect: request.scopeList.map(scope => ({
+          name: scope
+        }))
       }
     },
     include: {
       Client: {
         select: {
           client_id: true
+        }
+      },
+      Scopes: {
+        select: {
+          name: true
         }
       }
     }

@@ -30,6 +30,7 @@ export class RefreshTokenService {
     message.setUserId(options.userId!)
     message.setClientId(options.clientId!)
     message.setToken(options.token!)
+    message.setScopeList(options.scopeList || [])
 
     const created = await createRefreshToken(message)
 

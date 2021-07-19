@@ -2,12 +2,12 @@ import { FastifyPluginAsync } from 'fastify'
 import fp from 'fastify-plugin'
 import { decodeBasic } from '@xarples/accounts-utils'
 import { postRevokeSchema } from '../schemas'
-import { PostRevokeRoute } from '../types'
+import { RevokeRequest } from '../types'
 import { AccessTokenResponse } from '../../access-token/types'
 import { RefreshTokenResponse } from '../../refresh-token/types'
 
 const plugin: FastifyPluginAsync = async fastify => {
-  fastify.post<PostRevokeRoute>(
+  fastify.post<RevokeRequest>(
     '/revoke',
     {
       attachValidation: true,

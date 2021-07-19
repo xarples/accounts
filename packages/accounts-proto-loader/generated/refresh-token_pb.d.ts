@@ -24,6 +24,10 @@ export class RefreshToken extends jspb.Message {
     setCreatedAt(value: string): RefreshToken;
     getUpdatedAt(): string;
     setUpdatedAt(value: string): RefreshToken;
+    clearScopeList(): void;
+    getScopeList(): Array<string>;
+    setScopeList(value: Array<string>): RefreshToken;
+    addScope(value: string, index?: number): string;
 
     hasClient(): boolean;
     clearClient(): void;
@@ -50,6 +54,7 @@ export namespace RefreshToken {
         expiresIn: string,
         createdAt: string,
         updatedAt: string,
+        scopeList: Array<string>,
         client?: client_pb.Client.AsObject,
     }
 }

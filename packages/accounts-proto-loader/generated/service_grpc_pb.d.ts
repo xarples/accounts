@@ -1,11 +1,11 @@
 // package: auth
-// file: account.proto
+// file: service.proto
 
 /* tslint:disable */
 /* eslint-disable */
 
 import * as grpc from "@grpc/grpc-js";
-import * as account_pb from "./account_pb";
+import * as service_pb from "./service_pb";
 import * as access_token_pb from "./access-token_pb";
 import * as authorization_code_pb from "./authorization-code_pb";
 import * as client_pb from "./client_pb";

@@ -30,7 +30,7 @@ goog.exportSymbol('proto.refresh_token.RefreshTokenList', null, global);
  * @constructor
  */
 proto.refresh_token.RefreshToken = function(opt_data) {
-  jspb.Message.initialize(this, opt_data, 0, -1, null, null);
+  jspb.Message.initialize(this, opt_data, 0, -1, proto.refresh_token.RefreshToken.repeatedFields_, null);
 };
 goog.inherits(proto.refresh_token.RefreshToken, jspb.Message);
 if (goog.DEBUG && !COMPILED) {
@@ -61,6 +61,13 @@ if (goog.DEBUG && !COMPILED) {
    */
   proto.refresh_token.RefreshTokenList.displayName = 'proto.refresh_token.RefreshTokenList';
 }
+
+/**
+ * List of repeated fields within this message type.
+ * @private {!Array<number>}
+ * @const
+ */
+proto.refresh_token.RefreshToken.repeatedFields_ = [9];
 
 
 
@@ -101,6 +108,7 @@ proto.refresh_token.RefreshToken.toObject = function(includeInstance, msg) {
     expiresIn: jspb.Message.getFieldWithDefault(msg, 6, ""),
     createdAt: jspb.Message.getFieldWithDefault(msg, 7, ""),
     updatedAt: jspb.Message.getFieldWithDefault(msg, 8, ""),
+    scopeList: (f = jspb.Message.getRepeatedField(msg, 9)) == null ? undefined : f,
     client: (f = msg.getClient()) && client_pb.Client.toObject(includeInstance, f)
   };
 
@@ -171,6 +179,10 @@ proto.refresh_token.RefreshToken.deserializeBinaryFromReader = function(msg, rea
       msg.setUpdatedAt(value);
       break;
     case 9:
+      var value = /** @type {string} */ (reader.readString());
+      msg.addScope(value);
+      break;
+    case 10:
       var value = new client_pb.Client;
       reader.readMessage(value,client_pb.Client.deserializeBinaryFromReader);
       msg.setClient(value);
@@ -260,10 +272,17 @@ proto.refresh_token.RefreshToken.serializeBinaryToWriter = function(message, wri
       f
     );
   }
+  f = message.getScopeList();
+  if (f.length > 0) {
+    writer.writeRepeatedString(
+      9,
+      f
+    );
+  }
   f = message.getClient();
   if (f != null) {
     writer.writeMessage(
-      9,
+      10,
       f,
       client_pb.Client.serializeBinaryToWriter
     );
@@ -416,12 +435,49 @@ proto.refresh_token.RefreshToken.prototype.setUpdatedAt = function(value) {
 
 
 /**
- * optional client.Client client = 9;
+ * repeated string scope = 9;
+ * @return {!Array<string>}
+ */
+proto.refresh_token.RefreshToken.prototype.getScopeList = function() {
+  return /** @type {!Array<string>} */ (jspb.Message.getRepeatedField(this, 9));
+};
+
+
+/**
+ * @param {!Array<string>} value
+ * @return {!proto.refresh_token.RefreshToken} returns this
+ */
+proto.refresh_token.RefreshToken.prototype.setScopeList = function(value) {
+  return jspb.Message.setField(this, 9, value || []);
+};
+
+
+/**
+ * @param {string} value
+ * @param {number=} opt_index
+ * @return {!proto.refresh_token.RefreshToken} returns this
+ */
+proto.refresh_token.RefreshToken.prototype.addScope = function(value, opt_index) {
+  return jspb.Message.addToRepeatedField(this, 9, value, opt_index);
+};
+
+
+/**
+ * Clears the list making it empty but non-null.
+ * @return {!proto.refresh_token.RefreshToken} returns this
+ */
+proto.refresh_token.RefreshToken.prototype.clearScopeList = function() {
+  return this.setScopeList([]);
+};
+
+
+/**
+ * optional client.Client client = 10;
  * @return {?proto.client.Client}
  */
 proto.refresh_token.RefreshToken.prototype.getClient = function() {
   return /** @type{?proto.client.Client} */ (
-    jspb.Message.getWrapperField(this, client_pb.Client, 9));
+    jspb.Message.getWrapperField(this, client_pb.Client, 10));
 };
 
 
@@ -430,7 +486,7 @@ proto.refresh_token.RefreshToken.prototype.getClient = function() {
  * @return {!proto.refresh_token.RefreshToken} returns this
 */
 proto.refresh_token.RefreshToken.prototype.setClient = function(value) {
-  return jspb.Message.setWrapperField(this, 9, value);
+  return jspb.Message.setWrapperField(this, 10, value);
 };
 
 
@@ -448,7 +504,7 @@ proto.refresh_token.RefreshToken.prototype.clearClient = function() {
  * @return {boolean}
  */
 proto.refresh_token.RefreshToken.prototype.hasClient = function() {
-  return jspb.Message.getField(this, 9) != null;
+  return jspb.Message.getField(this, 10) != null;
 };
 
 

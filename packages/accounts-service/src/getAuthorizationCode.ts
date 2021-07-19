@@ -18,6 +18,11 @@ export default async function getAuthorizationCode(
         select: {
           client_id: true
         }
+      },
+      Scopes: {
+        select: {
+          name: true
+        }
       }
     }
   })

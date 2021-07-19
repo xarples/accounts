@@ -12,8 +12,6 @@ export default async function createAccessToken(
 
   const token = await db.accessToken.create({
     data: {
-      // user_id: request.userId,
-      // authorization_code_id: request.authorizationCodeId,
       token: randomBytes(32).toString('hex'),
       expires_in: add(new Date(), { hours: 1 }),
       AuthorizationCode: {
@@ -32,7 +30,9 @@ export default async function createAccessToken(
         }
       },
       Scopes: {
-        connect: [{ name: 'clients:write' }]
+        connect: request.scopeList.map(scope => ({
+          name: scope
+        }))
       }
     },
     include: {

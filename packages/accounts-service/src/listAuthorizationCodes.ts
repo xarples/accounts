@@ -20,6 +20,11 @@ export default async function listAuthorizationCodes(
         select: {
           client_id: true
         }
+      },
+      Scopes: {
+        select: {
+          name: true
+        }
       }
     }
   })
