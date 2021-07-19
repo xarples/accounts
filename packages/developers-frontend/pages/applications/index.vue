@@ -1,9 +1,10 @@
 <script lang="ts">
-import { defineComponent, useAsync } from '@nuxtjs/composition-api'
+import { defineComponent, useAsync, useRouter } from '@nuxtjs/composition-api'
 import { useClients } from '~/components/clients/hooks'
 
 export default defineComponent({
   setup() {
+    const router = useRouter()
     const clients = useAsync(useClients, 'clients')
     const applicationTypes = {
       web: 'Web Application'
@@ -11,7 +12,10 @@ export default defineComponent({
 
     return {
       clients,
-      applicationTypes
+      applicationTypes,
+      handleClick(id: string) {
+        router.push(`/applications/${id}`)
+      }
     }
   }
 })
@@ -42,15 +46,16 @@ export default defineComponent({
         cols="12"
         v-for="client in clients"
         :key="client.client_id"
+        @click="handleClick(client.id)"
       >
         <b-list-group>
           <b-list-group-item href="#" class="flex-column align-items-start">
             <div class="d-flex w-100 justify-content-between">
-              <h5 class="mb-1">{{ client.name }}</h5>
+              <h5 class="mb-1">{{ client.client_name }}</h5>
               <small class="text-muted">3 days ago</small>
             </div>
             <p class="mb-1">
-              {{ client.description }}
+              {{ client.client_description }}
             </p>
             <small class="text-muted">Client ID: {{ client.client_id }}</small>
           </b-list-group-item>

@@ -9,6 +9,9 @@ export default function toRefreshTokenMessage(
     Client: {
       client_id: string | null
     }
+    Scopes: {
+      name: string
+    }[]
   }
 ): RefreshTokenMessage {
   const message = new RefreshTokenMessage()
@@ -25,6 +28,7 @@ export default function toRefreshTokenMessage(
   message.setCreatedAt(item.created_at.toString())
   message.setUpdatedAt(item.updated_at.toString())
   message.setClient(clientMessage)
+  message.setScopeList(item.Scopes.map(scope => scope.name))
 
   return message
 }

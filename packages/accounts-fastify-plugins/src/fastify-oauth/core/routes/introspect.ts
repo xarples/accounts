@@ -61,7 +61,11 @@ const plugin: FastifyPluginAsync = async fastify => {
         // it is possible to validate whether an access or refresh token has expired or not
         // using the accessTokenService or the refreshTokenService.
         if (fastify.accessTokenService.isExpired(accessOrRefreshToken)) {
-          throw new Error('Token is expired')
+          reply.code(200).send({
+            active: false
+          })
+
+          return
         }
 
         const user = await fastify.userService.get({
@@ -70,7 +74,7 @@ const plugin: FastifyPluginAsync = async fastify => {
 
         reply.code(200).send({
           active: true,
-          scope: 'read write dolphin',
+          scope: accessOrRefreshToken.scopes.join(' '),
           client_id: accessOrRefreshToken.client_id,
           username: user!.email,
           token_type: tokenTypeHint,

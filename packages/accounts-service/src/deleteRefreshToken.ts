@@ -17,6 +17,11 @@ export default async function deleteRefreshToken(
         select: {
           client_id: true
         }
+      },
+      Scopes: {
+        select: {
+          name: true
+        }
       }
     }
   })

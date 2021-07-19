@@ -28,14 +28,14 @@ model User {
 }
 
 model Client {
-  id                         String      @id @default(cuid())
+  id                         String                         @id @default(cuid())
   user_id                    String?
-  client_id                  String      @unique
+  client_id                  String                         @unique
   client_secret              String?
-  client_name                String      @unique
+  client_name                String                         @unique
   client_description         String
-  type                       ClientType? @default(web)
-  token_endpoint_auth_method String?     @default("client_secret_basic")
+  application_type           ClientType?                    @default(web)
+  token_endpoint_auth_method ClientTokenEndpointAuthMethod? @default(client_secret_basic)
   contacts                   String[]
   grant_types                String[]
   response_types             String[]
@@ -44,8 +44,9 @@ model Client {
   client_uri                 String?
   policy_uri                 String?
   tos_uri                    String?
-  created_at                 DateTime    @default(now())
-  updated_at                 DateTime    @updatedAt
+  client_secret_expires_at   DateTime?
+  created_at                 DateTime                       @default(now())
+  updated_at                 DateTime                       @updatedAt
 
   User               User?               @relation(fields: [user_id], references: [id])
   AuthorizationCodes AuthorizationCode[]
@@ -133,6 +134,10 @@ enum ClientType {
   browser
   ios
   android
+}
+
+enum ClientTokenEndpointAuthMethod {
+  client_secret_basic
 }
 
 enum CodeChallengeMethod {

@@ -2,7 +2,7 @@ export interface CreateClientRequest {
   Body: {
     client_name: string
     client_description: string
-    type: string
+    application_type: string
     redirect_uris: string[]
   }
 }

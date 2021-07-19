@@ -31,9 +31,9 @@ const routes: FastifyPluginAsync = async fastify => {
       }
 
       const client = await fastify.clientService.create({
-        name: request.body.client_name,
-        description: request.body.client_description,
-        type: request.body.type,
+        clientName: request.body.client_name,
+        clientDescription: request.body.client_description,
+        applicationType: request.body.application_type,
         redirectUriList: request.body.redirect_uris
       })
 
@@ -78,8 +78,8 @@ const routes: FastifyPluginAsync = async fastify => {
 
       return fastify.clientService.update({
         id: request.params.id,
-        name: request.body.client_name,
-        description: request.body.client_description,
+        clientName: request.body.client_name,
+        clientDescription: request.body.client_description,
         redirectUriList: request.body.redirect_uris
       })
     }

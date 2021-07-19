@@ -102,9 +102,9 @@ proto.client.Client.toObject = function(includeInstance, msg) {
     userId: jspb.Message.getFieldWithDefault(msg, 2, ""),
     clientId: jspb.Message.getFieldWithDefault(msg, 3, ""),
     clientSecret: jspb.Message.getFieldWithDefault(msg, 4, ""),
-    name: jspb.Message.getFieldWithDefault(msg, 5, ""),
-    description: jspb.Message.getFieldWithDefault(msg, 6, ""),
-    type: jspb.Message.getFieldWithDefault(msg, 7, ""),
+    clientName: jspb.Message.getFieldWithDefault(msg, 5, ""),
+    clientDescription: jspb.Message.getFieldWithDefault(msg, 6, ""),
+    applicationType: jspb.Message.getFieldWithDefault(msg, 7, ""),
     tokenEndpointAuthMethod: jspb.Message.getFieldWithDefault(msg, 8, ""),
     scope: jspb.Message.getFieldWithDefault(msg, 9, ""),
     contactsList: (f = jspb.Message.getRepeatedField(msg, 10)) == null ? undefined : f,
@@ -112,7 +112,7 @@ proto.client.Client.toObject = function(includeInstance, msg) {
     responseTypeList: (f = jspb.Message.getRepeatedField(msg, 12)) == null ? undefined : f,
     redirectUriList: (f = jspb.Message.getRepeatedField(msg, 13)) == null ? undefined : f,
     logoUri: jspb.Message.getFieldWithDefault(msg, 14, ""),
-    websiteUri: jspb.Message.getFieldWithDefault(msg, 15, ""),
+    clientUri: jspb.Message.getFieldWithDefault(msg, 15, ""),
     policyUri: jspb.Message.getFieldWithDefault(msg, 16, ""),
     tosUri: jspb.Message.getFieldWithDefault(msg, 17, ""),
     createdAt: jspb.Message.getFieldWithDefault(msg, 18, ""),
@@ -171,15 +171,15 @@ proto.client.Client.deserializeBinaryFromReader = function(msg, reader) {
       break;
     case 5:
       var value = /** @type {string} */ (reader.readString());
-      msg.setName(value);
+      msg.setClientName(value);
       break;
     case 6:
       var value = /** @type {string} */ (reader.readString());
-      msg.setDescription(value);
+      msg.setClientDescription(value);
       break;
     case 7:
       var value = /** @type {string} */ (reader.readString());
-      msg.setType(value);
+      msg.setApplicationType(value);
       break;
     case 8:
       var value = /** @type {string} */ (reader.readString());
@@ -211,7 +211,7 @@ proto.client.Client.deserializeBinaryFromReader = function(msg, reader) {
       break;
     case 15:
       var value = /** @type {string} */ (reader.readString());
-      msg.setWebsiteUri(value);
+      msg.setClientUri(value);
       break;
     case 16:
       var value = /** @type {string} */ (reader.readString());
@@ -286,21 +286,21 @@ proto.client.Client.serializeBinaryToWriter = function(message, writer) {
       f
     );
   }
-  f = message.getName();
+  f = message.getClientName();
   if (f.length > 0) {
     writer.writeString(
       5,
       f
     );
   }
-  f = message.getDescription();
+  f = message.getClientDescription();
   if (f.length > 0) {
     writer.writeString(
       6,
       f
     );
   }
-  f = message.getType();
+  f = message.getApplicationType();
   if (f.length > 0) {
     writer.writeString(
       7,
@@ -356,7 +356,7 @@ proto.client.Client.serializeBinaryToWriter = function(message, writer) {
       f
     );
   }
-  f = message.getWebsiteUri();
+  f = message.getClientUri();
   if (f.length > 0) {
     writer.writeString(
       15,
@@ -467,10 +467,10 @@ proto.client.Client.prototype.setClientSecret = function(value) {
 
 
 /**
- * optional string name = 5;
+ * optional string client_name = 5;
  * @return {string}
  */
-proto.client.Client.prototype.getName = function() {
+proto.client.Client.prototype.getClientName = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 5, ""));
 };
 
@@ -479,16 +479,16 @@ proto.client.Client.prototype.getName = function() {
  * @param {string} value
  * @return {!proto.client.Client} returns this
  */
-proto.client.Client.prototype.setName = function(value) {
+proto.client.Client.prototype.setClientName = function(value) {
   return jspb.Message.setProto3StringField(this, 5, value);
 };
 
 
 /**
- * optional string description = 6;
+ * optional string client_description = 6;
  * @return {string}
  */
-proto.client.Client.prototype.getDescription = function() {
+proto.client.Client.prototype.getClientDescription = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 6, ""));
 };
 
@@ -497,16 +497,16 @@ proto.client.Client.prototype.getDescription = function() {
  * @param {string} value
  * @return {!proto.client.Client} returns this
  */
-proto.client.Client.prototype.setDescription = function(value) {
+proto.client.Client.prototype.setClientDescription = function(value) {
   return jspb.Message.setProto3StringField(this, 6, value);
 };
 
 
 /**
- * optional string type = 7;
+ * optional string application_type = 7;
  * @return {string}
  */
-proto.client.Client.prototype.getType = function() {
+proto.client.Client.prototype.getApplicationType = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 7, ""));
 };
 
@@ -515,7 +515,7 @@ proto.client.Client.prototype.getType = function() {
  * @param {string} value
  * @return {!proto.client.Client} returns this
  */
-proto.client.Client.prototype.setType = function(value) {
+proto.client.Client.prototype.setApplicationType = function(value) {
   return jspb.Message.setProto3StringField(this, 7, value);
 };
 
@@ -723,10 +723,10 @@ proto.client.Client.prototype.setLogoUri = function(value) {
 
 
 /**
- * optional string website_uri = 15;
+ * optional string client_uri = 15;
  * @return {string}
  */
-proto.client.Client.prototype.getWebsiteUri = function() {
+proto.client.Client.prototype.getClientUri = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 15, ""));
 };
 
@@ -735,7 +735,7 @@ proto.client.Client.prototype.getWebsiteUri = function() {
  * @param {string} value
  * @return {!proto.client.Client} returns this
  */
-proto.client.Client.prototype.setWebsiteUri = function(value) {
+proto.client.Client.prototype.setClientUri = function(value) {
   return jspb.Message.setProto3StringField(this, 15, value);
 };
 

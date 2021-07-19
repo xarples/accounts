@@ -40,6 +40,11 @@ export default async function createAccessToken(
         select: {
           client_id: true
         }
+      },
+      Scopes: {
+        select: {
+          name: true
+        }
       }
     }
   })

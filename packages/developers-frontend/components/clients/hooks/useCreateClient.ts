@@ -1,8 +1,8 @@
 interface IOptions {
-  name: string
-  description: string
-  type: string
-  redirect_uris: string[]
+  clientName: string
+  clientDescription: string
+  applicationType: string
+  redirectUris: string[]
 }
 
 export function useCreateClient(options: IOptions) {
@@ -12,6 +12,11 @@ export function useCreateClient(options: IOptions) {
       Accept: 'application/json',
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify(options)
+    body: JSON.stringify({
+      client_name: options.clientName,
+      client_description: options.clientDescription,
+      application_type: options.applicationType,
+      redirect_uris: options.redirectUris
+    })
   }).then(res => res.json)
 }

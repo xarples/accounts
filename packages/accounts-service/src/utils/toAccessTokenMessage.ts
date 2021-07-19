@@ -9,6 +9,9 @@ export default function toAccessTokenMessage(
     Client: {
       client_id: string | null
     }
+    Scopes: {
+      name: string
+    }[]
   }
 ): AccessTokenMessage {
   const message = new AccessTokenMessage()
@@ -25,6 +28,7 @@ export default function toAccessTokenMessage(
   message.setCreatedAt(item.created_at.toString())
   message.setUpdatedAt(item.updated_at.toString())
   message.setClient(clientMessage)
+  message.setScopeList(item.Scopes.map(scope => scope.name))
 
   return message
 }

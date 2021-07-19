@@ -19,6 +19,11 @@ export default async function getRefreshToken(
           select: {
             client_id: true
           }
+        },
+        Scopes: {
+          select: {
+            name: true
+          }
         }
       }
     })

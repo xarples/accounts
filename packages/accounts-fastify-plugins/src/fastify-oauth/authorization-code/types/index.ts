@@ -6,8 +6,8 @@ export interface AuthorizationCodeResponse {
   code_challenge: string
   code_challenge_method: string
   redirect_uri: string
+  scopes: string[]
   expires_in: string
   created_at: string
   updated_at: string
-  scopes: string[]
 }

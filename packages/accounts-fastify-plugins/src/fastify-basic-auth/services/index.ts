@@ -13,7 +13,7 @@ export class BasicAuthService {
 
       const client = await getClient(message)
 
-      if (client.getType() !== 'web') {
+      if (client.getApplicationType() !== 'web') {
         return true
       }
 

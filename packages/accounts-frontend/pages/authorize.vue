@@ -27,9 +27,9 @@ export default defineComponent({
       :key="client.id"
     >
       <b-col sm="9" md="5" xl="3">
-        <h3 class="font-weight-bold">{{ client.name }}</h3>
+        <h3 class="font-weight-bold">{{ client.client_name }}</h3>
         <p class="font-weight-bold">
-          You agree that {{ client.name }} will be able to:
+          You agree that {{ client.client_name }} will be able to:
         </p>
         <hr />
         <div>

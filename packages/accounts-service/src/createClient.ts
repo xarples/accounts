@@ -20,8 +20,10 @@ export default async function createClient(
     return
   }
 
+  const token = (metadata.authorization as string).split(' ')?.[1]
+
   const accessToken = await db.accessToken.findUnique({
-    where: { token: metadata.authorization as string }
+    where: { token }
   })
 
   if (!accessToken) {
@@ -44,9 +46,10 @@ export default async function createClient(
 
   const user = await db.client.create({
     data: {
-      name: request.name,
-      description: request.description,
-      type: ClientType[request.type as ClientType],
+      user_id: accessToken.user_id,
+      client_name: request.clientName,
+      client_description: request.clientDescription,
+      application_type: ClientType[request.applicationType as ClientType],
       client_id: randomBytes(32).toString('hex'),
       client_secret: randomBytes(32).toString('hex'),
       redirect_uris: request.redirectUriList

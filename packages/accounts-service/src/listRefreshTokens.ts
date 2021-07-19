@@ -20,6 +20,11 @@ export default async function listRefreshTokens(
         select: {
           client_id: true
         }
+      },
+      Scopes: {
+        select: {
+          name: true
+        }
       }
     }
   })

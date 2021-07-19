@@ -7,9 +7,9 @@ message Client {
   string user_id = 2;
   string client_id  = 3; 
   string client_secret = 4;
-  string name = 5;
-  string description = 6;
-  string type = 7;
+  string client_name = 5;
+  string client_description = 6;
+  string application_type = 7;
   string token_endpoint_auth_method = 8;
   string scope = 9;
   repeated string contacts = 10;
@@ -17,7 +17,7 @@ message Client {
   repeated string response_type = 12;
   repeated string redirect_uri = 13;
   string logo_uri = 14;
-  string website_uri = 15;
+  string client_uri = 15;
   string policy_uri = 16;
   string tos_uri = 17;
   string created_at = 18;

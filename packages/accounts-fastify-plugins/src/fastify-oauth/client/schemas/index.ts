@@ -7,7 +7,7 @@ const clientSchema = S.object()
   .prop('client_secret', S.string())
   .prop('client_name', S.string())
   .prop('client_description', S.string())
-  .prop('type', S.string())
+  .prop('application_type', S.string())
   .prop('redirect_uris', S.array().items(S.string()))
   .prop('client_secret_expires_at', S.string())
   .prop('created_at', S.string())
@@ -19,9 +19,9 @@ const errorSchema = S.object()
 
 export const createClientSchema: FastifySchema = {
   body: S.object()
-    .prop('name', S.string().required())
-    .prop('description', S.string().required())
-    .prop('type', S.string().required())
+    .prop('client_name', S.string().required())
+    .prop('client_description', S.string().required())
+    .prop('application_type', S.string().required())
     .prop(
       'redirect_uris',
       S.array()

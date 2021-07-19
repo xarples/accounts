@@ -35,11 +35,14 @@ export class ClientService {
     const message = new Client()
     const metadata = new grpc.Metadata()
 
-    metadata.set('authorization', this.context?.request?.session.accessToken)
+    metadata.set(
+      'authorization',
+      this.context?.request?.headers?.authorization || ''
+    )
 
-    message.setName(options.name!)
-    message.setDescription(options.description!)
-    message.setType(options.type!)
+    message.setClientName(options.clientName!)
+    message.setClientDescription(options.clientDescription!)
+    message.setApplicationType(options.applicationType!)
     message.setRedirectUriList(options.redirectUriList!)
 
     return new Promise((resolve, reject) => {
@@ -84,8 +87,8 @@ export class ClientService {
     const message = new Client()
 
     message.setId(options.id!)
-    message.setName(options.name!)
-    message.setDescription(options.description!)
+    message.setClientName(options.clientName!)
+    message.setClientDescription(options.clientDescription!)
     message.setRedirectUriList(options.redirectUriList!)
 
     const client = await updateClient(message)
@@ -118,16 +121,16 @@ export class ClientService {
       id: options.id,
       client_id: options.clientId,
       client_secret: options.clientSecret,
-      client_name: options.name,
-      client_description: options.description,
-      type: options.type,
+      client_name: options.clientName,
+      client_description: options.clientDescription,
+      application_type: options.applicationType,
       redirect_uris: options.redirectUriList,
-      client_secret_expires_at: 0,
       logo_uri: options.logoUri,
-      website_uri: options.websiteUri,
+      client_uri: options.clientUri,
       policy_uri: options.policyUri,
       tos_uri: options.tosUri,
       user_id: options.userId,
+      client_secret_expires_at: 0,
       client_id_issued_at: options.createdAt,
       created_at: options.createdAt,
       updated_at: options.updatedAt

@@ -1,11 +1,7 @@
 import fastify from 'fastify'
 import fastifyFormbody from 'fastify-formbody'
 import fastifyCookie from 'fastify-cookie'
-import {
-  fastifySession,
-  fastifyNuxt
-  // fastifyOauth
-} from '@xarples/accounts-fastify-plugins'
+import { fastifySession, fastifyNuxt } from '@xarples/accounts-fastify-plugins'
 
 import api from './api'
 import routes from './routes'

@@ -1,5 +1,5 @@
 export class OauthMetadataService {
-  async getMetadata() {
+  async get() {
     return {
       issuer: 'https://accounts.xarples.com',
       authorization_endpoint: 'https://accounts.xarples.com/authorize',

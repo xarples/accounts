@@ -96,10 +96,10 @@ export class AuthorizationCodeService {
       code_challenge: options.codeChallenge,
       code_challenge_method: options.codeChallengeMethod,
       redirect_uri: options.redirectUri,
+      scopes: options.scopeList,
       expires_in: options.expiresIn,
       created_at: options.createdAt,
-      updated_at: options.updatedAt,
-      scopes: options.scopeList
+      updated_at: options.updatedAt
     }
   }
 }

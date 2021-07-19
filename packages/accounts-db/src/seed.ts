@@ -20,9 +20,10 @@ async function main() {
   await prisma.client.createMany({
     data: [
       {
-        name: 'Accounts Developers',
-        description: 'App to allow developers make their own applications',
-        type: ClientType.web,
+        client_name: 'Accounts Developers',
+        client_description:
+          'App to allow developers make their own applications',
+        application_type: ClientType.web,
         client_id:
           '5c1954c928d3b1317fb8bcf66604c59e583efbf38556e03c6768eadeb2e15bd0',
         client_secret:
@@ -37,11 +38,11 @@ async function main() {
     data: [
       {
         name: 'clients:read',
-        description: ''
+        description: 'Access to read clients'
       },
       {
         name: 'clients:write',
-        description: ''
+        description: 'Access to create, update and delete clients'
       }
     ],
     skipDuplicates: true

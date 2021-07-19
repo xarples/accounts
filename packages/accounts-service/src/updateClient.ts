@@ -12,8 +12,8 @@ export default async function updateClient(
       id: request.id || undefined
     },
     data: {
-      name: request.name || undefined,
-      description: request.description || undefined,
+      client_name: request.clientName || undefined,
+      client_description: request.clientDescription || undefined,
       redirect_uris: request.redirectUriList || undefined
       // logo_uri: request.logoUri || undefined,
       // policy_uri: request.policyUri || undefined,

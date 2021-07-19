@@ -4,8 +4,8 @@ import { useCreateClient } from '~/components/clients/hooks'
 
 export default defineComponent({
   setup() {
-    const name = ref('')
-    const description = ref('')
+    const clientName = ref('')
+    const clientDescription = ref('')
     const redirectUris = ref<string[]>([])
     const applicationType = reactive({
       selected: null,
@@ -18,16 +18,16 @@ export default defineComponent({
     })
 
     return {
-      name,
-      description,
+      clientName,
+      clientDescription,
       applicationType,
       redirectUris,
       handleSubmit() {
         useCreateClient({
-          name: name.value,
-          description: description.value,
-          type: applicationType.selected!,
-          redirect_uris: redirectUris.value
+          clientName: clientName.value,
+          clientDescription: clientDescription.value,
+          applicationType: applicationType.selected!,
+          redirectUris: redirectUris.value
         })
       }
     }
@@ -60,7 +60,7 @@ export default defineComponent({
           </b-form-group>
           <b-form-group label="Name:" label-for="name">
             <b-form-input
-              v-model="name"
+              v-model="clientName"
               id="name"
               type="text"
               placeholder="Enter an application name"
@@ -69,7 +69,7 @@ export default defineComponent({
           </b-form-group>
           <b-form-group label="Description:" label-for="description">
             <b-form-textarea
-              v-model="description"
+              v-model="clientDescription"
               id="description"
               placeholder="Enter an application description"
               rows="3"

@@ -3,9 +3,9 @@ import fp from 'fastify-plugin'
 
 const plugin: FastifyPluginAsync = async fastify => {
   fastify.get('/.well-known/oauth-authorization-server', async (_, reply) => {
-    const metadata = await fastify.oauthMetadataService.getMetadata()
+    const metadata = await fastify.oauthMetadataService.get()
 
-    reply.send(metadata)
+    reply.code(200).send(metadata)
   })
 }
 
