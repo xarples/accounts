@@ -32,8 +32,8 @@ model Client {
   user_id                    String?
   client_id                  String      @unique
   client_secret              String?
-  name                       String      @unique
-  description                String
+  client_name                String      @unique
+  client_description         String
   type                       ClientType? @default(web)
   token_endpoint_auth_method String?     @default("client_secret_basic")
   contacts                   String[]
@@ -41,7 +41,7 @@ model Client {
   response_types             String[]
   redirect_uris              String[]
   logo_uri                   String?
-  website_uri                String?
+  client_uri                 String?
   policy_uri                 String?
   tos_uri                    String?
   created_at                 DateTime    @default(now())

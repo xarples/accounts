@@ -7,6 +7,7 @@ import {
   // fastifyOauth
 } from '@xarples/accounts-fastify-plugins'
 
+import api from './api'
 import routes from './routes'
 
 const host = process.env.HOST || '127.0.0.1'
@@ -24,6 +25,8 @@ server.register(fastifySession, {
   saveUninitialized: false
 })
 // server.register(fastifyOauth)
+
+server.register(api)
 server.register(routes)
 server.register(fastifyNuxt)
 
