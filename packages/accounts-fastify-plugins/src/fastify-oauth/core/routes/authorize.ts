@@ -7,7 +7,7 @@ const plugin: FastifyPluginAsync = async fastify => {
   fastify.get<AuthorizationRequest>(
     '/authorize',
     {
-      // preHandler: fastify.authPreHandler,
+      preHandler: fastify.authPreHandler,
       schema: getAuthorizeSchema,
       attachValidation: true
     },

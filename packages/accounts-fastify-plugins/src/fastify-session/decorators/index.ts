@@ -10,7 +10,7 @@ export const authPreHandler: preHandlerHookHandler<
   unknown
 > = (request, reply, done) => {
   if (!request.session.user) {
-    reply.redirect('/signin')
+    reply.redirect(`/signin?redirect_to=${request.url}`)
 
     return
   }

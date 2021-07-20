@@ -1,16 +1,31 @@
 <script lang="ts">
-import { defineComponent } from '@nuxtjs/composition-api'
+import { defineComponent, useRoute, useRouter } from '@nuxtjs/composition-api'
 import { useSignIn } from '~/components/users/hooks'
 
 export default defineComponent({
   setup() {
-    return {
-      handleSubmit(e: Event) {
-        const form = new FormData(e.target as HTMLFormElement)
-        const email = form.get('email') as string
-        const password = form.get('password') as string
+    const router = useRouter()
 
-        useSignIn({ email, password })
+    return {
+      async handleSubmit(e: Event) {
+        try {
+          const form = new FormData(e.target as HTMLFormElement)
+          const email = form.get('email') as string
+          const password = form.get('password') as string
+
+          await useSignIn({ email, password })
+
+          if (window.location.search) {
+            const search = window.location.search.replace('?redirect_to=', '')
+            const redirectTo = decodeURIComponent(search)
+
+            router.replace(redirectTo)
+          }
+
+          router.replace('/')
+        } catch (error) {
+          alert(error.message)
+        }
       }
     }
   }

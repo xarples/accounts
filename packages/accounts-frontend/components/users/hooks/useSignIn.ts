@@ -3,13 +3,21 @@ interface IOptions {
   password: string
 }
 
-export function useSignIn(options: IOptions) {
-  return fetch('/signin', {
+export async function useSignIn(options: IOptions) {
+  const response = await fetch(`/signin`, {
     method: 'POST',
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json'
     },
     body: JSON.stringify(options)
-  }).then(res => res.json)
+  })
+
+  const data = await response.json()
+
+  if (!response.ok) {
+    return Promise.reject(data)
+  }
+
+  return Promise.resolve(data)
 }

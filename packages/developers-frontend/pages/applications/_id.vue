@@ -17,8 +17,6 @@ export default defineComponent({
       'client'
     )
 
-    console.log(client)
-
     return {
       client,
       handleUpdate() {

@@ -23,7 +23,8 @@ export default async function createClient(
   const token = (metadata.authorization as string).split(' ')?.[1]
 
   const accessToken = await db.accessToken.findUnique({
-    where: { token }
+    where: { token },
+    include: { Scopes: true }
   })
 
   if (!accessToken) {
@@ -42,6 +43,15 @@ export default async function createClient(
     })
 
     return
+  }
+
+  if (
+    !accessToken?.Scopes.some(scope => scope.name.includes('clients:write'))
+  ) {
+    cb({
+      code: grpc.status.PERMISSION_DENIED,
+      message: 'No permission'
+    })
   }
 
   const user = await db.client.create({
