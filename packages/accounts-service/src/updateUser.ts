@@ -1,4 +1,4 @@
-import db from '@xarples/accounts-db'
+import * as db from '@xarples/accounts-db'
 import { grpc, User } from '@xarples/accounts-proto-loader'
 import { encrypt } from '../../accounts-utils/dist'
 import { toUserMessage } from './utils'

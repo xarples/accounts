@@ -2,7 +2,6 @@ import db, { ClientType } from '@xarples/accounts-db'
 import { randomBytes } from '@xarples/accounts-utils'
 import { grpc, Client } from '@xarples/accounts-proto-loader'
 import { toClientMessage } from './utils'
-import isAfter from 'date-fns/isAfter'
 
 export default async function createClient(
   call: grpc.ServerUnaryCall<Client, Client>,
@@ -22,10 +21,7 @@ export default async function createClient(
 
   const token = (metadata.authorization as string).split(' ')?.[1]
 
-  const accessToken = await db.accessToken.findUnique({
-    where: { token },
-    include: { Scopes: true }
-  })
+  const accessToken = await db.accessToken.verify(token)
 
   if (!accessToken) {
     cb({
@@ -36,27 +32,23 @@ export default async function createClient(
     return
   }
 
-  if (isAfter(new Date(), new Date(accessToken.expires_in))) {
+  const hasScopes = db.accessToken.hasScopes({
+    token: accessToken,
+    scopes: ['clients:write']
+  })
+
+  if (!hasScopes) {
     cb({
-      code: grpc.status.UNAUTHENTICATED,
-      message: 'Access token is expired'
+      code: grpc.status.PERMISSION_DENIED,
+      message: 'Insufficient scopes'
     })
 
     return
   }
 
-  if (
-    !accessToken?.Scopes.some(scope => scope.name.includes('clients:write'))
-  ) {
-    cb({
-      code: grpc.status.PERMISSION_DENIED,
-      message: 'No permission'
-    })
-  }
-
   const user = await db.client.create({
     data: {
-      user_id: accessToken.user_id,
+      user_id: accessToken!.user_id,
       client_name: request.clientName,
       client_description: request.clientDescription,
       application_type: ClientType[request.applicationType as ClientType],

@@ -1,4 +1,4 @@
-import db from '@xarples/accounts-db'
+import * as db from '@xarples/accounts-db'
 import {
   grpc,
   RefreshToken,

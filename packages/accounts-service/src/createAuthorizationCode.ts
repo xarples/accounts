@@ -1,4 +1,5 @@
-import db, { CodeChallengeMethod } from '@xarples/accounts-db'
+import { CodeChallengeMethod } from '@xarples/accounts-db'
+import * as db from '@xarples/accounts-db'
 import { randomBytes } from '@xarples/accounts-utils'
 import { grpc, AuthorizationCode } from '@xarples/accounts-proto-loader'
 import { add } from 'date-fns'
