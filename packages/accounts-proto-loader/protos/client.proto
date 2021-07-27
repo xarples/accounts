@@ -5,10 +5,9 @@ package client;
 message Client {
   string id  = 1; 
   string user_id = 2;
-  string client_id  = 3; 
-  string client_secret = 4;
-  string client_name = 5;
-  string client_description = 6;
+  string secret = 4;
+  string name = 5;
+  string description = 6;
   string application_type = 7;
   string token_endpoint_auth_method = 8;
   string scope = 9;

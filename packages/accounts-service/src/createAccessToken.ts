@@ -19,14 +19,14 @@ export default async function createAccessToken(
           id: request.authorizationCodeId
         }
       },
+      Client: {
+        connect: {
+          id: request.clientId
+        }
+      },
       User: {
         connect: {
           id: request.userId
-        }
-      },
-      Client: {
-        connect: {
-          client_id: request.clientId
         }
       },
       Scopes: {
@@ -36,11 +36,6 @@ export default async function createAccessToken(
       }
     },
     include: {
-      Client: {
-        select: {
-          client_id: true
-        }
-      },
       Scopes: {
         select: {
           name: true

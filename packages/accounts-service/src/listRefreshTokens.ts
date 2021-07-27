@@ -16,11 +16,6 @@ export default async function listRefreshTokens(
       client_id: request.clientId || undefined
     },
     include: {
-      Client: {
-        select: {
-          client_id: true
-        }
-      },
       Scopes: {
         select: {
           name: true

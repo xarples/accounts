@@ -15,7 +15,7 @@ export default async function deleteAccessToken(
     include: {
       Client: {
         select: {
-          client_id: true
+          id: true
         }
       },
       Scopes: {

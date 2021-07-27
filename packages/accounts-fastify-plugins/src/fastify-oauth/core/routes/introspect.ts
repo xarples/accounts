@@ -11,8 +11,8 @@ const plugin: FastifyPluginAsync = async fastify => {
     '/introspect',
     {
       attachValidation: true,
-      onRequest: fastify.basicAuth,
-      schema: postIntrospectSchema
+      schema: postIntrospectSchema,
+      preHandler: fastify.clientAuthPreHandler
     },
     async (request, reply) => {
       try {
@@ -92,22 +92,6 @@ const plugin: FastifyPluginAsync = async fastify => {
       }
     }
   )
-
-  fastify.setErrorHandler((error, request, reply) => {
-    if (error.statusCode === 401) {
-      reply
-        .code(401)
-        .header('WWW-Authenticate', 'Basic')
-        .send({
-          error: 'invalid_client',
-          error_description: 'Client authentication failed'
-        })
-
-      return
-    }
-
-    fastify.errorHandler(error, request, reply)
-  })
 }
 
 export default fp(plugin, '3.x')

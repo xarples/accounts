@@ -1,6 +1,6 @@
 import { FastifyPluginAsync } from 'fastify'
 import fp from 'fastify-plugin'
-import { calculateCodeChallenge, decodeBasic } from '@xarples/accounts-utils'
+import { codeChallenge, decodeBasic } from '@xarples/accounts-utils'
 import { postTokenSchema } from '../schemas'
 import { TokenRequest } from '../types'
 
@@ -10,7 +10,7 @@ const plugin: FastifyPluginAsync = async fastify => {
     {
       attachValidation: true,
       schema: postTokenSchema,
-      onRequest: fastify.basicAuth
+      preHandler: fastify.clientAuthPreHandler
     },
     async (request, reply) => {
       if (request.validationError) {
@@ -23,10 +23,10 @@ const plugin: FastifyPluginAsync = async fastify => {
       }
 
       if (request.body.grant_type === 'client_credentials') {
-        const credentials = decodeBasic(request.headers.authorization!)
+        const credentials = fastify.clientService.verifyBasicAuth(request)
 
         const accessToken = await fastify.accessTokenService.create({
-          clientId: credentials!.clientId,
+          clientId: credentials!.username,
           scopeList: request.body.scope?.split(' ')
         })
 
@@ -53,9 +53,9 @@ const plugin: FastifyPluginAsync = async fastify => {
           return
         }
 
-        const credentials = decodeBasic(request.headers.authorization!)
+        const credentials = fastify.clientService.verifyBasicAuth(request)
 
-        if (refreshToken!.client_id !== credentials!.clientId) {
+        if (refreshToken!.client_id !== credentials!.username) {
           reply.code(400).send({
             error: 'invalid_grant',
             error_description: 'Invalid client'
@@ -80,14 +80,14 @@ const plugin: FastifyPluginAsync = async fastify => {
         const accessToken = await fastify.accessTokenService.create({
           authorizationCodeId: refreshToken!.authorization_code_id,
           userId: authorizationCode!.user_id,
-          clientId: credentials!.clientId,
+          clientId: credentials!.username,
           scopeList: authorizationCode!.scopes
         })
 
         const nextRefreshToken = await fastify.refreshTokenService.create({
           authorizationCodeId: refreshToken!.authorization_code_id,
           userId: authorizationCode!.user_id,
-          clientId: credentials!.clientId,
+          clientId: credentials!.username,
           scopeList: authorizationCode!.scopes
         })
 
@@ -108,7 +108,7 @@ const plugin: FastifyPluginAsync = async fastify => {
       if (!authorizationCode) {
         reply.code(400).send({
           error: 'invalid_grant',
-          error_description: 'Authorization code is revoked'
+          error_description: 'Authorization code is invalid or revoked'
         })
 
         return
@@ -141,14 +141,13 @@ const plugin: FastifyPluginAsync = async fastify => {
         return
       }
 
-      const codeChallenge = calculateCodeChallenge({
+      const _codeChallenge = codeChallenge(request.body.code_verifier, {
         codeChallengeMethod: authorizationCode!.code_challenge_method as
           | 'plain'
-          | 'S256',
-        codeVerifier: request.body.code_verifier
+          | 'S256'
       })
 
-      if (codeChallenge !== authorizationCode!.code_challenge) {
+      if (_codeChallenge !== authorizationCode!.code_challenge) {
         reply.code(400).send({
           error: 'invalid_request',
           error_description: 'Invalid code challenge'
@@ -188,22 +187,6 @@ const plugin: FastifyPluginAsync = async fastify => {
       })
     }
   )
-
-  fastify.setErrorHandler((error, request, reply) => {
-    if (error.statusCode === 401) {
-      reply
-        .code(401)
-        .header('WWW-Authenticate', 'Basic')
-        .send({
-          error: 'invalid_client',
-          error_description: 'Client authentication failed'
-        })
-
-      return
-    }
-
-    fastify.errorHandler(error, request, reply)
-  })
 }
 
 export default fp(plugin, '3.x')

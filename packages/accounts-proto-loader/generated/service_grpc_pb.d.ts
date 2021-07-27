@@ -10,6 +10,7 @@ import * as access_token_pb from "./access-token_pb";
 import * as authorization_code_pb from "./authorization-code_pb";
 import * as client_pb from "./client_pb";
 import * as refresh_token_pb from "./refresh-token_pb";
+import * as scope_pb from "./scope_pb";
 import * as user_pb from "./user_pb";
 
 interface IAccountService extends grpc.ServiceDefinition<grpc.UntypedServiceImplementation> {
@@ -40,6 +41,8 @@ interface IAccountService extends grpc.ServiceDefinition<grpc.UntypedServiceImpl
     listRefreshTokens: IAccountService_IListRefreshTokens;
     updateRefreshToken: IAccountService_IUpdateRefreshToken;
     deleteRefreshToken: IAccountService_IDeleteRefreshToken;
+    getScope: IAccountService_IGetScope;
+    listScopes: IAccountService_IListScopes;
 }
 
 interface IAccountService_ICreateUser extends grpc.MethodDefinition<user_pb.User, user_pb.User> {
@@ -285,6 +288,24 @@ interface IAccountService_IDeleteRefreshToken extends grpc.MethodDefinition<refr
     responseSerialize: grpc.serialize<refresh_token_pb.RefreshToken>;
     responseDeserialize: grpc.deserialize<refresh_token_pb.RefreshToken>;
 }
+interface IAccountService_IGetScope extends grpc.MethodDefinition<scope_pb.Scope, scope_pb.Scope> {
+    path: "/auth.Account/GetScope";
+    requestStream: false;
+    responseStream: false;
+    requestSerialize: grpc.serialize<scope_pb.Scope>;
+    requestDeserialize: grpc.deserialize<scope_pb.Scope>;
+    responseSerialize: grpc.serialize<scope_pb.Scope>;
+    responseDeserialize: grpc.deserialize<scope_pb.Scope>;
+}
+interface IAccountService_IListScopes extends grpc.MethodDefinition<scope_pb.Scope, scope_pb.ScopeList> {
+    path: "/auth.Account/ListScopes";
+    requestStream: false;
+    responseStream: false;
+    requestSerialize: grpc.serialize<scope_pb.Scope>;
+    requestDeserialize: grpc.deserialize<scope_pb.Scope>;
+    responseSerialize: grpc.serialize<scope_pb.ScopeList>;
+    responseDeserialize: grpc.deserialize<scope_pb.ScopeList>;
+}
 
 export const AccountService: IAccountService;
 
@@ -316,6 +337,8 @@ export interface IAccountServer extends grpc.UntypedServiceImplementation {
     listRefreshTokens: grpc.handleUnaryCall<refresh_token_pb.RefreshToken, refresh_token_pb.RefreshTokenList>;
     updateRefreshToken: grpc.handleUnaryCall<refresh_token_pb.RefreshToken, refresh_token_pb.RefreshToken>;
     deleteRefreshToken: grpc.handleUnaryCall<refresh_token_pb.RefreshToken, refresh_token_pb.RefreshToken>;
+    getScope: grpc.handleUnaryCall<scope_pb.Scope, scope_pb.Scope>;
+    listScopes: grpc.handleUnaryCall<scope_pb.Scope, scope_pb.ScopeList>;
 }
 
 export interface IAccountClient {
@@ -400,6 +423,12 @@ export interface IAccountClient {
     deleteRefreshToken(request: refresh_token_pb.RefreshToken, callback: (error: grpc.ServiceError | null, response: refresh_token_pb.RefreshToken) => void): grpc.ClientUnaryCall;
     deleteRefreshToken(request: refresh_token_pb.RefreshToken, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: refresh_token_pb.RefreshToken) => void): grpc.ClientUnaryCall;
     deleteRefreshToken(request: refresh_token_pb.RefreshToken, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: refresh_token_pb.RefreshToken) => void): grpc.ClientUnaryCall;
+    getScope(request: scope_pb.Scope, callback: (error: grpc.ServiceError | null, response: scope_pb.Scope) => void): grpc.ClientUnaryCall;
+    getScope(request: scope_pb.Scope, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: scope_pb.Scope) => void): grpc.ClientUnaryCall;
+    getScope(request: scope_pb.Scope, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: scope_pb.Scope) => void): grpc.ClientUnaryCall;
+    listScopes(request: scope_pb.Scope, callback: (error: grpc.ServiceError | null, response: scope_pb.ScopeList) => void): grpc.ClientUnaryCall;
+    listScopes(request: scope_pb.Scope, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: scope_pb.ScopeList) => void): grpc.ClientUnaryCall;
+    listScopes(request: scope_pb.Scope, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: scope_pb.ScopeList) => void): grpc.ClientUnaryCall;
 }
 
 export class AccountClient extends grpc.Client implements IAccountClient {
@@ -485,4 +514,10 @@ export class AccountClient extends grpc.Client implements IAccountClient {
     public deleteRefreshToken(request: refresh_token_pb.RefreshToken, callback: (error: grpc.ServiceError | null, response: refresh_token_pb.RefreshToken) => void): grpc.ClientUnaryCall;
     public deleteRefreshToken(request: refresh_token_pb.RefreshToken, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: refresh_token_pb.RefreshToken) => void): grpc.ClientUnaryCall;
     public deleteRefreshToken(request: refresh_token_pb.RefreshToken, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: refresh_token_pb.RefreshToken) => void): grpc.ClientUnaryCall;
+    public getScope(request: scope_pb.Scope, callback: (error: grpc.ServiceError | null, response: scope_pb.Scope) => void): grpc.ClientUnaryCall;
+    public getScope(request: scope_pb.Scope, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: scope_pb.Scope) => void): grpc.ClientUnaryCall;
+    public getScope(request: scope_pb.Scope, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: scope_pb.Scope) => void): grpc.ClientUnaryCall;
+    public listScopes(request: scope_pb.Scope, callback: (error: grpc.ServiceError | null, response: scope_pb.ScopeList) => void): grpc.ClientUnaryCall;
+    public listScopes(request: scope_pb.Scope, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: scope_pb.ScopeList) => void): grpc.ClientUnaryCall;
+    public listScopes(request: scope_pb.Scope, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: scope_pb.ScopeList) => void): grpc.ClientUnaryCall;
 }

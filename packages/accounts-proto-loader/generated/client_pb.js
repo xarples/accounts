@@ -100,10 +100,9 @@ proto.client.Client.toObject = function(includeInstance, msg) {
   var f, obj = {
     id: jspb.Message.getFieldWithDefault(msg, 1, ""),
     userId: jspb.Message.getFieldWithDefault(msg, 2, ""),
-    clientId: jspb.Message.getFieldWithDefault(msg, 3, ""),
-    clientSecret: jspb.Message.getFieldWithDefault(msg, 4, ""),
-    clientName: jspb.Message.getFieldWithDefault(msg, 5, ""),
-    clientDescription: jspb.Message.getFieldWithDefault(msg, 6, ""),
+    secret: jspb.Message.getFieldWithDefault(msg, 4, ""),
+    name: jspb.Message.getFieldWithDefault(msg, 5, ""),
+    description: jspb.Message.getFieldWithDefault(msg, 6, ""),
     applicationType: jspb.Message.getFieldWithDefault(msg, 7, ""),
     tokenEndpointAuthMethod: jspb.Message.getFieldWithDefault(msg, 8, ""),
     scope: jspb.Message.getFieldWithDefault(msg, 9, ""),
@@ -161,21 +160,17 @@ proto.client.Client.deserializeBinaryFromReader = function(msg, reader) {
       var value = /** @type {string} */ (reader.readString());
       msg.setUserId(value);
       break;
-    case 3:
-      var value = /** @type {string} */ (reader.readString());
-      msg.setClientId(value);
-      break;
     case 4:
       var value = /** @type {string} */ (reader.readString());
-      msg.setClientSecret(value);
+      msg.setSecret(value);
       break;
     case 5:
       var value = /** @type {string} */ (reader.readString());
-      msg.setClientName(value);
+      msg.setName(value);
       break;
     case 6:
       var value = /** @type {string} */ (reader.readString());
-      msg.setClientDescription(value);
+      msg.setDescription(value);
       break;
     case 7:
       var value = /** @type {string} */ (reader.readString());
@@ -272,28 +267,21 @@ proto.client.Client.serializeBinaryToWriter = function(message, writer) {
       f
     );
   }
-  f = message.getClientId();
-  if (f.length > 0) {
-    writer.writeString(
-      3,
-      f
-    );
-  }
-  f = message.getClientSecret();
+  f = message.getSecret();
   if (f.length > 0) {
     writer.writeString(
       4,
       f
     );
   }
-  f = message.getClientName();
+  f = message.getName();
   if (f.length > 0) {
     writer.writeString(
       5,
       f
     );
   }
-  f = message.getClientDescription();
+  f = message.getDescription();
   if (f.length > 0) {
     writer.writeString(
       6,
@@ -431,28 +419,10 @@ proto.client.Client.prototype.setUserId = function(value) {
 
 
 /**
- * optional string client_id = 3;
+ * optional string secret = 4;
  * @return {string}
  */
-proto.client.Client.prototype.getClientId = function() {
-  return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 3, ""));
-};
-
-
-/**
- * @param {string} value
- * @return {!proto.client.Client} returns this
- */
-proto.client.Client.prototype.setClientId = function(value) {
-  return jspb.Message.setProto3StringField(this, 3, value);
-};
-
-
-/**
- * optional string client_secret = 4;
- * @return {string}
- */
-proto.client.Client.prototype.getClientSecret = function() {
+proto.client.Client.prototype.getSecret = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 4, ""));
 };
 
@@ -461,16 +431,16 @@ proto.client.Client.prototype.getClientSecret = function() {
  * @param {string} value
  * @return {!proto.client.Client} returns this
  */
-proto.client.Client.prototype.setClientSecret = function(value) {
+proto.client.Client.prototype.setSecret = function(value) {
   return jspb.Message.setProto3StringField(this, 4, value);
 };
 
 
 /**
- * optional string client_name = 5;
+ * optional string name = 5;
  * @return {string}
  */
-proto.client.Client.prototype.getClientName = function() {
+proto.client.Client.prototype.getName = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 5, ""));
 };
 
@@ -479,16 +449,16 @@ proto.client.Client.prototype.getClientName = function() {
  * @param {string} value
  * @return {!proto.client.Client} returns this
  */
-proto.client.Client.prototype.setClientName = function(value) {
+proto.client.Client.prototype.setName = function(value) {
   return jspb.Message.setProto3StringField(this, 5, value);
 };
 
 
 /**
- * optional string client_description = 6;
+ * optional string description = 6;
  * @return {string}
  */
-proto.client.Client.prototype.getClientDescription = function() {
+proto.client.Client.prototype.getDescription = function() {
   return /** @type {string} */ (jspb.Message.getFieldWithDefault(this, 6, ""));
 };
 
@@ -497,7 +467,7 @@ proto.client.Client.prototype.getClientDescription = function() {
  * @param {string} value
  * @return {!proto.client.Client} returns this
  */
-proto.client.Client.prototype.setClientDescription = function(value) {
+proto.client.Client.prototype.setDescription = function(value) {
   return jspb.Message.setProto3StringField(this, 6, value);
 };
 

@@ -4,9 +4,12 @@ export class OauthMetadataService {
       issuer: 'https://accounts.xarples.com',
       authorization_endpoint: 'https://accounts.xarples.com/authorize',
       token_endpoint: 'https://accounts.xarples.com/token',
-      token_endpoint_auth_methods_supported: ['client_secret_basic'],
+      token_endpoint_auth_methods_supported: [
+        'client_secret_basic',
+        'private_key_jwt'
+      ],
       userinfo_endpoint: 'https://accounts.xarples.com/userinfo',
-      registration_endpoint: 'https://accounts.xarples.com/register',
+      registration_endpoint: 'https://accounts.xarples.com/signup',
       scopes_supported: [
         'profile',
         'email',

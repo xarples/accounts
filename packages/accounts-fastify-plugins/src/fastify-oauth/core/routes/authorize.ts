@@ -1,6 +1,6 @@
 import { FastifyPluginAsync } from 'fastify'
 import fp from 'fastify-plugin'
-import { getAuthorizeSchema } from '../schemas'
+import { authorizationRequestSchema } from '../schemas'
 import { AuthorizationRequest, AuthorizationConsentRequest } from '../types'
 
 const plugin: FastifyPluginAsync = async fastify => {
@@ -8,7 +8,7 @@ const plugin: FastifyPluginAsync = async fastify => {
     '/authorize',
     {
       preHandler: fastify.authPreHandler,
-      schema: getAuthorizeSchema,
+      schema: authorizationRequestSchema,
       attachValidation: true
     },
     async (request, reply) => {
@@ -23,7 +23,7 @@ const plugin: FastifyPluginAsync = async fastify => {
         }
 
         const client = await fastify.clientService.get({
-          clientId: request.query.client_id
+          id: request.query.client_id
         })
 
         if (!client) {
@@ -42,6 +42,26 @@ const plugin: FastifyPluginAsync = async fastify => {
           })
 
           return
+        }
+
+        if (request.query.scope) {
+          const scopes = (await fastify.scopeService.list()).map(
+            scope => scope.name
+          )
+
+          const isScopeValid = request.query.scope
+            .split(' ')
+            .every(scope => scopes.includes(scope))
+
+          if (!isScopeValid) {
+            reply.code(400).send({
+              error: 'invalid_scope',
+              error_description:
+                'The requested scope is invalid, unknown, or malformed'
+            })
+
+            return
+          }
         }
 
         fastify.nuxt.render(request.raw, reply.raw)
@@ -71,6 +91,69 @@ const plugin: FastifyPluginAsync = async fastify => {
         reply.redirect(302, `${request.body.redirect_uri}?${params.toString()}`)
 
         return
+      }
+
+      const client = await fastify.clientService.get({
+        id: request.body.client_id
+      })
+
+      if (!client) {
+        const params = new URLSearchParams({
+          error: 'invalid_request',
+          error_description: 'Invalid client'
+        })
+
+        if (request.body.state) {
+          params.set('state', request.body.state)
+        }
+
+        reply.redirect(302, `${request.body.redirect_uri}?${params.toString()}`)
+
+        return
+      }
+
+      if (!client.redirect_uris.includes(request.body.redirect_uri)) {
+        const params = new URLSearchParams({
+          error: 'invalid_request',
+          error_description: 'Invalid redirect URI'
+        })
+
+        if (request.body.state) {
+          params.set('state', request.body.state)
+        }
+
+        reply.redirect(302, `${request.body.redirect_uri}?${params.toString()}`)
+
+        return
+      }
+
+      if (request.body.scope) {
+        const scopes = (await fastify.scopeService.list()).map(
+          scope => scope.name
+        )
+
+        const isScopeValid = request.body.scope
+          .split(' ')
+          .every(scope => scopes.includes(scope))
+
+        if (!isScopeValid) {
+          const params = new URLSearchParams({
+            error: 'invalid_scope',
+            error_description:
+              'The requested scope is invalid, unknown, or malformed'
+          })
+
+          if (request.body.state) {
+            params.set('state', request.body.state)
+          }
+
+          reply.redirect(
+            302,
+            `${request.body.redirect_uri}?${params.toString()}`
+          )
+
+          return
+        }
       }
 
       const authorizationCode = await fastify.authorizationCodeService.create({

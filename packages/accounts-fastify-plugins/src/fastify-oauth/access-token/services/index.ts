@@ -81,8 +81,8 @@ export class AccessTokenService {
     return {
       id: options.id,
       authorization_code_id: options.authorizationCodeId,
+      client_id: options.clientId,
       user_id: options.userId,
-      client_id: options.client!.clientId,
       token: options.token,
       scopes: options.scopeList,
       expires_in: options.expiresIn,

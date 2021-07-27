@@ -20,13 +20,11 @@ async function main() {
   await prisma.client.createMany({
     data: [
       {
-        client_name: 'Accounts Developers',
-        client_description:
-          'App to allow developers make their own applications',
+        id: 'ckraxj4gu00033u9kvjny5bv7',
+        name: 'Accounts Developers',
+        description: 'App to allow developers make their own applications',
         application_type: ClientType.web,
-        client_id:
-          '5c1954c928d3b1317fb8bcf66604c59e583efbf38556e03c6768eadeb2e15bd0',
-        client_secret:
+        secret:
           'ceac77ba4ceba7d0fc8011fa82383b3f64cc7a1580f000182b7aba77adc31607',
         redirect_uris: ['http://localhost:5002/callback']
       }

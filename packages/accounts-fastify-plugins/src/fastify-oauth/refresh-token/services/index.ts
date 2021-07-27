@@ -82,7 +82,7 @@ export class RefreshTokenService {
       id: options.id,
       authorization_code_id: options.authorizationCodeId,
       user_id: options.userId,
-      client_id: options.client!.clientId,
+      client_id: options.clientId,
       token: options.token,
       scopes: options.scopeList,
       expires_in: options.expiresIn,

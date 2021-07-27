@@ -30,10 +30,9 @@ model User {
 model Client {
   id                         String                         @id @default(cuid())
   user_id                    String?
-  client_id                  String                         @unique
-  client_secret              String?
-  client_name                String                         @unique
-  client_description         String
+  secret                     String?
+  name                       String                         @unique
+  description                String
   application_type           ClientType?                    @default(web)
   token_endpoint_auth_method ClientTokenEndpointAuthMethod? @default(client_secret_basic)
   contacts                   String[]
@@ -65,14 +64,14 @@ model AuthorizationCode {
   code_challenge        String
   code_challenge_method CodeChallengeMethod @default(plain)
   redirect_uri          String
-  Client                Client              @relation(fields: [client_id], references: [id])
   expires_in            DateTime
   created_at            DateTime            @default(now())
   updated_at            DateTime            @updatedAt
 
+  AccessTokens AccessToken[]
+  Client       Client         @relation(fields: [client_id], references: [id])
   User         User?          @relation(fields: [user_id], references: [id])
   Scopes       Scope[]        @relation(onDelete: Cascade, onUpdate: Cascade)
-  AccessTokens AccessToken[]
   RefreshToken RefreshToken[]
 
   @@map(name: "authorization_codes")
@@ -84,12 +83,12 @@ model AccessToken {
   authorization_code_id String?
   client_id             String
   token                 String   @unique
-  Client                Client   @relation(fields: [client_id], references: [id])
   expires_in            DateTime
   created_at            DateTime @default(now())
   updated_at            DateTime @updatedAt
 
   AuthorizationCode AuthorizationCode? @relation(fields: [authorization_code_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  Client            Client             @relation(fields: [client_id], references: [id])
   User              User?              @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
   Scopes            Scope[]            @relation(onDelete: Cascade, onUpdate: Cascade)
 
@@ -138,6 +137,7 @@ enum ClientType {
 
 enum ClientTokenEndpointAuthMethod {
   client_secret_basic
+  private_key_jwt
 }
 
 enum CodeChallengeMethod {

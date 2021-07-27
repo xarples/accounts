@@ -2,10 +2,12 @@ import { FastifyPluginAsync } from 'fastify'
 import fp from 'fastify-plugin'
 import { ClientService } from './services'
 import routes from './routes'
+import { clientAuthPreHandler } from './decorators'
 
 declare module 'fastify' {
   interface FastifyInstance {
     clientService: ClientService
+    clientAuthPreHandler: typeof clientAuthPreHandler
   }
 }
 
@@ -18,6 +20,7 @@ const plugin: FastifyPluginAsync = async (fastify, options) => {
   })
 
   fastify.decorate('clientService', service)
+  fastify.decorate('clientAuthPreHandler', clientAuthPreHandler)
   fastify.register(routes, { prefix: 'api' })
 }
 

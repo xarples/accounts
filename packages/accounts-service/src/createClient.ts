@@ -49,11 +49,10 @@ export default async function createClient(
   const user = await db.client.create({
     data: {
       user_id: accessToken!.user_id,
-      client_name: request.clientName,
-      client_description: request.clientDescription,
+      secret: randomBytes(32).toString('hex'),
+      name: request.name,
+      description: request.description,
       application_type: ClientType[request.applicationType as ClientType],
-      client_id: randomBytes(32).toString('hex'),
-      client_secret: randomBytes(32).toString('hex'),
       redirect_uris: request.redirectUriList
       // token_endpoint_auth_method: request.tokenEndpointAuthMethod,
       // scope: request.scope,

@@ -1,6 +1,5 @@
 interface IOptions {
   id: string
-  clientId: string
 }
 
 export function useClient(options: IOptions) {

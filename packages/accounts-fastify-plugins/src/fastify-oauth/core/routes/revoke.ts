@@ -11,7 +11,7 @@ const plugin: FastifyPluginAsync = async fastify => {
     '/revoke',
     {
       attachValidation: true,
-      onRequest: fastify.basicAuth,
+      onRequest: fastify.clientAuthPreHandler,
       schema: postRevokeSchema
     },
     async (request, reply) => {
@@ -79,22 +79,6 @@ const plugin: FastifyPluginAsync = async fastify => {
       }
     }
   )
-
-  fastify.setErrorHandler((error, request, reply) => {
-    if (error.statusCode === 401) {
-      reply
-        .code(401)
-        .header('WWW-Authenticate', 'Basic')
-        .send({
-          error: 'invalid_client',
-          error_description: 'Client authentication failed'
-        })
-
-      return
-    }
-
-    fastify.errorHandler(error, request, reply)
-  })
 }
 
 export default fp(plugin, '3.x')

@@ -14,11 +14,6 @@ export default async function getAuthorizationCode(
       code: request.code || undefined
     },
     include: {
-      Client: {
-        select: {
-          client_id: true
-        }
-      },
       Scopes: {
         select: {
           name: true

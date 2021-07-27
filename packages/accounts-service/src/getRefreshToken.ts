@@ -15,11 +15,6 @@ export default async function getRefreshToken(
         token: request.token || undefined
       },
       include: {
-        Client: {
-          select: {
-            client_id: true
-          }
-        },
         Scopes: {
           select: {
             name: true

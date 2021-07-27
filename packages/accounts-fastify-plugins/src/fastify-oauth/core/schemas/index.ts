@@ -1,7 +1,7 @@
 import { FastifySchema } from 'fastify'
 import S from 'fluent-json-schema'
 
-export const getAuthorizeSchema: FastifySchema = {
+export const authorizationRequestSchema: FastifySchema = {
   querystring: S.object()
     .prop(
       'response_type',

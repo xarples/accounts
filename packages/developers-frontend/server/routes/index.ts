@@ -2,7 +2,7 @@ import { FastifyPluginAsync } from 'fastify'
 import fp from 'fastify-plugin'
 import axios from 'axios'
 import {
-  calculateCodeChallenge,
+  codeChallenge,
   codeVerifier,
   encodeBasic,
   randomBytes
@@ -12,29 +12,28 @@ declare module 'fastify' {
   interface FastifyInstance {}
 }
 
-const clientId =
-  '5c1954c928d3b1317fb8bcf66604c59e583efbf38556e03c6768eadeb2e15bd0'
+const clientId = 'ckraxj4gu00033u9kvjny5bv7'
 const clientSecret =
   'ceac77ba4ceba7d0fc8011fa82383b3f64cc7a1580f000182b7aba77adc31607'
 const redirectUri = 'http://localhost:5002/callback'
 const oauthServerHost = `${process.env.ACCOUNTS_FRONTEND_HOST}:5000`
 const scopes = ['clients:read', 'clients:write']
+const codeChallengeMethod = 'S256'
 
 const plugin: FastifyPluginAsync = async fastify => {
   fastify.get('/signin', async (request, reply) => {
-    const _codeVerifier = codeVerifier()
     const state = randomBytes(16).toString('hex')
-    const codeChallenge = calculateCodeChallenge({
-      codeChallengeMethod: 'S256',
-      codeVerifier: _codeVerifier
+    const _codeVerifier = codeVerifier()
+    const _codeChallenge = codeChallenge(_codeVerifier, {
+      codeChallengeMethod
     })
 
     const params = new URLSearchParams({
       response_type: 'code',
       client_id: clientId,
       redirect_uri: redirectUri,
-      code_challenge: codeChallenge,
-      code_challenge_method: 'S256',
+      code_challenge: _codeChallenge,
+      code_challenge_method: codeChallengeMethod,
       scope: scopes.join(' '),
       state
     })

@@ -1,7 +1,8 @@
 import { promisify } from 'util'
+import { FastifyRequest } from 'fastify'
+import auth from 'basic-auth'
 import client from '@xarples/accounts-client'
 import { Client, ClientList, grpc } from '@xarples/accounts-proto-loader'
-import { FastifyRequest } from 'fastify'
 import { IncomingMessage, Server } from 'http'
 import { RouteGenericInterface } from 'fastify/types/route'
 
@@ -40,8 +41,8 @@ export class ClientService {
       this.context?.request?.headers?.authorization || ''
     )
 
-    message.setClientName(options.clientName!)
-    message.setClientDescription(options.clientDescription!)
+    message.setName(options.name!)
+    message.setDescription(options.description!)
     message.setApplicationType(options.applicationType!)
     message.setRedirectUriList(options.redirectUriList!)
 
@@ -61,7 +62,6 @@ export class ClientService {
       const message = new Client()
 
       message.setId(options.id!)
-      message.setClientId(options.clientId!)
 
       const client = await getClient(message)
 
@@ -74,8 +74,6 @@ export class ClientService {
   async list(options: Options) {
     const message = new Client()
 
-    message.setClientId(options.clientId!)
-
     const clientList = await listClients(message)
 
     return clientList
@@ -87,8 +85,8 @@ export class ClientService {
     const message = new Client()
 
     message.setId(options.id!)
-    message.setClientName(options.clientName!)
-    message.setClientDescription(options.clientDescription!)
+    message.setName(options.name!)
+    message.setDescription(options.description!)
     message.setRedirectUriList(options.redirectUriList!)
 
     const client = await updateClient(message)
@@ -116,20 +114,60 @@ export class ClientService {
     return this.reducer(client.toObject())
   }
 
+  async basicAuth(request: any) {
+    try {
+      const result = auth(request)
+
+      if (!result) {
+        return undefined
+      }
+
+      const message = new Client()
+
+      message.setId(result.name)
+
+      const client = await getClient(message)
+
+      if (client.getSecret() !== result.pass) {
+        return undefined
+      }
+
+      return { username: result.name, password: result.pass }
+    } catch (error) {
+      return undefined
+    }
+  }
+
+  async privateKeyJWTAuth() {}
+
+  verifyBasicAuth(request: any) {
+    try {
+      const result = auth(request)
+
+      if (!result) {
+        return undefined
+      }
+
+      return { username: result.name, password: result.pass }
+    } catch (error) {
+      return undefined
+    }
+  }
+
   reducer(options: Client.AsObject) {
     return {
-      id: options.id,
-      client_id: options.clientId,
-      client_secret: options.clientSecret,
-      client_name: options.clientName,
-      client_description: options.clientDescription,
+      user_id: options.userId,
+      client_id: options?.id,
+      client_secret: options.secret,
+      client_name: options.name,
+      client_description: options.description,
       application_type: options.applicationType,
+      token_endpoint_auth_method: options.tokenEndpointAuthMethod,
       redirect_uris: options.redirectUriList,
       logo_uri: options.logoUri,
       client_uri: options.clientUri,
       policy_uri: options.policyUri,
       tos_uri: options.tosUri,
-      user_id: options.userId,
       client_secret_expires_at: 0,
       client_id_issued_at: options.createdAt,
       created_at: options.createdAt,

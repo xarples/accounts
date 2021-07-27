@@ -13,7 +13,7 @@ export default async function updateClient(
       id: request.id || undefined
     },
     data: {
-      client_secret: randomBytes(32).toString('hex')
+      secret: randomBytes(32).toString('hex')
     }
   })
 

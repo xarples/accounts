@@ -2,8 +2,7 @@ import { promisify } from 'util'
 import client from '@xarples/accounts-client'
 import {
   AuthorizationCode,
-  AuthorizationCodeList,
-  Scope
+  AuthorizationCodeList
 } from '@xarples/accounts-proto-loader'
 import isAfter from 'date-fns/isAfter'
 import { AuthorizationCodeResponse } from '../types'
@@ -91,7 +90,7 @@ export class AuthorizationCodeService {
     return {
       id: options.id,
       user_id: options.userId,
-      client_id: options.client?.clientId!,
+      client_id: options.clientId!,
       code: options.code,
       code_challenge: options.codeChallenge,
       code_challenge_method: options.codeChallengeMethod,

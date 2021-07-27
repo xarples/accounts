@@ -11,14 +11,12 @@ export class Client extends jspb.Message {
     setId(value: string): Client;
     getUserId(): string;
     setUserId(value: string): Client;
-    getClientId(): string;
-    setClientId(value: string): Client;
-    getClientSecret(): string;
-    setClientSecret(value: string): Client;
-    getClientName(): string;
-    setClientName(value: string): Client;
-    getClientDescription(): string;
-    setClientDescription(value: string): Client;
+    getSecret(): string;
+    setSecret(value: string): Client;
+    getName(): string;
+    setName(value: string): Client;
+    getDescription(): string;
+    setDescription(value: string): Client;
     getApplicationType(): string;
     setApplicationType(value: string): Client;
     getTokenEndpointAuthMethod(): string;
@@ -68,10 +66,9 @@ export namespace Client {
     export type AsObject = {
         id: string,
         userId: string,
-        clientId: string,
-        clientSecret: string,
-        clientName: string,
-        clientDescription: string,
+        secret: string,
+        name: string,
+        description: string,
         applicationType: string,
         tokenEndpointAuthMethod: string,
         scope: string,

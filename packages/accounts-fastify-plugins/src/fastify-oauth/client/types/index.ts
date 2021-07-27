@@ -14,14 +14,7 @@ export interface GetClientRequest {
   }
 }
 
-export interface ListClientsRequest {
-  Params: {
-    id: string
-  }
-  Querystring: {
-    client_id: string
-  }
-}
+export interface ListClientsRequest {}
 
 export interface UpdateClientRequest {
   Body: {

@@ -6,6 +6,7 @@ var access$token_pb = require('./access-token_pb.js');
 var authorization$code_pb = require('./authorization-code_pb.js');
 var client_pb = require('./client_pb.js');
 var refresh$token_pb = require('./refresh-token_pb.js');
+var scope_pb = require('./scope_pb.js');
 var user_pb = require('./user_pb.js');
 
 function serialize_access_token_AccessToken(arg) {
@@ -94,6 +95,28 @@ function serialize_refresh_token_RefreshTokenList(arg) {
 
 function deserialize_refresh_token_RefreshTokenList(buffer_arg) {
   return refresh$token_pb.RefreshTokenList.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_scope_Scope(arg) {
+  if (!(arg instanceof scope_pb.Scope)) {
+    throw new Error('Expected argument of type scope.Scope');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_scope_Scope(buffer_arg) {
+  return scope_pb.Scope.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_scope_ScopeList(arg) {
+  if (!(arg instanceof scope_pb.ScopeList)) {
+    throw new Error('Expected argument of type scope.ScopeList');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_scope_ScopeList(buffer_arg) {
+  return scope_pb.ScopeList.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_user_User(arg) {
@@ -416,6 +439,28 @@ var AccountService = exports.AccountService = {
     requestDeserialize: deserialize_refresh_token_RefreshToken,
     responseSerialize: serialize_refresh_token_RefreshToken,
     responseDeserialize: deserialize_refresh_token_RefreshToken,
+  },
+  getScope: {
+    path: '/auth.Account/GetScope',
+    requestStream: false,
+    responseStream: false,
+    requestType: scope_pb.Scope,
+    responseType: scope_pb.Scope,
+    requestSerialize: serialize_scope_Scope,
+    requestDeserialize: deserialize_scope_Scope,
+    responseSerialize: serialize_scope_Scope,
+    responseDeserialize: deserialize_scope_Scope,
+  },
+  listScopes: {
+    path: '/auth.Account/ListScopes',
+    requestStream: false,
+    responseStream: false,
+    requestType: scope_pb.Scope,
+    responseType: scope_pb.ScopeList,
+    requestSerialize: serialize_scope_Scope,
+    requestDeserialize: deserialize_scope_Scope,
+    responseSerialize: serialize_scope_ScopeList,
+    responseDeserialize: deserialize_scope_ScopeList,
   },
 };
 

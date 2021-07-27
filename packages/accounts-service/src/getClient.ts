@@ -10,8 +10,7 @@ export default async function getClient(
 
   const client = await db.client.findUnique({
     where: {
-      id: request.id || undefined,
-      client_id: request.clientId || undefined
+      id: request.id || undefined
     }
   })
 

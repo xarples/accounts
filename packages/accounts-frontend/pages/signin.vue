@@ -20,6 +20,8 @@ export default defineComponent({
             const redirectTo = decodeURIComponent(search)
 
             router.replace(redirectTo)
+
+            return
           }
 
           router.replace('/')

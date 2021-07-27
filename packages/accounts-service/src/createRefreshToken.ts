@@ -26,7 +26,7 @@ export default async function createRefreshToken(
       },
       Client: {
         connect: {
-          client_id: request.clientId
+          id: request.clientId
         }
       },
       Scopes: {
@@ -36,11 +36,6 @@ export default async function createRefreshToken(
       }
     },
     include: {
-      Client: {
-        select: {
-          client_id: true
-        }
-      },
       Scopes: {
         select: {
           name: true
