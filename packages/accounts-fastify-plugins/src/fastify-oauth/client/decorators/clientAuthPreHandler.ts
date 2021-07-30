@@ -5,6 +5,8 @@ import { RouteGenericInterface } from 'fastify/types/route'
 
 type ClientAuthPreHandler = RouteGenericInterface & {
   Body: {
+    grant_type?: 'authorization_code' | 'client_credentials' | 'refresh_token'
+    client_id?: string
     client_assertion_type?: 'urn:ietf:params:oauth:client-assertion-type:jwt-bearer'
     client_assertion?: string
   }
@@ -18,31 +20,70 @@ export const clientAuthPreHandler: preHandlerHookHandler<
   ServerResponse,
   RouteGenericInterface & ClientAuthPreHandler,
   unknown
-> = (request, reply, done) => {
-  if (!request.body.client_assertion_type) {
-    const credentials = service.basicAuth(request)
+> = async (request, reply) => {
+  let authenticationMethod:
+    | 'client_secret_basic'
+    | 'private_key_jwt'
+    | undefined = undefined
 
-    if (!credentials) {
-      reply
-        .code(401)
-        .header('WWW-Authenticate', 'Basic')
-        .send({
-          error: 'invalid_client',
-          error_description: 'Client authentication failed'
-        })
+  const hasAuthenticationMethod =
+    request.headers.authorization || request.body.client_assertion_type
 
-      return
-    }
-  }
+  const needClientAuthentication = [
+    'client_credentials',
+    'refresh_token'
+  ].includes(request?.body?.grant_type!)
 
-  if (
+  if (request.headers.authorization) {
+    authenticationMethod = 'client_secret_basic'
+  } else if (
     request.body.client_assertion_type ===
     'urn:ietf:params:oauth:client-assertion-type:jwt-bearer'
   ) {
-    // TODO...
-    // Implement private_key_jwt authentication
-    service.privateKeyJWTAuth()
+    authenticationMethod = 'private_key_jwt'
   }
 
-  done()
+  if (needClientAuthentication && !hasAuthenticationMethod) {
+    reply
+      .code(401)
+      .header('WWW-Authenticate', 'Basic')
+      .send({
+        error: 'invalid_client',
+        error_description: 'Client authentication failed'
+      })
+
+    reply.sent = true
+  }
+
+  if (
+    !needClientAuthentication &&
+    !authenticationMethod &&
+    !request.body.client_id
+  ) {
+    reply
+      .code(401)
+      .header('WWW-Authenticate', 'Basic')
+      .send({
+        error: 'invalid_client',
+        error_description: 'Client authentication failed'
+      })
+
+    reply.sent = true
+  }
+
+  if (!needClientAuthentication && !authenticationMethod) {
+    request.client = { clientId: request.body.client_id! }
+  }
+
+  if (authenticationMethod === 'client_secret_basic') {
+    const client = await service.basicAuth(request)
+
+    if (client) {
+      request.client = { clientId: client?.client_id! }
+    }
+  }
+  // } else if (authenticationMethod === 'private_key_jwt') {
+  //   // TODO
+  //   // service.privateKeyJWTAuth()
+  // }
 }

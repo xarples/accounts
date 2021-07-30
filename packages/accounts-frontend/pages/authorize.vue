@@ -1,6 +1,6 @@
 <script lang="ts">
 import { defineComponent, useAsync, useRoute } from '@nuxtjs/composition-api'
-import { useClient } from '~/components/clients/hooks'
+import { useClient, useScopes } from '~/components/clients/hooks'
 
 export default defineComponent({
   layout: 'authenticated',
@@ -10,9 +10,11 @@ export default defineComponent({
       () => useClient({ id: route.value.query.client_id as string }),
       'client'
     )
+    const scopes = useAsync(() => useScopes(), 'scopes')
     return {
       queryParams: route.value.query,
-      client
+      client,
+      scopes
     }
   }
 })
@@ -28,16 +30,18 @@ export default defineComponent({
             You agree that {{ client.client_name }} will be able to:
           </p>
           <hr />
-          <div>
-            <h6 class="font-weight-bold">View your Spotify account data</h6>
+          <div v-for="scope in scopes" :key="scope.id">
+            <h6 class="font-weight-bold">
+              {{ scope.name.split(':')[1] }} {{ scope.name.split(':')[0] }}
+            </h6>
             <p>
-              Your name and username, your profile picture, how many followers
-              you have on Spotify and your public playlists
+              {{ scope.description }}
             </p>
           </div>
           <hr />
+
           <p>
-            You can remove this access at any time at spotify.com/account.
+            You can remove this access at any time at xarples accounts.
             <b-link href="#foo">accounts.xarples.com.</b-link>
           </p>
           <p>

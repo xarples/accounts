@@ -75,23 +75,27 @@ const plugin: FastifyPluginAsync = async fastify => {
         return
       }
 
-      const result = await axios({
-        method: 'POST',
-        url: `http://${oauthServerHost}/token`,
-        data: {
-          grant_type: 'authorization_code',
-          code,
-          redirect_uri: redirectUri,
-          client_id: clientId,
-          code_verifier: _codeVerifier
-        },
-        headers: {
-          authorization: `Basic ${encodeBasic({
-            username: clientId,
-            password: clientSecret
-          })}`
-        }
+      const params = new URLSearchParams({
+        grant_type: 'authorization_code',
+        code,
+        redirect_uri: redirectUri,
+        client_id: clientId,
+        code_verifier: _codeVerifier
       })
+
+      const result = await axios.post(
+        `http://${oauthServerHost}/token`,
+        params,
+        {
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            Authorization: `Basic ${encodeBasic({
+              username: clientId,
+              password: clientSecret
+            })}`
+          }
+        }
+      )
 
       request.session.accessToken = result.data.access_token
       request.session.refreshToken = result.data.refresh_token
@@ -100,9 +104,7 @@ const plugin: FastifyPluginAsync = async fastify => {
 
       reply.redirect('/applications')
     } catch (error) {
-      reply.send({
-        error: error.message
-      })
+      reply.code(error.response.status).send(error.response.data)
     }
   })
 }

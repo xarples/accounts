@@ -24,7 +24,7 @@ export const authorizationRequestSchema: FastifySchema = {
     .prop('state', S.string())
 }
 
-export const postTokenSchema: FastifySchema = {
+export const tokenRequestSchema: FastifySchema = {
   body: S.object()
     .prop(
       'grant_type',

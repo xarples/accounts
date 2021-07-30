@@ -5,6 +5,11 @@ import * as routes from './routes'
 
 declare module 'fastify' {
   interface FastifyInstance {}
+  interface FastifyRequest {
+    client: {
+      clientId: string
+    }
+  }
 }
 
 const plugin: FastifyPluginAsync = async (fastify, options) => {

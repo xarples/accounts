@@ -132,13 +132,19 @@ export class ClientService {
         return undefined
       }
 
-      return { username: result.name, password: result.pass }
+      return this.reducer(client.toObject())
     } catch (error) {
       return undefined
     }
   }
 
   async privateKeyJWTAuth() {}
+
+  verifyAuth(request: any) {
+    if (request.headers.authorization) {
+      return this.verifyBasicAuth(request)
+    }
+  }
 
   verifyBasicAuth(request: any) {
     try {
@@ -148,7 +154,7 @@ export class ClientService {
         return undefined
       }
 
-      return { username: result.name, password: result.pass }
+      return { clientId: result.name, clientSecret: result.pass }
     } catch (error) {
       return undefined
     }
