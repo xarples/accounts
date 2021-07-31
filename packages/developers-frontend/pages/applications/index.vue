@@ -46,7 +46,7 @@ export default defineComponent({
         cols="12"
         v-for="client in clients"
         :key="client.client_id"
-        @click="handleClick(client.id)"
+        @click="handleClick(client.client_id)"
       >
         <b-list-group>
           <b-list-group-item href="#" class="flex-column align-items-start">

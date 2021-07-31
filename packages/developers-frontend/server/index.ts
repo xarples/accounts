@@ -6,10 +6,13 @@ import { fastifySession, fastifyNuxt } from '@xarples/accounts-fastify-plugins'
 import api from './api'
 import routes from './routes'
 
+const isDev = process.env.NODE_ENV !== 'production'
 const host = process.env.HOST || '127.0.0.1'
 const port = process.env.PORT || 5001
 const server = fastify({
-  logger: true
+  logger: {
+    prettyPrint: isDev
+  }
 })
 
 server.register(fastifyFormbody)

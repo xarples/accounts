@@ -32,7 +32,13 @@ export default defineComponent({
           <hr />
           <div v-for="scope in scopes" :key="scope.id">
             <h6 class="font-weight-bold">
-              {{ scope.name.split(':')[1] }} {{ scope.name.split(':')[0] }}
+              {{
+                scope.name
+                  .split(':')
+                  .reverse()
+                  .join(' ')
+              }}
+              <!-- {{ scope.name.split(':')[1] }} {{ scope.name.split(':')[0] }} -->
             </h6>
             <p>
               {{ scope.description }}

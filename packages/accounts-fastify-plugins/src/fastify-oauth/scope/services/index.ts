@@ -36,6 +36,15 @@ export class ScopeService {
     return list.getScopeList().map(code => this.reducer(code.toObject()))
   }
 
+  async verify(scopes: string[]) {
+    const message = new Scope()
+    const list = await listRefreshTokens(message)
+    const scopeList = list.getScopeList().map(scope => scope.getName())
+    const isScopeValid = scopes.every(scope => scopeList.includes(scope))
+
+    return isScopeValid
+  }
+
   reducer(options: Scope.AsObject): ScopeResponse {
     return {
       id: options.id,

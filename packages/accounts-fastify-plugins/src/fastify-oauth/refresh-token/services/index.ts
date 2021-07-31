@@ -62,7 +62,7 @@ export class RefreshTokenService {
     return list.getRefreshTokenList().map(code => this.reducer(code.toObject()))
   }
 
-  async delete(options: Options) {
+  async delete(options: Pick<Options, 'id' | 'token'>) {
     const message = new RefreshToken()
 
     message.setId(options.id!)

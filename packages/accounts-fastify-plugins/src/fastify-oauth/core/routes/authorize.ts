@@ -60,13 +60,9 @@ async function authorizationHandler(
     }
 
     if (request.query.scope) {
-      const scopes = (await fastify.scopeService.list()).map(
-        scope => scope.name
+      const isScopeValid = fastify.scopeService.verify(
+        request.query.scope.split(' ')
       )
-
-      const isScopeValid = request.query.scope
-        .split(' ')
-        .every(scope => scopes.includes(scope))
 
       if (!isScopeValid) {
         reply.code(400).send({

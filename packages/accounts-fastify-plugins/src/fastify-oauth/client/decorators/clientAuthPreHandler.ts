@@ -71,10 +71,6 @@ export const clientAuthPreHandler: preHandlerHookHandler<
     reply.sent = true
   }
 
-  if (!needClientAuthentication && !authenticationMethod) {
-    request.client = { clientId: request.body.client_id! }
-  }
-
   if (authenticationMethod === 'client_secret_basic') {
     const client = await service.basicAuth(request)
 
@@ -86,4 +82,9 @@ export const clientAuthPreHandler: preHandlerHookHandler<
   //   // TODO
   //   // service.privateKeyJWTAuth()
   // }
+  else if (request.body.client_id) {
+    request.client = { clientId: request.body.client_id }
+  }
+
+  // reply.sent = true
 }

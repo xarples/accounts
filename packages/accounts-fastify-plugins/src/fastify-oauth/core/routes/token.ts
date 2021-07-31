@@ -1,7 +1,6 @@
 import { FastifyInstance, FastifyPluginAsync, FastifyReply } from 'fastify'
 import fp from 'fastify-plugin'
 import { codeChallenge } from '@xarples/accounts-utils'
-import { tokenRequestSchema } from '../schemas'
 import { TokenRequest } from '../types'
 import { FastifyRequest } from 'fastify'
 
@@ -14,20 +13,33 @@ const plugin: FastifyPluginAsync = async fastify => {
     '/token',
     {
       attachValidation: true,
-      schema: tokenRequestSchema,
       preHandler: fastify.clientAuthPreHandler
     },
     async (request, reply) => {
-      if (request.validationError) {
-        reply.code(400).send({
-          error: 'unsupported_grant_type',
-          error_description: request.validationError.message
+      try {
+        if (
+          ![
+            'authorization_code',
+            'client_credentials',
+            'refresh_token'
+          ].includes(request.body.grant_type)
+        ) {
+          reply.code(400).send({
+            error: 'unsupported_grant_type',
+            error_description:
+              'The authorization grant type is not supported by the authorization server.'
+          })
+        }
+
+        await _authorizationCodeHandler(request, reply)
+        await _clientCredentialsHandler(request, reply)
+        await _refreshTokenHandler(request, reply)
+      } catch (error) {
+        reply.code(500).send({
+          error: 'server_error',
+          error_description: error.message
         })
       }
-
-      await _authorizationCodeHandler(request, reply)
-      await _clientCredentialsHandler(request, reply)
-      await _refreshTokenHandler(request, reply)
     }
   )
 }
@@ -38,6 +50,22 @@ async function clientCredentialsGrantHandler(
 ) {
   if (request.body.grant_type === 'client_credentials') {
     const fastify = this as FastifyInstance
+
+    if (request.body.scope) {
+      const isScopeValid = fastify.scopeService.verify(
+        request.body.scope.split(' ')
+      )
+
+      if (!isScopeValid) {
+        reply.code(400).send({
+          error: 'invalid_scope',
+          error_description:
+            'The requested scope is invalid, unknown, or malformed'
+        })
+
+        return
+      }
+    }
 
     const accessToken = await fastify.accessTokenService.create({
       clientId: request.client!.clientId,
@@ -60,6 +88,15 @@ async function refreshTokenGrantHandler(
 ) {
   if (request.body.grant_type === 'refresh_token') {
     const fastify = this as FastifyInstance
+
+    if (!request.body.refresh_token) {
+      reply.code(400).send({
+        error: 'invalid_grant',
+        error_description: 'Refresh token is invalid'
+      })
+
+      return
+    }
 
     const refreshToken = await fastify.refreshTokenService.get({
       token: request.body.refresh_token
@@ -110,6 +147,10 @@ async function refreshTokenGrantHandler(
       scopeList: authorizationCode!.scopes
     })
 
+    await fastify.refreshTokenService.delete({
+      id: refreshToken.id
+    })
+
     reply.code(200).send({
       access_token: accessToken.token,
       token_type: 'Bearer',
@@ -128,15 +169,32 @@ async function authorizationCodeGrantHandler(
   const fastify = this as FastifyInstance
 
   if (request.body.grant_type === 'authorization_code') {
-    fastify.log.info(`Requesting authorization_code: ${request.body.code}`)
+    fastify.log.info('Validating token request')
+    fastify.log.debug(request.body)
+
+    if (
+      !request.body.code ||
+      !request.body.redirect_uri ||
+      !request.body.client_id ||
+      !request.body.code_verifier
+    ) {
+      reply.code(400).send({
+        error: 'invalid_grant',
+        error_description:
+          'code, redirect_uri, client_id and code_verifier are required parameters'
+      })
+
+      return
+    }
+
+    fastify.log.info('Fetching authorization code')
 
     const authorizationCode = await fastify.authorizationCodeService.get({
       code: request.body.code
     })
 
-    fastify.log.info(
-      `Validating if authorization_code: ${request.body.code} exist`
-    )
+    fastify.log.debug(authorizationCode)
+    fastify.log.info(`Validating if the authorization code exist`)
 
     if (!authorizationCode) {
       reply.code(400).send({
@@ -147,9 +205,7 @@ async function authorizationCodeGrantHandler(
       return
     }
 
-    fastify.log.info(
-      `Validating if authorization_code: ${request.body.code} is expired`
-    )
+    fastify.log.info('Validating if the authorization code is expired')
 
     if (fastify.authorizationCodeService.isExpired(authorizationCode)) {
       reply.code(400).send({
@@ -161,10 +217,10 @@ async function authorizationCodeGrantHandler(
     }
 
     fastify.log.info(
-      `Validating if authorization_code: ${request.body.code} belongs to the authenticated client`
+      `Validating if the authorization code belongs to the authenticated client`
     )
 
-    if (authorizationCode!.client_id !== request.client.clientId) {
+    if (authorizationCode!.client_id !== request.client!.clientId) {
       reply.code(400).send({
         error: 'invalid_grant',
         error_description: 'Invalid client'
@@ -173,22 +229,7 @@ async function authorizationCodeGrantHandler(
       return
     }
 
-    fastify.log.info(
-      `Validating if code_verifier: ${request.body.code_verifier} exist`
-    )
-
-    if (!request.body?.code_verifier) {
-      reply.code(400).send({
-        error: 'invalid_request',
-        error_description: 'Invalid code verifier'
-      })
-
-      return
-    }
-
-    fastify.log.info(
-      `Calculating code_challenge from code_verifier: ${request.body.code_verifier}`
-    )
+    fastify.log.info('Calculating code challenge from code verifier')
 
     const _codeChallenge = codeChallenge(request.body.code_verifier, {
       codeChallengeMethod: authorizationCode!.code_challenge_method as
@@ -196,10 +237,9 @@ async function authorizationCodeGrantHandler(
         | 'S256'
     })
 
+    fastify.log.debug(_codeChallenge)
     fastify.log.info(
-      `Validating if code_challenge ${_codeChallenge} is equal to the authorization_code's one ${
-        authorizationCode!.code_challenge
-      }`
+      `Validating if code challenge is equal to the authorization code's one`
     )
 
     if (_codeChallenge !== authorizationCode!.code_challenge) {
@@ -212,11 +252,7 @@ async function authorizationCodeGrantHandler(
     }
 
     fastify.log.info(
-      `Validating if redirect_uri ${
-        request.body.redirect_uri
-      } is equal to the authorization_code's one ${
-        authorizationCode!.redirect_uri
-      }`
+      `Validating if redirect uri is equal to the authorization code's one`
     )
 
     if (request.body.redirect_uri !== authorizationCode!.redirect_uri) {
@@ -228,30 +264,37 @@ async function authorizationCodeGrantHandler(
       return
     }
 
-    fastify.log.info('Issuing access_token')
+    fastify.log.info('Issuing access token')
 
     const accessToken = await fastify.accessTokenService.create({
       authorizationCodeId: authorizationCode!.id,
       userId: authorizationCode!.user_id,
-      clientId: request.client.clientId,
+      clientId: request.client!.clientId,
       scopeList: authorizationCode.scopes
     })
 
-    fastify.log.info('Issuing refresh_token')
+    fastify.log.debug(accessToken)
+    fastify.log.info('Issuing refresh token')
 
     const refreshToken = await fastify.refreshTokenService.create({
       authorizationCodeId: authorizationCode!.id,
       userId: authorizationCode!.user_id,
-      clientId: request.client.clientId,
+      clientId: request.client!.clientId,
       scopeList: authorizationCode.scopes
     })
 
-    reply.code(200).send({
+    const tokenResponse = {
       access_token: accessToken.token,
       token_type: 'Bearer',
       expires_in: 3600,
       refresh_token: refreshToken.token
-    })
+    }
+
+    fastify.log.debug(refreshToken)
+    fastify.log.info('Sending token response')
+    fastify.log.debug(tokenResponse)
+
+    reply.code(200).send(tokenResponse)
   }
 }
 

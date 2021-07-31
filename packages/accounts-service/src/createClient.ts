@@ -12,8 +12,9 @@ export default async function createClient(
 
   if (!metadata.authorization) {
     cb({
-      code: grpc.status.UNAUTHENTICATED,
-      message: 'Access token is required'
+      code: grpc.status.INVALID_ARGUMENT,
+      name: 'invalid_request',
+      message: 'Invalid required parameter authorization'
     })
 
     return
@@ -26,7 +27,9 @@ export default async function createClient(
   if (!accessToken) {
     cb({
       code: grpc.status.UNAUTHENTICATED,
-      message: 'Invalid access token'
+      name: 'invalid_token',
+      message:
+        'The access token provided is expired, revoked, malformed, or invalid for other reasons.'
     })
 
     return
@@ -40,7 +43,9 @@ export default async function createClient(
   if (!hasScopes) {
     cb({
       code: grpc.status.PERMISSION_DENIED,
-      message: 'Insufficient scopes'
+      name: 'insufficient_scope',
+      message:
+        'The request requires higher privileges than provided by the access token.'
     })
 
     return

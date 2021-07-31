@@ -6,7 +6,7 @@ import * as routes from './routes'
 declare module 'fastify' {
   interface FastifyInstance {}
   interface FastifyRequest {
-    client: {
+    client?: {
       clientId: string
     }
   }
