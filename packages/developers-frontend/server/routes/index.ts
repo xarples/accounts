@@ -34,6 +34,7 @@ const plugin: FastifyPluginAsync = async fastify => {
       redirect_uri: redirectUri,
       code_challenge: _codeChallenge,
       code_challenge_method: codeChallengeMethod,
+      response_mode: 'web_message',
       scope: scopes.join(' '),
       state
     })

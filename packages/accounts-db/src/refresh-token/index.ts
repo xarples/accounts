@@ -2,11 +2,8 @@ import { RefreshToken, Scope } from '@prisma/client'
 import { isAfter } from 'date-fns'
 import { createClient } from '../prisma'
 
-interface HasScopesOptions {
-  token: RefreshToken & {
-    Scopes: Scope[]
-  }
-  scopes: string[]
+type RefreshTokenWithScopes = RefreshToken & {
+  Scopes: Scope[]
 }
 
 const client = createClient()
@@ -24,20 +21,20 @@ export const service = {
       return undefined
     }
 
-    if (this.hasExpired(refreshToken)) {
+    if (this.verifyExpirationDate(refreshToken)) {
       return undefined
     }
 
     return refreshToken
   },
 
-  hasExpired(token: RefreshToken) {
+  verifyExpirationDate(token: RefreshToken) {
     return isAfter(new Date(), new Date(token.expires_in))
   },
 
-  hasScopes(options: HasScopesOptions) {
-    const scopes = options.token.Scopes.map(scope => scope.name)
+  verifyScopes(token: RefreshTokenWithScopes, scopes: string[]) {
+    const tokenScopes = token.Scopes.map(scope => scope.name)
 
-    return options.scopes.every(scope => scopes.includes(scope))
+    return scopes.every(scope => tokenScopes.includes(scope))
   }
 }

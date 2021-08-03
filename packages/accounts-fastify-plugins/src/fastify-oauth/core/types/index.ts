@@ -5,6 +5,7 @@ export interface AuthorizationRequest {
     code_challenge_method: string
     redirect_uri: string
     response_type: string
+    response_mode?: 'web_message'
     scope?: string
     state?: string
   }

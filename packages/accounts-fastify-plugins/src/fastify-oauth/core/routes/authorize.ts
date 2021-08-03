@@ -75,6 +75,30 @@ async function authorizationHandler(
       }
     }
 
+    if (request.query.response_mode === 'web_message') {
+      const authorizationCode = await fastify.authorizationCodeService.create({
+        userId: request.session?.user?.id,
+        clientId: request.query.client_id,
+        codeChallenge: request.query.code_challenge,
+        codeChallengeMethod: request.query.code_challenge_method,
+        redirectUri: request.query.redirect_uri,
+        scopeList: request.query.scope?.split(' ')
+      })
+
+      const html = renderWebMessageResponse({
+        code: authorizationCode.code,
+        state: request.query.state,
+        redirectUri: request.query.redirect_uri
+      })
+
+      reply
+        .code(200)
+        .type('html')
+        .send(html)
+
+      return
+    }
+
     fastify.nuxt.render(request.raw, reply.raw)
   } catch (error) {
     reply.code(500).send({
@@ -182,6 +206,32 @@ async function authorizationConsentHandler(
   }
 
   reply.redirect(302, `${request.body.redirect_uri}?${params.toString()}`)
+}
+
+function renderWebMessageResponse(options: any) {
+  return `
+    <!DOCTYPE html>
+    <html>
+      <head>
+          <title>Authorization Response</title>
+      </head>
+      <body>
+        <script type="text/javascript">
+          const redirectURI = "${options.redirectUri}";
+          const webMessageRequest = {};
+          const authorizationResponse = {
+            type: "authorization_response",
+            response: {
+              code: "${options.code}",
+              ${options.state ? `state: ${options.state}` : ''}
+            }
+          };
+          const mainWin = (window.opener != window) ? window.opener : window.parent;
+
+          mainWin.postMessage(authorizationResponse, redirectURI);
+        </script>
+      </body>
+  `.trim()
 }
 
 export default fp(plugin, '3.x')

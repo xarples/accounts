@@ -17,13 +17,13 @@ model User {
   last_name  String
   password   String
   email      String   @unique
-  clients    Client[]
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
 
-  AuthorizationCode AuthorizationCode[]
-  AccessToken       AccessToken[]
-  RefreshToken      RefreshToken[]
+  AuthorizationCodes AuthorizationCode[]
+  Clients            Client[]
+  AccessTokens       AccessToken[]
+  RefreshTokens      RefreshToken[]
   @@map(name: "users")
 }
 

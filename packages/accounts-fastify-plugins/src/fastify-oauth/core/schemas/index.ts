@@ -8,8 +8,6 @@ export const authorizationRequestSchema: FastifySchema = {
       S.string()
         .required()
         .enum(['code'])
-        .title('Hello')
-        .description('Hello 2')
     )
     .prop('client_id', S.string().required())
     .prop('code_challenge', S.string().required())
@@ -20,6 +18,7 @@ export const authorizationRequestSchema: FastifySchema = {
         .default('plain')
     )
     .prop('redirect_uri', S.string().required())
+    .prop('response_mode', S.string().enum(['web_message']))
     .prop('scope', S.string())
     .prop('state', S.string())
 }

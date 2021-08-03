@@ -2,11 +2,8 @@ import { AccessToken, Scope } from '@prisma/client'
 import { isAfter } from 'date-fns'
 import { createClient } from '../prisma'
 
-interface HasScopesOptions {
-  token: AccessToken & {
-    Scopes: Scope[]
-  }
-  scopes: string[]
+type AccessTokenWithScopes = AccessToken & {
+  Scopes: Scope[]
 }
 
 const client = createClient()
@@ -24,20 +21,20 @@ export const service = {
       return undefined
     }
 
-    if (this.hasExpired(accessToken)) {
+    if (this.verifyExpirationDate(accessToken)) {
       return undefined
     }
 
     return accessToken
   },
 
-  hasExpired(token: AccessToken) {
+  verifyExpirationDate(token: AccessToken) {
     return isAfter(new Date(), new Date(token.expires_in))
   },
 
-  hasScopes(options: HasScopesOptions) {
-    const scopes = options.token.Scopes.map(scope => scope.name)
+  verifyScopes(token: AccessTokenWithScopes, scopes: string[]) {
+    const tokenScopes = token.Scopes.map(scope => scope.name)
 
-    return options.scopes.every(scope => scopes.includes(scope))
+    return scopes.every(scope => tokenScopes.includes(scope))
   }
 }

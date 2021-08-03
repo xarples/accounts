@@ -26,7 +26,10 @@ async function main() {
         application_type: ClientType.web,
         secret:
           'ceac77ba4ceba7d0fc8011fa82383b3f64cc7a1580f000182b7aba77adc31607',
-        redirect_uris: ['http://localhost:5002/callback']
+        redirect_uris: [
+          'http://localhost:5002',
+          'http://localhost:5002/callback'
+        ]
       }
     ],
     skipDuplicates: true

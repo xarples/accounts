@@ -19,7 +19,8 @@ export default defineComponent({
             const search = window.location.search.replace('?redirect_to=', '')
             const redirectTo = decodeURIComponent(search)
 
-            router.replace(redirectTo)
+            // router.replace(redirectTo)
+            window.location.replace(redirectTo)
 
             return
           }

@@ -1,4 +1,4 @@
-import db, { ClientType } from '@xarples/accounts-db'
+import * as db from '@xarples/accounts-db'
 import { randomBytes } from '@xarples/accounts-utils'
 import { grpc, Client } from '@xarples/accounts-proto-loader'
 import { toClientMessage } from './utils'
@@ -35,10 +35,7 @@ export default async function createClient(
     return
   }
 
-  const hasScopes = db.accessToken.hasScopes({
-    token: accessToken,
-    scopes: ['clients:write']
-  })
+  const hasScopes = db.accessToken.verifyScopes(accessToken, ['clients:write'])
 
   if (!hasScopes) {
     cb({
@@ -57,7 +54,7 @@ export default async function createClient(
       secret: randomBytes(32).toString('hex'),
       name: request.name,
       description: request.description,
-      application_type: ClientType[request.applicationType as ClientType],
+      application_type: db.ClientType[request.applicationType as db.ClientType],
       redirect_uris: request.redirectUriList
       // token_endpoint_auth_method: request.tokenEndpointAuthMethod,
       // scope: request.scope,
