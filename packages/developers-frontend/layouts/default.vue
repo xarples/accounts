@@ -35,7 +35,7 @@ export default defineComponent({
         window.open(
           '/signin',
           '_new',
-          'location=yes,height=570,width=520,scrollbars=yes,status=yes'
+          'location=yes,height=600,width=520,scrollbars=yes,status=yes'
         )
       }
     }

@@ -6,11 +6,15 @@ export default async function listUsers(
   _: grpc.ServerUnaryCall<User, UserList>,
   cb: grpc.sendUnaryData<UserList>
 ) {
-  // const request = call.request.toObject()
-  const users = await db.user.findMany()
-  const message = new UserList()
+  try {
+    // const request = call.request.toObject()
+    const users = await db.user.findMany()
+    const message = new UserList()
 
-  message.setUserList(users.map(toUserMessage))
+    message.setUserList(users.map(toUserMessage))
 
-  cb(null, message)
+    cb(null, message)
+  } catch (error) {
+    cb(error)
+  }
 }

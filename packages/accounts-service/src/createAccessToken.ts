@@ -8,43 +8,47 @@ export default async function createAccessToken(
   call: grpc.ServerUnaryCall<AccessToken, AccessToken>,
   cb: grpc.sendUnaryData<AccessToken>
 ) {
-  const request = call.request.toObject()
+  try {
+    const request = call.request.toObject()
 
-  const token = await db.accessToken.create({
-    data: {
-      token: randomBytes(32).toString('hex'),
-      expires_in: add(new Date(), { hours: 1 }),
-      AuthorizationCode: {
-        connect: {
-          id: request.authorizationCodeId
+    const token = await db.accessToken.create({
+      data: {
+        token: randomBytes(32).toString('hex'),
+        expires_in: add(new Date(), { hours: 1 }),
+        AuthorizationCode: {
+          connect: {
+            id: request.authorizationCodeId
+          }
+        },
+        Client: {
+          connect: {
+            id: request.clientId
+          }
+        },
+        User: {
+          connect: {
+            id: request.userId
+          }
+        },
+        Scopes: {
+          connect: request.scopeList.map(scope => ({
+            name: scope
+          }))
         }
       },
-      Client: {
-        connect: {
-          id: request.clientId
+      include: {
+        Scopes: {
+          select: {
+            name: true
+          }
         }
-      },
-      User: {
-        connect: {
-          id: request.userId
-        }
-      },
-      Scopes: {
-        connect: request.scopeList.map(scope => ({
-          name: scope
-        }))
       }
-    },
-    include: {
-      Scopes: {
-        select: {
-          name: true
-        }
-      }
-    }
-  })
+    })
 
-  const message = toAccessTokenMessage(token)
+    const message = toAccessTokenMessage(token)
 
-  cb(null, message)
+    cb(null, message)
+  } catch (error) {
+    cb(error)
+  }
 }

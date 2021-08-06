@@ -1,3 +1,5 @@
+import { useContext } from '@nuxtjs/composition-api'
+
 interface IOptions {
   id: string
   clientName: string
@@ -7,9 +9,12 @@ interface IOptions {
 }
 
 export function useUpdateClient({ id, ...options }: IOptions) {
+  const headers = useContext().req.headers
+
   return fetch(`/api/clients/${id}`, {
     method: 'PUT',
     headers: {
+      ...(headers as HeadersInit),
       Accept: 'application/json',
       'Content-Type': 'application/json'
     },

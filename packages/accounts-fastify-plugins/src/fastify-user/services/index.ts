@@ -79,7 +79,7 @@ export class UserService {
     try {
       const message = new User()
 
-      message.setLastName(options.email!)
+      message.setEmail(options.email!)
       message.setPassword(options.password!)
 
       const found = await signIn(message)

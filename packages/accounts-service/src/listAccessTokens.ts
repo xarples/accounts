@@ -10,23 +10,27 @@ export default async function listAccessTokens(
   call: grpc.ServerUnaryCall<AccessToken, AccessTokenList>,
   cb: grpc.sendUnaryData<AccessTokenList>
 ) {
-  const request = call.request.toObject()
-  const accessTokens = await db.accessToken.findMany({
-    where: {
-      client_id: request.clientId || undefined
-    },
-    include: {
-      Scopes: {
-        select: {
-          name: true
+  try {
+    const request = call.request.toObject()
+    const accessTokens = await db.accessToken.findMany({
+      where: {
+        client_id: request.clientId || undefined
+      },
+      include: {
+        Scopes: {
+          select: {
+            name: true
+          }
         }
       }
-    }
-  })
+    })
 
-  const message = new AccessTokenList()
+    const message = new AccessTokenList()
 
-  message.setAccessTokenList(accessTokens.map(toAccessTokenMessage))
+    message.setAccessTokenList(accessTokens.map(toAccessTokenMessage))
 
-  cb(null, message)
+    cb(null, message)
+  } catch (error) {
+    cb(error)
+  }
 }

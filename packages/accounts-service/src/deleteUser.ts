@@ -6,14 +6,18 @@ export default async function deleteUser(
   call: grpc.ServerUnaryCall<User, User>,
   cb: grpc.sendUnaryData<User>
 ) {
-  const request = call.request.toObject()
-  const user = await db.user.delete({
-    where: {
-      id: request.id || undefined
-    }
-  })
+  try {
+    const request = call.request.toObject()
+    const user = await db.user.delete({
+      where: {
+        id: request.id || undefined
+      }
+    })
 
-  const message = toUserMessage(user)
+    const message = toUserMessage(user)
 
-  cb(null, message)
+    cb(null, message)
+  } catch (error) {
+    cb(error)
+  }
 }

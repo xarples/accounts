@@ -7,32 +7,37 @@ export default async function signIn(
   call: grpc.ServerUnaryCall<User, User>,
   cb: grpc.sendUnaryData<User>
 ) {
-  const request = call.request.toObject()
-  const found = await db.user.findFirst({
-    where: {
-      email: request.email || undefined
+  try {
+    const request = call.request.toObject()
+    const found = await db.user.findUnique({
+      where: {
+        id: request.id || undefined,
+        email: request.email || undefined
+      }
+    })
+
+    if (!found) {
+      cb({
+        code: grpc.status.NOT_FOUND
+      })
+
+      return
     }
-  })
 
-  if (!found) {
-    cb({
-      code: grpc.status.NOT_FOUND
-    })
+    const encryptedPassword = encrypt(request.password)
 
-    return
+    if (encryptedPassword !== found.password) {
+      cb({
+        code: grpc.status.INVALID_ARGUMENT
+      })
+
+      return
+    }
+
+    const message = toUserMessage(found)
+
+    cb(null, message)
+  } catch (error) {
+    cb(error)
   }
-
-  const encryptedPassword = encrypt(request.password)
-
-  if (encryptedPassword !== found.password) {
-    cb({
-      code: grpc.status.NOT_FOUND
-    })
-
-    return
-  }
-
-  const message = toUserMessage(found)
-
-  cb(null, message)
 }

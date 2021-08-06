@@ -5,7 +5,7 @@ interface IOptions {
   redirectUris: string[]
 }
 
-export function useCreateClient(options: IOptions) {
+export async function useCreateClient(options: IOptions) {
   return fetch('/api/clients', {
     method: 'POST',
     headers: {
@@ -13,8 +13,8 @@ export function useCreateClient(options: IOptions) {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      client_name: options.clientName,
-      client_description: options.clientDescription,
+      name: options.clientName,
+      description: options.clientDescription,
       application_type: options.applicationType,
       redirect_uris: options.redirectUris
     })

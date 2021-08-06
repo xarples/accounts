@@ -7,17 +7,21 @@ export default async function updateClient(
   call: grpc.ServerUnaryCall<Client, Client>,
   cb: grpc.sendUnaryData<Client>
 ) {
-  const request = call.request.toObject()
-  const client = await db.client.update({
-    where: {
-      id: request.id || undefined
-    },
-    data: {
-      secret: randomBytes(32).toString('hex')
-    }
-  })
+  try {
+    const request = call.request.toObject()
+    const client = await db.client.update({
+      where: {
+        id: request.id || undefined
+      },
+      data: {
+        secret: randomBytes(32).toString('hex')
+      }
+    })
 
-  const message = toClientMessage(client)
+    const message = toClientMessage(client)
 
-  cb(null, message)
+    cb(null, message)
+  } catch (error) {
+    cb(error)
+  }
 }

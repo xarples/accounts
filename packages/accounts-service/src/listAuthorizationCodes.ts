@@ -10,25 +10,29 @@ export default async function listAuthorizationCodes(
   call: grpc.ServerUnaryCall<AuthorizationCode, AuthorizationCodeList>,
   cb: grpc.sendUnaryData<AuthorizationCodeList>
 ) {
-  const request = call.request.toObject()
-  const authorizationCodes = await db.authorizationCode.findMany({
-    where: {
-      client_id: request.clientId || undefined
-    },
-    include: {
-      Scopes: {
-        select: {
-          name: true
+  try {
+    const request = call.request.toObject()
+    const authorizationCodes = await db.authorizationCode.findMany({
+      where: {
+        client_id: request.clientId || undefined
+      },
+      include: {
+        Scopes: {
+          select: {
+            name: true
+          }
         }
       }
-    }
-  })
+    })
 
-  const message = new AuthorizationCodeList()
+    const message = new AuthorizationCodeList()
 
-  message.setAuthorizationCodeList(
-    authorizationCodes.map(toAuthorizationCodeMessage)
-  )
+    message.setAuthorizationCodeList(
+      authorizationCodes.map(toAuthorizationCodeMessage)
+    )
 
-  cb(null, message)
+    cb(null, message)
+  } catch (error) {
+    cb(error)
+  }
 }

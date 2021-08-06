@@ -6,10 +6,14 @@ export default async function listScopes(
   _: grpc.ServerUnaryCall<Scope, ScopeList>,
   cb: grpc.sendUnaryData<ScopeList>
 ) {
-  const Scopes = await db.scope.findMany()
-  const message = new ScopeList()
+  try {
+    const Scopes = await db.scope.findMany()
+    const message = new ScopeList()
 
-  message.setScopeList(Scopes.map(toScopeMessage))
+    message.setScopeList(Scopes.map(toScopeMessage))
 
-  cb(null, message)
+    cb(null, message)
+  } catch (error) {
+    cb(error)
+  }
 }

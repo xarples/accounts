@@ -7,18 +7,22 @@ export default async function createUser(
   call: grpc.ServerUnaryCall<User, User>,
   cb: grpc.sendUnaryData<User>
 ) {
-  const request = call.request.toObject()
+  try {
+    const request = call.request.toObject()
 
-  const user = await db.user.create({
-    data: {
-      first_name: request.firstName,
-      last_name: request.lastName,
-      email: request.email,
-      password: encrypt(request.password)
-    }
-  })
+    const user = await db.user.create({
+      data: {
+        first_name: request.firstName,
+        last_name: request.lastName,
+        email: request.email,
+        password: encrypt(request.password)
+      }
+    })
 
-  const message = toUserMessage(user)
+    const message = toUserMessage(user)
 
-  cb(null, message)
+    cb(null, message)
+  } catch (error) {
+    cb(error)
+  }
 }

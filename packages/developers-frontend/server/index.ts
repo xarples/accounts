@@ -1,18 +1,20 @@
 import fastify from 'fastify'
 import fastifyFormbody from 'fastify-formbody'
 import fastifyCookie from 'fastify-cookie'
-import { fastifySession, fastifyNuxt } from '@xarples/accounts-fastify-plugins'
+import {
+  fastifySession,
+  fastifyNuxt,
+  fastifyOauthServices
+} from '@xarples/accounts-fastify-plugins'
 
-import api from './api'
+import api from './routes/api'
 import routes from './routes'
 
 const isDev = process.env.NODE_ENV !== 'production'
 const host = process.env.HOST || '127.0.0.1'
 const port = process.env.PORT || 5001
 const server = fastify({
-  logger: {
-    prettyPrint: isDev
-  }
+  logger: true
 })
 
 server.register(fastifyFormbody)
@@ -25,6 +27,7 @@ server.register(fastifySession, {
 })
 // server.register(fastifyOauth)
 
+server.register(fastifyOauthServices.clientService)
 server.register(api)
 server.register(routes)
 server.register(fastifyNuxt)

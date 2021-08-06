@@ -6,27 +6,31 @@ export default async function deleteAccessToken(
   call: grpc.ServerUnaryCall<AccessToken, AccessToken>,
   cb: grpc.sendUnaryData<AccessToken>
 ) {
-  const request = call.request.toObject()
-  const accessToken = await db.accessToken.delete({
-    where: {
-      id: request.id || undefined,
-      token: request.token || undefined
-    },
-    include: {
-      Client: {
-        select: {
-          id: true
-        }
+  try {
+    const request = call.request.toObject()
+    const accessToken = await db.accessToken.delete({
+      where: {
+        id: request.id || undefined,
+        token: request.token || undefined
       },
-      Scopes: {
-        select: {
-          name: true
+      include: {
+        Client: {
+          select: {
+            id: true
+          }
+        },
+        Scopes: {
+          select: {
+            name: true
+          }
         }
       }
-    }
-  })
+    })
 
-  const message = toAccessTokenMessage(accessToken)
+    const message = toAccessTokenMessage(accessToken)
 
-  cb(null, message)
+    cb(null, message)
+  } catch (error) {
+    cb(error)
+  }
 }

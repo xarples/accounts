@@ -21,6 +21,10 @@ const scopes = ['clients:read', 'clients:write']
 const codeChallengeMethod = 'S256'
 
 const plugin: FastifyPluginAsync = async fastify => {
+  fastify.get('/me', async (request, reply) => {
+    return request.session
+  })
+
   fastify.get('/signin', async (request, reply) => {
     const state = randomBytes(16).toString('hex')
     const _codeVerifier = codeVerifier()

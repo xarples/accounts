@@ -6,29 +6,33 @@ export default async function getAccessToken(
   call: grpc.ServerUnaryCall<AccessToken, AccessToken>,
   cb: grpc.sendUnaryData<AccessToken>
 ) {
-  const request = call.request.toObject()
+  try {
+    const request = call.request.toObject()
 
-  const accessToken = await db.accessToken.findUnique({
-    where: {
-      id: request.id || undefined,
-      token: request.token || undefined
-    },
-    include: {
-      Scopes: {
-        select: {
-          name: true
+    const accessToken = await db.accessToken.findUnique({
+      where: {
+        id: request.id || undefined,
+        token: request.token || undefined
+      },
+      include: {
+        Scopes: {
+          select: {
+            name: true
+          }
         }
       }
-    }
-  })
-
-  if (!accessToken) {
-    return cb({
-      code: grpc.status.NOT_FOUND
     })
+
+    if (!accessToken) {
+      return cb({
+        code: grpc.status.NOT_FOUND
+      })
+    }
+
+    const message = toAccessTokenMessage(accessToken)
+
+    cb(null, message)
+  } catch (error) {
+    cb(error)
   }
-
-  const message = toAccessTokenMessage(accessToken)
-
-  cb(null, message)
 }
