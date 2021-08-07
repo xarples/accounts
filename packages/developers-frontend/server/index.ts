@@ -10,7 +10,7 @@ import {
 import api from './routes/api'
 import routes from './routes'
 
-const isDev = process.env.NODE_ENV !== 'production'
+// const isDev = process.env.NODE_ENV !== 'production'
 const host = process.env.HOST || '127.0.0.1'
 const port = process.env.PORT || 5001
 const server = fastify({
@@ -25,7 +25,6 @@ server.register(fastifySession, {
   cookieName: 'developersSessionId',
   saveUninitialized: false
 })
-// server.register(fastifyOauth)
 
 server.register(fastifyOauthServices.clientService)
 server.register(api)

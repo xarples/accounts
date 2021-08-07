@@ -8,7 +8,7 @@ declare module 'fastify' {
 
 const plugin: FastifyPluginAsync = async fastify => {
   fastify.post<SignInRequest>('/signin', async (request, reply) => {
-    const user = await fastify.userService.signIn(request.body)
+    const user = await fastify.userService.authenticateUser(request.body)
 
     request.session.user = {
       id: user.id,

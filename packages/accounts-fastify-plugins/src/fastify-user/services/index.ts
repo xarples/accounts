@@ -7,7 +7,9 @@ const getUser = promisify<User, User>(client.getUser.bind(client))
 const listUsers = promisify<User, UserList>(client.listUsers.bind(client))
 const updateUser = promisify<User, User>(client.updateUser.bind(client))
 const deleteUser = promisify<User, User>(client.deleteUser.bind(client))
-const signIn = promisify<User, User>(client.signIn.bind(client))
+const authenticateUser = promisify<User, User>(
+  client.authenticateUser.bind(client)
+)
 
 type Options = {
   [K in keyof User.AsObject]?: User.AsObject[K] // so that it retains the types
@@ -75,14 +77,14 @@ export class UserService {
     return this.reducer(deleted.toObject())
   }
 
-  async signIn(options: Pick<Options, 'email' | 'password'>) {
+  async authenticateUser(options: Pick<Options, 'email' | 'password'>) {
     try {
       const message = new User()
 
       message.setEmail(options.email!)
       message.setPassword(options.password!)
 
-      const found = await signIn(message)
+      const found = await authenticateUser(message)
 
       return this.reducer(found.toObject())
     } catch (error) {

@@ -15,7 +15,7 @@ service Account{
   rpc ListUsers(user.User) returns (user.UserList) {}
   rpc UpdateUser(user.User) returns (user.User) {}
   rpc DeleteUser(user.User) returns (user.User) {}
-  rpc SignIn(user.User) returns (user.User) {}
+  rpc AuthenticateUser(user.User) returns (user.User) {}
 
   rpc CreateClient(client.Client) returns (client.Client) {}
   rpc GetClient(client.Client) returns (client.Client) {}
@@ -23,6 +23,7 @@ service Account{
   rpc UpdateClient(client.Client) returns (client.Client) {}
   rpc UpdateClientSecret(client.Client) returns (client.Client) {}
   rpc DeleteClient(client.Client) returns (client.Client) {}
+  rpc AuthenticateClient(client.Client) returns (client.Client) {}
 
   rpc CreateAccessToken(access_token.AccessToken) returns (access_token.AccessToken) {}
   rpc GetAccessToken(access_token.AccessToken) returns (access_token.AccessToken) {}

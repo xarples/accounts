@@ -108,9 +108,8 @@ export class RefreshTokenService {
 const plugin: FastifyPluginAsync = async fastify => {
   const service = new RefreshTokenService()
 
-  fastify.addHook('preHandler', async (request, reply, done) => {
+  fastify.addHook('preHandler', (request, reply, done) => {
     service.setContext({ request, reply })
-
     done()
   })
 

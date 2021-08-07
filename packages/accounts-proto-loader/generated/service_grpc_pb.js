@@ -198,8 +198,8 @@ var AccountService = exports.AccountService = {
     responseSerialize: serialize_user_User,
     responseDeserialize: deserialize_user_User,
   },
-  signIn: {
-    path: '/auth.Account/SignIn',
+  authenticateUser: {
+    path: '/auth.Account/AuthenticateUser',
     requestStream: false,
     responseStream: false,
     requestType: user_pb.User,
@@ -266,6 +266,17 @@ var AccountService = exports.AccountService = {
   },
   deleteClient: {
     path: '/auth.Account/DeleteClient',
+    requestStream: false,
+    responseStream: false,
+    requestType: client_pb.Client,
+    responseType: client_pb.Client,
+    requestSerialize: serialize_client_Client,
+    requestDeserialize: deserialize_client_Client,
+    responseSerialize: serialize_client_Client,
+    responseDeserialize: deserialize_client_Client,
+  },
+  authenticateClient: {
+    path: '/auth.Account/AuthenticateClient',
     requestStream: false,
     responseStream: false,
     requestType: client_pb.Client,

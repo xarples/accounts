@@ -72,9 +72,8 @@ export class ScopeService {
 const plugin: FastifyPluginAsync = async fastify => {
   const service = new ScopeService()
 
-  fastify.addHook('preHandler', async (request, reply, done) => {
+  fastify.addHook('preHandler', (request, reply, done) => {
     service.setContext({ request, reply })
-
     done()
   })
 

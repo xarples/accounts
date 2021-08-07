@@ -1,1 +1,1 @@
-export * from './clientAuthPreHandler'
+export * from './client-auth-handler'

@@ -41,9 +41,8 @@ export class MetadataService {
 const plugin: FastifyPluginAsync = async fastify => {
   const service = new MetadataService()
 
-  fastify.addHook('preHandler', async (request, reply, done) => {
+  fastify.addHook('preHandler', (request, reply, done) => {
     service.setContext({ request, reply })
-
     done()
   })
 

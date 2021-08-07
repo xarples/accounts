@@ -46,7 +46,6 @@ declare module 'fastify' {
 
 const plugin: FastifyPluginAsync = async (fastify, options) => {
   fastify.decorate('clientAuthPreHandler', clientAuthPreHandler)
-
   fastify.register(accessTokenService)
   fastify.register(authorizationCodeService)
   fastify.register(clientService)

@@ -6,6 +6,9 @@ import client from '@xarples/accounts-client'
 import { Client, grpc } from '@xarples/accounts-proto-loader'
 import { ClientResponse } from '../types'
 
+const authenticateClient = promisify<Client, Client>(
+  client.authenticateClient.bind(client)
+)
 const getClient = promisify<Client, Client>(client.getClient.bind(client))
 const updateClient = promisify<Client, Client>(client.updateClient.bind(client))
 const updateClientSecret = promisify<Client, Client>(
@@ -129,6 +132,21 @@ export class ClientService {
     return this.reducer(client.toObject())
   }
 
+  async authenticateClient(options: Pick<Options, 'id' | 'secret'>) {
+    try {
+      const message = new Client()
+
+      message.setId(options.id!)
+      message.setSecret(options.secret!)
+
+      const found = await authenticateClient(message)
+
+      return this.reducer(found.toObject())
+    } catch (error) {
+      throw new Error('Wrong credentials')
+    }
+  }
+
   async basicAuth(request: any) {
     try {
       const result = auth(request)
@@ -140,14 +158,15 @@ export class ClientService {
       const message = new Client()
 
       message.setId(result.name)
+      message.setSecret(result.pass)
 
-      const client = await getClient(message)
+      const found = await authenticateClient(message)
 
-      if (client.getSecret() !== result.pass) {
+      if (!found) {
         return undefined
       }
 
-      return this.reducer(client.toObject())
+      return this.reducer(found.toObject())
     } catch (error) {
       return undefined
     }
@@ -182,9 +201,8 @@ const service = new ClientService()
 const plugin: FastifyPluginAsync = async fastify => {
   fastify.decorate('clientService', service)
 
-  fastify.addHook('preHandler', async (request, reply, done) => {
+  fastify.addHook('preHandler', (request, reply, done) => {
     service.setContext({ request, reply })
-
     done()
   })
 }
