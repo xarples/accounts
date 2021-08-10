@@ -4,6 +4,7 @@ import {
   AccessTokenService,
   AuthorizationCodeService,
   ClientService,
+  IdTokenService,
   MetadataService,
   RefreshTokenService,
   ScopeService,
@@ -12,7 +13,8 @@ import {
   clientService,
   metadataService,
   refreshTokenService,
-  scopeService
+  scopeService,
+  idTokenService
 } from './services'
 
 import {
@@ -30,6 +32,7 @@ import { clientAuthPreHandler } from './hooks'
 declare module 'fastify' {
   interface FastifyInstance {
     clientAuthPreHandler: typeof clientAuthPreHandler
+    idTokenService: IdTokenService
     accessTokenService: AccessTokenService
     authorizationCodeService: AuthorizationCodeService
     clientService: ClientService
@@ -49,6 +52,7 @@ const plugin: FastifyPluginAsync = async (fastify, options) => {
   fastify.register(accessTokenService)
   fastify.register(authorizationCodeService)
   fastify.register(clientService)
+  fastify.register(idTokenService)
   fastify.register(metadataService)
   fastify.register(refreshTokenService)
   fastify.register(scopeService)

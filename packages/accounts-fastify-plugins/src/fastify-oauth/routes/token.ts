@@ -5,6 +5,7 @@ import {
   FastifyReply
 } from 'fastify'
 import fp from 'fastify-plugin'
+import jwt from 'jsonwebtoken'
 import { codeChallenge } from '@xarples/accounts-utils'
 import { TokenRequest } from '../types'
 
@@ -268,8 +269,6 @@ async function authorizationCodeGrantHandler(
       return
     }
 
-    fastify.log.info('Issuing access token')
-
     const accessToken = await fastify.accessTokenService.create({
       authorizationCodeId: authorizationCode!.id,
       userId: authorizationCode!.user_id,
@@ -277,8 +276,8 @@ async function authorizationCodeGrantHandler(
       scopeList: authorizationCode.scopes
     })
 
+    fastify.log.info('Issuing access token')
     fastify.log.debug(accessToken)
-    fastify.log.info('Issuing refresh token')
 
     const refreshToken = await fastify.refreshTokenService.create({
       authorizationCodeId: authorizationCode!.id,
@@ -287,18 +286,42 @@ async function authorizationCodeGrantHandler(
       scopeList: authorizationCode.scopes
     })
 
+    fastify.log.info('Issuing refresh token')
+    fastify.log.debug(refreshToken)
+
     const tokenResponse = {
       access_token: accessToken.token,
       token_type: 'Bearer',
       expires_in: 3600,
-      refresh_token: refreshToken.token
+      refresh_token: refreshToken.token,
+      id_token: undefined as undefined | string
     }
 
-    fastify.log.debug(refreshToken)
+    if (authorizationCode.scopes.includes('openid')) {
+      const payload = {
+        iss: 'https://server.example.com',
+        sub: authorizationCode!.user_id,
+        aud: request.client!.clientId,
+        nonce: request.body?.nonce,
+        auth_time: authorizationCode.created_at
+      }
+
+      tokenResponse.id_token = await fastify.idTokenService.sign(payload)
+
+      fastify.log.info('Issuing id token')
+      fastify.log.debug(tokenResponse.id_token)
+    }
+
     fastify.log.info('Sending token response')
     fastify.log.debug(tokenResponse)
 
-    reply.code(200).send(tokenResponse)
+    reply
+      .headers({
+        'Cache-Control': 'no-store',
+        Pragma: 'no-cache'
+      })
+      .code(200)
+      .send(tokenResponse)
   }
 }
 

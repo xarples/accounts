@@ -143,6 +143,7 @@ export interface TokenRequest {
     redirect_uri?: string
     refresh_token?: string
     scope?: string
+    nonce?: string
   }
 }
 

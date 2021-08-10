@@ -15,4 +15,5 @@ export const tokenRequestSchema: FastifySchema = {
     .prop('client_id', S.string())
     .prop('code_verifier', S.string())
     .prop('refresh_token', S.string())
+    .prop('nonce', S.string())
 }

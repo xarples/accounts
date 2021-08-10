@@ -1,0 +1,21 @@
+{
+  "name": "@xarples/accounts-config",
+  "version": "0.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "scripts": {
+    "build": "tsc",
+    "generate": "ts-node src/generate-config.ts",
+    "test-config": "ts-node src/test-config.ts"
+  },
+  "dependencies": {
+    "jose": "^3.14.3",
+    "pem-jwk": "^2.0.0"
+  },
+  "devDependencies": {
+    "@types/pem-jwk": "^1.5.1"
+  }
+}

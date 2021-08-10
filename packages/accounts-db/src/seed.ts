@@ -44,6 +44,10 @@ async function main() {
       {
         name: 'clients:write',
         description: 'Access to create, update and delete clients'
+      },
+      {
+        name: 'openid',
+        description: ''
       }
     ],
     skipDuplicates: true

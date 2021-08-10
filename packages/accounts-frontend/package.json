@@ -29,6 +29,7 @@
     "fastify-session": "^5.2.1",
     "fluent-json-schema": "^3.0.0",
     "ioredis": "^4.27.6",
+    "jsonwebtoken": "^8.5.1",
     "nuxt": "^2.15.6"
   },
   "devDependencies": {

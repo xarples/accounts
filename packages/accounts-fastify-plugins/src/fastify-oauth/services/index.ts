@@ -1,6 +1,7 @@
 export * from './access-token'
 export * from './authorization-code'
 export * from './client'
+export * from './id-token'
 export * from './metadata'
 export * from './refresh-token'
 export * from './scope'
