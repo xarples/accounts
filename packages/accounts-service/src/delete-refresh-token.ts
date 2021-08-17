@@ -1,5 +1,5 @@
 import * as db from '@xarples/accounts-db'
-import { grpc, RefreshToken } from '@xarples/accounts-proto-loader'
+import { grpc, RefreshToken } from '@xarples/accounts-protobuf'
 import { getRefreshTokenMessage } from './utils'
 
 export default async function deleteRefreshToken(

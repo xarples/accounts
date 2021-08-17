@@ -1,5 +1,5 @@
 import * as db from '@xarples/accounts-db'
-import { grpc, Scope } from '@xarples/accounts-proto-loader'
+import { grpc, Scope } from '@xarples/accounts-protobuf'
 import { getScopeMessage } from './utils'
 
 export default async function getScope(

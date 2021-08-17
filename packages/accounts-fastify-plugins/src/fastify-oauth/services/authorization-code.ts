@@ -5,7 +5,7 @@ import client from '@xarples/accounts-client'
 import {
   AuthorizationCode,
   AuthorizationCodeList
-} from '@xarples/accounts-proto-loader'
+} from '@xarples/accounts-protobuf'
 import isAfter from 'date-fns/isAfter'
 import { AuthorizationCodeResponse } from '../types'
 

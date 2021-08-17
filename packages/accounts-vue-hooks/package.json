@@ -12,5 +12,8 @@
   },
   "dependencies": {
     "swrv": "^0.9.4"
+  },
+  "devDependencies": {
+    "@types/node": "^15.6.0"
   }
 }

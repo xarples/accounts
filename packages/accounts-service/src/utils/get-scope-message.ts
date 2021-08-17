@@ -1,5 +1,5 @@
 import { Scope } from '@xarples/accounts-db'
-import { Scope as ScopeMessage } from '@xarples/accounts-proto-loader'
+import { Scope as ScopeMessage } from '@xarples/accounts-protobuf'
 
 export default function getScopeMessage(scope: Scope): ScopeMessage {
   const message = new ScopeMessage()

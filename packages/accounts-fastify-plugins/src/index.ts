@@ -1,3 +1,4 @@
+export { default as fastifyAuth } from './fastify-auth'
 export { default as fastifyNuxt } from './fastify-nuxt'
 export { default as fastifyOauth } from './fastify-oauth'
 export * from './fastify-oauth'

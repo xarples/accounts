@@ -1,5 +1,5 @@
 import { AccessToken } from '@xarples/accounts-db'
-import { AccessToken as AccessTokenMessage } from '@xarples/accounts-proto-loader'
+import { AccessToken as AccessTokenMessage } from '@xarples/accounts-protobuf'
 
 export default function getAccessTokenMessage(
   item: AccessToken & {

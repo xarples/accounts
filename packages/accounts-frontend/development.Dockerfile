@@ -6,20 +6,22 @@ WORKDIR /usr/src/accounts
 RUN npm install --global npm
 
 COPY ./package*.json ./lerna.json ./
+COPY ./packages/accounts-config/package.json ./packages/accounts-config/
 COPY ./packages/accounts-fastify-plugins/package.json ./packages/accounts-fastify-plugins/
 COPY ./packages/accounts-client/package.json ./packages/accounts-client/
 COPY ./packages/accounts-frontend/package.json ./packages/accounts-frontend/
-COPY ./packages/accounts-proto-loader/package.json ./packages/accounts-proto-loader/
+COPY ./packages/accounts-protobuf/package.json ./packages/accounts-protobuf/
 COPY ./packages/accounts-utils/package.json ./packages/accounts-utils/
 
 # RUN npm install --production
 # RUN cp -R node_modules node_modules_production
 RUN npm install
 
+COPY ./packages/accounts-config ./packages/accounts-config
 COPY ./packages/accounts-fastify-plugins ./packages/accounts-fastify-plugins
 COPY ./packages/accounts-client ./packages/accounts-client
 COPY ./packages/accounts-frontend ./packages/accounts-frontend
-COPY ./packages/accounts-proto-loader ./packages/accounts-proto-loader
+COPY ./packages/accounts-protobuf ./packages/accounts-protobuf
 COPY ./packages/accounts-utils ./packages/accounts-utils
 
 RUN npm run generate

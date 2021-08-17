@@ -13,7 +13,10 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "@xarples/accounts-proto-loader": "^0.0.0",
+    "@xarples/accounts-protobuf": "^0.0.0",
     "@xarples/accounts-service": "^0.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^15.6.0"
   }
 }

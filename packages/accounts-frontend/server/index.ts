@@ -1,12 +1,14 @@
 import fastify from 'fastify'
 import fastifyFormbody from 'fastify-formbody'
-import fastifyCookie from 'fastify-cookie'
 import {
+  fastifyAuth,
   fastifySession,
   fastifyUser,
   fastifyNuxt,
   fastifyOauth
 } from '@xarples/accounts-fastify-plugins'
+
+import config from './config'
 
 const isDev = process.env.NODE_ENV !== 'production'
 const host = process.env.HOST || '127.0.0.1'
@@ -18,13 +20,13 @@ const server = fastify({
 })
 
 server.register(fastifyFormbody)
-server.register(fastifyCookie)
 server.register(fastifySession, {
-  secret: 'a secret with minimum length of 32 characters',
+  secret: config.secret,
   cookie: { secure: false },
   cookieName: 'accountsSessionId',
   saveUninitialized: false
 })
+server.register(fastifyAuth)
 server.register(fastifyUser)
 server.register(fastifyOauth)
 server.register(fastifyNuxt)

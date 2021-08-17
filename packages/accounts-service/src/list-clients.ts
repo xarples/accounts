@@ -1,5 +1,5 @@
 import * as db from '@xarples/accounts-db'
-import { grpc, Client, ClientList } from '@xarples/accounts-proto-loader'
+import { grpc, Client, ClientList } from '@xarples/accounts-protobuf'
 import { getClientMessage } from './utils'
 import { withAuthorization } from './handlers'
 

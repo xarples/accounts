@@ -1,4 +1,4 @@
-import { User } from '@xarples/accounts-proto-loader/dist'
+import { User } from '@xarples/accounts-protobuf/dist'
 
 export interface SignUpRequest {
   Body: User.AsObject

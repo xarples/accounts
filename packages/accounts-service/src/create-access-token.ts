@@ -1,6 +1,6 @@
 import * as db from '@xarples/accounts-db'
 import { randomBytes } from '@xarples/accounts-utils'
-import { grpc, AccessToken } from '@xarples/accounts-proto-loader'
+import { grpc, AccessToken } from '@xarples/accounts-protobuf'
 import { add } from 'date-fns'
 import { getAccessTokenMessage } from './utils'
 

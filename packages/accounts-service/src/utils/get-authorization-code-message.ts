@@ -1,5 +1,5 @@
 import { AuthorizationCode } from '@xarples/accounts-db'
-import { AuthorizationCode as AuthorizationCodeMessage } from '@xarples/accounts-proto-loader'
+import { AuthorizationCode as AuthorizationCodeMessage } from '@xarples/accounts-protobuf'
 
 export default function getAuthorizationCodeMessage(
   item: AuthorizationCode & {

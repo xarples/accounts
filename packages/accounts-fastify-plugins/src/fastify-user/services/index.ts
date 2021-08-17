@@ -1,6 +1,6 @@
 import { promisify } from 'util'
 import client from '@xarples/accounts-client'
-import { User, UserList } from '@xarples/accounts-proto-loader'
+import { User, UserList } from '@xarples/accounts-protobuf'
 
 const createUser = promisify<User, User>(client.createUser.bind(client))
 const getUser = promisify<User, User>(client.getUser.bind(client))

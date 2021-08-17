@@ -1,5 +1,5 @@
 import * as db from '@xarples/accounts-db'
-import { grpc, AccessToken } from '@xarples/accounts-proto-loader'
+import { grpc, AccessToken } from '@xarples/accounts-protobuf'
 import { getAccessTokenMessage } from './utils'
 
 export default async function getAccessToken(

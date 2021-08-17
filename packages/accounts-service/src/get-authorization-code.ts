@@ -1,5 +1,5 @@
 import * as db from '@xarples/accounts-db'
-import { grpc, AuthorizationCode } from '@xarples/accounts-proto-loader'
+import { grpc, AuthorizationCode } from '@xarples/accounts-protobuf'
 import { getAuthorizationCodeMessage } from './utils'
 
 export default async function getAuthorizationCode(

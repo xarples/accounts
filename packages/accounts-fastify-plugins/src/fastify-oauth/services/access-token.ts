@@ -2,7 +2,7 @@ import { promisify } from 'util'
 import { FastifyPluginAsync, FastifyRequest, FastifyReply } from 'fastify'
 import fp from 'fastify-plugin'
 import client from '@xarples/accounts-client'
-import { AccessToken, AccessTokenList } from '@xarples/accounts-proto-loader'
+import { AccessToken, AccessTokenList } from '@xarples/accounts-protobuf'
 import { isAfter } from 'date-fns'
 import { AccessTokenResponse } from '../types'
 

@@ -1,5 +1,5 @@
 import { RefreshToken } from '@xarples/accounts-db'
-import { RefreshToken as RefreshTokenMessage } from '@xarples/accounts-proto-loader'
+import { RefreshToken as RefreshTokenMessage } from '@xarples/accounts-protobuf'
 
 export default function getRefreshTokenMessage(
   item: RefreshToken & {

@@ -8,16 +8,16 @@
     "build:nuxt": "nuxt build",
     "build:server": "tsc --build tsconfig.server.json",
     "build": "npm run build:nuxt && npm run build:server",
-    "start": "NODE_ENV=production node dist/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "NODE_ENV=production node dist/index.js"
   },
   "author": "xarples",
   "license": "MIT",
   "dependencies": {
     "@nuxtjs/composition-api": "^0.24.4",
+    "@xarples/accounts-db": "^0.0.0",
     "@xarples/accounts-client": "^0.0.0",
     "@xarples/accounts-fastify-plugins": "^0.0.0",
-    "@xarples/accounts-proto-loader": "^0.0.0",
+    "@xarples/accounts-protobuf": "^0.0.0",
     "@xarples/accounts-utils": "^0.0.0",
     "bootstrap": "^4.6.0",
     "bootstrap-vue": "^2.21.2",
@@ -25,14 +25,12 @@
     "fastify-cookie": "^5.3.1",
     "fastify-express": "^0.3.2",
     "fastify-formbody": "^5.0.0",
-    "fastify-redis-session": "^2.0.0",
     "fastify-session": "^5.2.1",
     "fluent-json-schema": "^3.0.0",
-    "ioredis": "^4.27.6",
-    "jsonwebtoken": "^8.5.1",
     "nuxt": "^2.15.6"
   },
   "devDependencies": {
+    "@types/node": "^15.6.0",
     "@nuxt/types": "^2.15.6",
     "@nuxt/typescript-build": "^2.1.0",
     "pino-pretty": "^5.0.2"

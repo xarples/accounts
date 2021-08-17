@@ -1,6 +1,6 @@
 import * as db from '@xarples/accounts-db'
 import { randomBytes } from '@xarples/accounts-utils'
-import { grpc, RefreshToken } from '@xarples/accounts-proto-loader'
+import { grpc, RefreshToken } from '@xarples/accounts-protobuf'
 import { add } from 'date-fns'
 import { getRefreshTokenMessage } from './utils'
 

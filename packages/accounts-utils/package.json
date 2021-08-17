@@ -10,5 +10,11 @@
     "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "dependencies": {}
+  "dependencies": {
+    "cuid": "^2.1.8"
+  },
+  "devDependencies": {
+    "@types/node": "^15.6.0",
+    "@types/cuid": "^2.0.1"
+  }
 }

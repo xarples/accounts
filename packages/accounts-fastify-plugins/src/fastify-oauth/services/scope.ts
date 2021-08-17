@@ -2,7 +2,7 @@ import { promisify } from 'util'
 import { FastifyPluginAsync, FastifyRequest, FastifyReply } from 'fastify'
 import fp from 'fastify-plugin'
 import client from '@xarples/accounts-client'
-import { Scope, ScopeList } from '@xarples/accounts-proto-loader'
+import { Scope, ScopeList } from '@xarples/accounts-protobuf'
 import { ScopeResponse } from '../types'
 
 const getRefreshToken = promisify<Scope, Scope>(client.getScope.bind(client))

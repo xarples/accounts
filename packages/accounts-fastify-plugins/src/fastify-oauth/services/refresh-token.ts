@@ -2,7 +2,7 @@ import { promisify } from 'util'
 import { FastifyPluginAsync, FastifyRequest, FastifyReply } from 'fastify'
 import fp from 'fastify-plugin'
 import client from '@xarples/accounts-client'
-import { RefreshToken, RefreshTokenList } from '@xarples/accounts-proto-loader'
+import { RefreshToken, RefreshTokenList } from '@xarples/accounts-protobuf'
 import isAfter from 'date-fns/isAfter'
 import { RefreshTokenResponse } from '../types'
 

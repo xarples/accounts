@@ -1,6 +1,6 @@
 import * as db from '@xarples/accounts-db'
 import { randomBytes } from '@xarples/accounts-utils'
-import { grpc, Client } from '@xarples/accounts-proto-loader'
+import { grpc, Client } from '@xarples/accounts-protobuf'
 import { getClientMessage } from './utils'
 import { withAuthorization } from './handlers'
 

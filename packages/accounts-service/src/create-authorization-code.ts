@@ -1,7 +1,7 @@
 import { CodeChallengeMethod } from '@xarples/accounts-db'
 import * as db from '@xarples/accounts-db'
 import { randomBytes } from '@xarples/accounts-utils'
-import { grpc, AuthorizationCode } from '@xarples/accounts-proto-loader'
+import { grpc, AuthorizationCode } from '@xarples/accounts-protobuf'
 import { add } from 'date-fns'
 import { getAuthorizationCodeMessage } from './utils'
 

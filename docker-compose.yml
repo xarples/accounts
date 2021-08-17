@@ -34,7 +34,7 @@ services:
       - ./packages/accounts-fastify-plugins:/usr/src/accounts/packages/accounts-fastify-plugins
       - ./packages/accounts-client:/usr/src/accounts/packages/accounts-client
       - ./packages/accounts-frontend:/usr/src/accounts/packages/accounts-frontend
-      - ./packages/accounts-proto-loader:/usr/src/accounts/packages/accounts-proto-loader
+      - ./packages/accounts-protobuf:/usr/src/accounts/packages/accounts-protobuf
       - ./packages/accounts-utils:/usr/src/accounts/packages/accounts-utils
       - /usr/src/accounts/node_modules
     depends_on:
@@ -55,37 +55,10 @@ services:
       DATABASE_URL: postgresql://app:app@postgres:5432/app?schema=public
     volumes:
       - ./packages/accounts-db:/usr/src/accounts/packages/accounts-db
-      - ./packages/accounts-proto-loader:/usr/src/accounts/packages/accounts-proto-loader
+      - ./packages/accounts-protobuf:/usr/src/accounts/packages/accounts-protobuf
       - ./packages/accounts-server:/usr/src/accounts/packages/accounts-server
       - ./packages/accounts-service:/usr/src/accounts/packages/accounts-service
       - ./packages/accounts-utils:/usr/src/accounts/packages/accounts-utils
       - /usr/src/accounts/node_modules
     depends_on:
       - postgres
-
-  developers:
-    container_name: developers-frontend
-    build:
-      context: .
-      dockerfile: ./packages/developers-frontend/development.Dockerfile
-    restart: on-failure
-    ports:
-      - 5002:5002
-    environment:
-      HOST: 0.0.0.0
-      PORT: 5002
-      NODE_ENV: development
-      ACCOUNTS_FRONTEND_HOST: frontend
-      ACCOUNTS_FRONTEND_PORT: 5000
-      GRPC_SERVER_HOST: server
-      GRPC_SERVER_PORT: 5001
-    volumes:
-      - ./packages/accounts-config:/usr/src/accounts/packages/accounts-config
-      - ./packages/accounts-fastify-plugins:/usr/src/accounts/packages/accounts-fastify-plugins
-      - ./packages/accounts-client:/usr/src/accounts/packages/accounts-client
-      - ./packages/developers-frontend:/usr/src/accounts/packages/developers-frontend
-      - ./packages/accounts-proto-loader:/usr/src/accounts/packages/accounts-proto-loader
-      - ./packages/accounts-utils:/usr/src/accounts/packages/accounts-utils
-      - /usr/src/accounts/node_modules
-    depends_on:
-      - server

@@ -5,7 +5,6 @@ import {
   FastifyReply
 } from 'fastify'
 import fp from 'fastify-plugin'
-import jwt from 'jsonwebtoken'
 import { codeChallenge } from '@xarples/accounts-utils'
 import { TokenRequest } from '../types'
 

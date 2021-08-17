@@ -1,6 +1,6 @@
 import * as db from '@xarples/accounts-db'
 import { randomBytes } from '@xarples/accounts-utils/dist'
-import { grpc, Client } from '@xarples/accounts-proto-loader'
+import { grpc, Client } from '@xarples/accounts-protobuf'
 import { getClientMessage } from './utils'
 
 export default async function updateClient(

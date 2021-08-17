@@ -1,5 +1,5 @@
 import { User } from '@xarples/accounts-db'
-import { User as UserMessage } from '@xarples/accounts-proto-loader'
+import { User as UserMessage } from '@xarples/accounts-protobuf'
 
 export default function getUserMessage(user: User): UserMessage {
   const message = new UserMessage()

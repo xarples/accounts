@@ -3,7 +3,7 @@ import { FastifyPluginAsync, FastifyReply, FastifyRequest } from 'fastify'
 import fp from 'fastify-plugin'
 import auth from 'basic-auth'
 import client from '@xarples/accounts-client'
-import { Client, grpc } from '@xarples/accounts-proto-loader'
+import { Client, grpc } from '@xarples/accounts-protobuf'
 import { ClientResponse } from '../types'
 
 const authenticateClient = promisify<Client, Client>(

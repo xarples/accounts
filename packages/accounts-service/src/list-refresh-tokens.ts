@@ -3,7 +3,7 @@ import {
   grpc,
   RefreshToken,
   RefreshTokenList
-} from '@xarples/accounts-proto-loader'
+} from '@xarples/accounts-protobuf'
 import { getRefreshTokenMessage } from './utils'
 
 export default async function listRefreshTokens(

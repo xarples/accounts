@@ -10,7 +10,7 @@ COPY ./packages/accounts-config/package.json ./packages/accounts-config/
 COPY ./packages/accounts-fastify-plugins/package.json ./packages/accounts-fastify-plugins/
 COPY ./packages/accounts-client/package.json ./packages/accounts-client/
 COPY ./packages/accounts-frontend/package.json ./packages/accounts-frontend/
-COPY ./packages/accounts-proto-loader/package.json ./packages/accounts-proto-loader/
+COPY ./packages/accounts-protobuf/package.json ./packages/accounts-protobuf/
 COPY ./packages/accounts-utils/package.json ./packages/accounts-utils/
 
 RUN npm install --production
@@ -21,7 +21,7 @@ COPY ./packages/accounts-config ./packages/accounts-config
 COPY ./packages/accounts-fastify-plugins ./packages/accounts-fastify-plugins
 COPY ./packages/accounts-client ./packages/accounts-client
 COPY ./packages/accounts-frontend ./packages/accounts-frontend
-COPY ./packages/accounts-proto-loader ./packages/accounts-proto-loader
+COPY ./packages/accounts-protobuf ./packages/accounts-protobuf
 COPY ./packages/accounts-utils ./packages/accounts-utils
 
 RUN npm run generate
@@ -56,9 +56,9 @@ COPY --from=deps /usr/src/accounts/packages/accounts-frontend/.nuxt  ./packages/
 COPY --from=deps /usr/src/accounts/packages/accounts-frontend/dist  ./packages/accounts-frontend/dist
 COPY --from=deps /usr/src/accounts/packages/accounts-frontend/package.json ./packages/accounts-frontend/
 COPY --from=deps /usr/src/accounts/packages/accounts-frontend/nuxt.config.js ./packages/accounts-frontend/
-COPY --from=deps /usr/src/accounts/packages/accounts-proto-loader/dist ./packages/accounts-proto-loader/dist
-COPY --from=deps /usr/src/accounts/packages/accounts-proto-loader/generated ./packages/accounts-proto-loader/generated
-COPY --from=deps /usr/src/accounts/packages/accounts-proto-loader/package.json ./packages/accounts-proto-loader/
+COPY --from=deps /usr/src/accounts/packages/accounts-protobuf/dist ./packages/accounts-protobuf/dist
+COPY --from=deps /usr/src/accounts/packages/accounts-protobuf/generated ./packages/accounts-protobuf/generated
+COPY --from=deps /usr/src/accounts/packages/accounts-protobuf/package.json ./packages/accounts-protobuf/
 COPY --from=deps /usr/src/accounts/packages/accounts-utils/dist  ./packages/accounts-utils/dist
 COPY --from=deps /usr/src/accounts/packages/accounts-utils/package.json ./packages/accounts-utils/
 

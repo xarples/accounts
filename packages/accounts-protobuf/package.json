@@ -1,5 +1,5 @@
 {
-  "name": "@xarples/accounts-proto-loader",
+  "name": "@xarples/accounts-protobuf",
   "version": "0.0.0",
   "description": "",
   "main": "dist/index.js",
@@ -16,6 +16,8 @@
     "google-protobuf": "^3.17.3"
   },
   "devDependencies": {
+    "@types/google-protobuf": "^3.15.2",
+    "@types/node": "^15.6.0",
     "grpc-tools": "^1.11.1",
     "grpc_tools_node_protoc_ts": "^5.2.2"
   }

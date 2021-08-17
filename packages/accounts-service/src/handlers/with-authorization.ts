@@ -1,5 +1,5 @@
 import * as db from '@xarples/accounts-db'
-import { grpc } from '@xarples/accounts-proto-loader'
+import { grpc } from '@xarples/accounts-protobuf'
 
 type Fn<RequestType, ResponseType> = (
   call: grpc.ServerUnaryCall<RequestType, ResponseType>,

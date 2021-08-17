@@ -3,7 +3,7 @@ import {
   grpc,
   AuthorizationCode,
   AuthorizationCodeList
-} from '@xarples/accounts-proto-loader'
+} from '@xarples/accounts-protobuf'
 import { getAuthorizationCodeMessage } from './utils'
 
 export default async function listAuthorizationCodes(
