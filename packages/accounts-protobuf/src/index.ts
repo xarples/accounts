@@ -6,6 +6,9 @@ export * from '../generated/authorization-code_pb'
 
 export * from '../generated/client_pb'
 
+export * from '../generated/id-token_pb'
+
+
 export * from '../generated/refresh-token_pb'
 
 export * from '../generated/scope_pb'

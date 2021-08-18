@@ -9,6 +9,7 @@ RUN npm install --global npm
 
 COPY ./package*.json ./lerna.json ./
 COPY ./packages/accounts-db/package.json ./packages/accounts-db/
+COPY ./packages/accounts-config/package.json ./packages/accounts-config/
 COPY ./packages/accounts-protobuf/package.json ./packages/accounts-protobuf/
 COPY ./packages/accounts-server/package.json ./packages/accounts-server/
 COPY ./packages/accounts-service/package.json ./packages/accounts-service/
@@ -19,6 +20,7 @@ RUN cp -R node_modules node_modules_production
 RUN npm install
 
 COPY ./packages/accounts-db ./packages/accounts-db
+COPY ./packages/accounts-config ./packages/accounts-config
 COPY ./packages/accounts-protobuf ./packages/accounts-protobuf
 COPY ./packages/accounts-server ./packages/accounts-server
 COPY ./packages/accounts-service ./packages/accounts-service
@@ -54,6 +56,8 @@ COPY --from=deps /usr/src/accounts/node_modules_development/@prisma/client/ ./no
 COPY --from=deps /usr/src/accounts/node_modules_development/.prisma/client/ ./node_modules/.prisma/client/
 COPY --from=deps /usr/src/accounts/packages/accounts-db/dist  ./packages/accounts-db/dist
 COPY --from=deps /usr/src/accounts/packages/accounts-db/package.json ./packages/accounts-db/
+COPY --from=deps /usr/src/accounts/packages/accounts-config/dist  ./packages/accounts-config/dist
+COPY --from=deps /usr/src/accounts/packages/accounts-config/package.json ./packages/accounts-config/
 COPY --from=deps /usr/src/accounts/packages/accounts-protobuf/dist ./packages/accounts-protobuf/dist
 COPY --from=deps /usr/src/accounts/packages/accounts-protobuf/generated ./packages/accounts-protobuf/generated
 COPY --from=deps /usr/src/accounts/packages/accounts-protobuf/package.json ./packages/accounts-protobuf/

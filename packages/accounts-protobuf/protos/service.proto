@@ -5,6 +5,7 @@ package auth;
 import "access-token.proto";
 import "authorization-code.proto";
 import "client.proto";
+import "id-token.proto";
 import "refresh-token.proto";
 import "scope.proto";
 import "user.proto";
@@ -45,6 +46,8 @@ service Account{
 
   rpc GetScope(scope.Scope) returns (scope.Scope) {}
   rpc ListScopes(scope.Scope) returns (scope.ScopeList) {}
+
+  rpc CreateAIdToken(id_token.IdTokenRequest) returns (id_token.IdTokenResponse) {}
 }
 
 

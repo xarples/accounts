@@ -83,6 +83,7 @@ model AccessToken {
   authorization_code_id String?
   client_id             String
   token                 String   @unique
+  audience              String[]
   expires_in            DateTime
   created_at            DateTime @default(now())
   updated_at            DateTime @updatedAt

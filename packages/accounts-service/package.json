@@ -11,11 +11,13 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
+    "@xarples/accounts-config": "^0.0.0",
     "@xarples/accounts-db": "^0.0.0",
     "@xarples/accounts-protobuf": "^0.0.0",
     "@xarples/accounts-utils": "^0.0.0",
     "axios": "^0.21.1",
-    "date-fns": "^2.22.1"
+    "date-fns": "^2.22.1",
+    "jose": "^3.14.3"
   },
   "devDependencies": {
     "@types/date-fns": "^2.6.0",

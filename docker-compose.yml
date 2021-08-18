@@ -54,6 +54,7 @@ services:
       NODE_ENV: development
       DATABASE_URL: postgresql://app:app@postgres:5432/app?schema=public
     volumes:
+      - ./packages/accounts-config:/usr/src/accounts/packages/accounts-config
       - ./packages/accounts-db:/usr/src/accounts/packages/accounts-db
       - ./packages/accounts-protobuf:/usr/src/accounts/packages/accounts-protobuf
       - ./packages/accounts-server:/usr/src/accounts/packages/accounts-server

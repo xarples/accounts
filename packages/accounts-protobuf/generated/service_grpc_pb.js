@@ -5,6 +5,7 @@ var grpc = require('@grpc/grpc-js');
 var access$token_pb = require('./access-token_pb.js');
 var authorization$code_pb = require('./authorization-code_pb.js');
 var client_pb = require('./client_pb.js');
+var id$token_pb = require('./id-token_pb.js');
 var refresh$token_pb = require('./refresh-token_pb.js');
 var scope_pb = require('./scope_pb.js');
 var user_pb = require('./user_pb.js');
@@ -73,6 +74,28 @@ function serialize_client_ClientList(arg) {
 
 function deserialize_client_ClientList(buffer_arg) {
   return client_pb.ClientList.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_id_token_IdTokenRequest(arg) {
+  if (!(arg instanceof id$token_pb.IdTokenRequest)) {
+    throw new Error('Expected argument of type id_token.IdTokenRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_id_token_IdTokenRequest(buffer_arg) {
+  return id$token_pb.IdTokenRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_id_token_IdTokenResponse(arg) {
+  if (!(arg instanceof id$token_pb.IdTokenResponse)) {
+    throw new Error('Expected argument of type id_token.IdTokenResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_id_token_IdTokenResponse(buffer_arg) {
+  return id$token_pb.IdTokenResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_refresh_token_RefreshToken(arg) {
@@ -472,6 +495,17 @@ var AccountService = exports.AccountService = {
     requestDeserialize: deserialize_scope_Scope,
     responseSerialize: serialize_scope_ScopeList,
     responseDeserialize: deserialize_scope_ScopeList,
+  },
+  createAIdToken: {
+    path: '/auth.Account/CreateAIdToken',
+    requestStream: false,
+    responseStream: false,
+    requestType: id$token_pb.IdTokenRequest,
+    responseType: id$token_pb.IdTokenResponse,
+    requestSerialize: serialize_id_token_IdTokenRequest,
+    requestDeserialize: deserialize_id_token_IdTokenRequest,
+    responseSerialize: serialize_id_token_IdTokenResponse,
+    responseDeserialize: deserialize_id_token_IdTokenResponse,
   },
 };
 

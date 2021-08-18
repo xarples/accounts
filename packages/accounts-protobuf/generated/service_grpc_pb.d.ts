@@ -9,6 +9,7 @@ import * as service_pb from "./service_pb";
 import * as access_token_pb from "./access-token_pb";
 import * as authorization_code_pb from "./authorization-code_pb";
 import * as client_pb from "./client_pb";
+import * as id_token_pb from "./id-token_pb";
 import * as refresh_token_pb from "./refresh-token_pb";
 import * as scope_pb from "./scope_pb";
 import * as user_pb from "./user_pb";
@@ -44,6 +45,7 @@ interface IAccountService extends grpc.ServiceDefinition<grpc.UntypedServiceImpl
     deleteRefreshToken: IAccountService_IDeleteRefreshToken;
     getScope: IAccountService_IGetScope;
     listScopes: IAccountService_IListScopes;
+    createAIdToken: IAccountService_ICreateAIdToken;
 }
 
 interface IAccountService_ICreateUser extends grpc.MethodDefinition<user_pb.User, user_pb.User> {
@@ -316,6 +318,15 @@ interface IAccountService_IListScopes extends grpc.MethodDefinition<scope_pb.Sco
     responseSerialize: grpc.serialize<scope_pb.ScopeList>;
     responseDeserialize: grpc.deserialize<scope_pb.ScopeList>;
 }
+interface IAccountService_ICreateAIdToken extends grpc.MethodDefinition<id_token_pb.IdTokenRequest, id_token_pb.IdTokenResponse> {
+    path: "/auth.Account/CreateAIdToken";
+    requestStream: false;
+    responseStream: false;
+    requestSerialize: grpc.serialize<id_token_pb.IdTokenRequest>;
+    requestDeserialize: grpc.deserialize<id_token_pb.IdTokenRequest>;
+    responseSerialize: grpc.serialize<id_token_pb.IdTokenResponse>;
+    responseDeserialize: grpc.deserialize<id_token_pb.IdTokenResponse>;
+}
 
 export const AccountService: IAccountService;
 
@@ -350,6 +361,7 @@ export interface IAccountServer extends grpc.UntypedServiceImplementation {
     deleteRefreshToken: grpc.handleUnaryCall<refresh_token_pb.RefreshToken, refresh_token_pb.RefreshToken>;
     getScope: grpc.handleUnaryCall<scope_pb.Scope, scope_pb.Scope>;
     listScopes: grpc.handleUnaryCall<scope_pb.Scope, scope_pb.ScopeList>;
+    createAIdToken: grpc.handleUnaryCall<id_token_pb.IdTokenRequest, id_token_pb.IdTokenResponse>;
 }
 
 export interface IAccountClient {
@@ -443,6 +455,9 @@ export interface IAccountClient {
     listScopes(request: scope_pb.Scope, callback: (error: grpc.ServiceError | null, response: scope_pb.ScopeList) => void): grpc.ClientUnaryCall;
     listScopes(request: scope_pb.Scope, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: scope_pb.ScopeList) => void): grpc.ClientUnaryCall;
     listScopes(request: scope_pb.Scope, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: scope_pb.ScopeList) => void): grpc.ClientUnaryCall;
+    createAIdToken(request: id_token_pb.IdTokenRequest, callback: (error: grpc.ServiceError | null, response: id_token_pb.IdTokenResponse) => void): grpc.ClientUnaryCall;
+    createAIdToken(request: id_token_pb.IdTokenRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: id_token_pb.IdTokenResponse) => void): grpc.ClientUnaryCall;
+    createAIdToken(request: id_token_pb.IdTokenRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: id_token_pb.IdTokenResponse) => void): grpc.ClientUnaryCall;
 }
 
 export class AccountClient extends grpc.Client implements IAccountClient {
@@ -537,4 +552,7 @@ export class AccountClient extends grpc.Client implements IAccountClient {
     public listScopes(request: scope_pb.Scope, callback: (error: grpc.ServiceError | null, response: scope_pb.ScopeList) => void): grpc.ClientUnaryCall;
     public listScopes(request: scope_pb.Scope, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: scope_pb.ScopeList) => void): grpc.ClientUnaryCall;
     public listScopes(request: scope_pb.Scope, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: scope_pb.ScopeList) => void): grpc.ClientUnaryCall;
+    public createAIdToken(request: id_token_pb.IdTokenRequest, callback: (error: grpc.ServiceError | null, response: id_token_pb.IdTokenResponse) => void): grpc.ClientUnaryCall;
+    public createAIdToken(request: id_token_pb.IdTokenRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: id_token_pb.IdTokenResponse) => void): grpc.ClientUnaryCall;
+    public createAIdToken(request: id_token_pb.IdTokenRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: id_token_pb.IdTokenResponse) => void): grpc.ClientUnaryCall;
 }
