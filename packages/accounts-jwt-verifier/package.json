@@ -11,7 +11,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "@xarples/accounts-protobuf": "^0.0.0"
+    "jose": "^3.14.3"
   },
   "devDependencies": {
     "@types/node": "^15.6.0"
