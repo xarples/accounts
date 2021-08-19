@@ -14,6 +14,7 @@ export default async function createRefreshToken(
     const token = await db.refreshToken.create({
       data: {
         token: randomBytes(32).toString('hex'),
+        audience: request.audienceList,
         expires_in: add(new Date(), { months: 1 }),
         AuthorizationCode: {
           connect: {
