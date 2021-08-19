@@ -75,6 +75,10 @@ async function authorizationHandler(
       }
     }
 
+    const audience = Array.isArray(request.query.resource)
+      ? request.query.resource
+      : [request.query.resource]
+
     if (request.query.response_mode === 'web_message') {
       const authorizationCode = await fastify.authorizationCodeService.create({
         userId: request.session?.user?.id,
@@ -82,6 +86,7 @@ async function authorizationHandler(
         codeChallenge: request.query.code_challenge,
         codeChallengeMethod: request.query.code_challenge_method,
         redirectUri: request.query.redirect_uri,
+        audienceList: audience,
         scopeList: request.query.scope?.split(' ')
       })
 
@@ -188,12 +193,17 @@ async function authorizationConsentHandler(
     }
   }
 
+  const audience = Array.isArray(request.body.resource)
+    ? request.body.resource
+    : [request.body.resource]
+
   const authorizationCode = await fastify.authorizationCodeService.create({
     userId: request.session?.user?.id,
     clientId: request.body.client_id,
     codeChallenge: request.body.code_challenge,
     codeChallengeMethod: request.body.code_challenge_method,
     redirectUri: request.body.redirect_uri,
+    audienceList: audience,
     scopeList: request.body.scope?.split(' ')
   })
 

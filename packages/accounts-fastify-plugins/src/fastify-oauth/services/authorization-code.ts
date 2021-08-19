@@ -50,6 +50,7 @@ export class AuthorizationCodeService {
     message.setCodeChallenge(options.codeChallenge!)
     message.setCodeChallengeMethod(options.codeChallengeMethod!)
     message.setRedirectUri(options.redirectUri!)
+    message.setAudienceList(options.audienceList!)
     message.setScopeList(options.scopeList || [])
 
     const created = await createAuthorizationCode(message)
@@ -108,6 +109,7 @@ export class AuthorizationCodeService {
       code_challenge: options.codeChallenge,
       code_challenge_method: options.codeChallengeMethod,
       redirect_uri: options.redirectUri,
+      audience: options.audienceList,
       scopes: options.scopeList,
       expires_in: options.expiresIn,
       created_at: options.createdAt,

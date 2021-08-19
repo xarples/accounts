@@ -19,6 +19,10 @@ export const authorizationRequestSchema: FastifySchema = {
     )
     .prop('redirect_uri', S.string().required())
     .prop('response_mode', S.string().enum(['web_message']))
+    .prop(
+      'resource',
+      S.oneOf([S.string(), S.array().items(S.string())]).required()
+    )
     .prop('scope', S.string())
     .prop('state', S.string())
 }

@@ -43,6 +43,7 @@ export class RefreshTokenService {
     message.setUserId(options.userId!)
     message.setClientId(options.clientId!)
     message.setToken(options.token!)
+    message.setAudienceList(options.audienceList!)
     message.setScopeList(options.scopeList || [])
 
     const created = await createRefreshToken(message)
@@ -97,6 +98,7 @@ export class RefreshTokenService {
       user_id: options.userId,
       client_id: options.clientId,
       token: options.token,
+      audience: options.audienceList,
       scopes: options.scopeList,
       expires_in: options.expiresIn,
       created_at: options.createdAt,

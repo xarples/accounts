@@ -22,6 +22,7 @@ export default async function createAuthorizationCode(
           ],
         redirect_uri: request.redirectUri,
         expires_in: add(new Date(), { seconds: 30 }),
+        audience: request.audienceList,
         User: {
           connect: {
             id: request.userId

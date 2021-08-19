@@ -43,6 +43,7 @@ export class AccessTokenService {
     message.setUserId(options.userId!)
     message.setClientId(options.clientId!)
     message.setToken(options.token!)
+    message.setAudienceList(options.audienceList!)
     message.setScopeList(options.scopeList || [])
 
     const created = await createAccessToken(message)
@@ -97,6 +98,7 @@ export class AccessTokenService {
       client_id: options.clientId,
       user_id: options.userId,
       token: options.token,
+      audience: options.audienceList,
       scopes: options.scopeList,
       expires_in: options.expiresIn,
       created_at: options.createdAt,

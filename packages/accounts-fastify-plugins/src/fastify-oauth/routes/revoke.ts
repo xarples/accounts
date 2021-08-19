@@ -18,7 +18,7 @@ const plugin: FastifyPluginAsync = async fastify => {
     '/revoke',
     {
       attachValidation: true,
-      onRequest: fastify.clientAuthPreHandler,
+      preHandler: [fastify.clientAuthPreHandler],
       schema: revokeTokenSchema
     },
     revokeHandler

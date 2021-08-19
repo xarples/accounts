@@ -2,7 +2,7 @@ import * as db from '@xarples/accounts-db'
 import { randomBytes } from '@xarples/accounts-utils'
 import { grpc, Client } from '@xarples/accounts-protobuf'
 import { getClientMessage } from './utils'
-import { withAuthorization } from './handlers'
+import { withAuthorization } from './hoc'
 
 async function createClient(
   call: grpc.ServerUnaryCall<Client, Client>,

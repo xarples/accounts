@@ -15,6 +15,7 @@ export default function getAccessTokenMessage(
   message.setUserId(item.user_id!)
   message.setClientId(item.client_id)
   message.setToken(item.token)
+  message.setAudienceList(item.audience)
   message.setExpiresIn(item.expires_in.toString())
   message.setCreatedAt(item.created_at.toString())
   message.setUpdatedAt(item.updated_at.toString())

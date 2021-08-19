@@ -17,6 +17,7 @@ export default function getAuthorizationCodeMessage(
   message.setCodeChallenge(item.code_challenge)
   message.setCodeChallengeMethod(item.code_challenge_method)
   message.setRedirectUri(item.redirect_uri)
+  message.setAudienceList(item.audience)
   message.setExpiresIn(item.expires_in.toString())
   message.setCreatedAt(item.created_at.toString())
   message.setUpdatedAt(item.updated_at.toString())

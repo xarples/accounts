@@ -64,6 +64,7 @@ model AuthorizationCode {
   code_challenge        String
   code_challenge_method CodeChallengeMethod @default(plain)
   redirect_uri          String
+  audience              String[]
   expires_in            DateTime
   created_at            DateTime            @default(now())
   updated_at            DateTime            @updatedAt
@@ -102,6 +103,7 @@ model RefreshToken {
   authorization_code_id String?
   client_id             String
   token                 String   @unique
+  audience              String[]
   expires_in            DateTime
   created_at            DateTime @default(now())
   updated_at            DateTime @updatedAt

@@ -18,6 +18,10 @@ export class RefreshToken extends jspb.Message {
     setClientId(value: string): RefreshToken;
     getToken(): string;
     setToken(value: string): RefreshToken;
+    clearAudienceList(): void;
+    getAudienceList(): Array<string>;
+    setAudienceList(value: Array<string>): RefreshToken;
+    addAudience(value: string, index?: number): string;
     getExpiresIn(): string;
     setExpiresIn(value: string): RefreshToken;
     getCreatedAt(): string;
@@ -51,6 +55,7 @@ export namespace RefreshToken {
         userId: string,
         clientId: string,
         token: string,
+        audienceList: Array<string>,
         expiresIn: string,
         createdAt: string,
         updatedAt: string,

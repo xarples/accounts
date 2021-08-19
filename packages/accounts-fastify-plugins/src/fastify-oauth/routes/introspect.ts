@@ -19,7 +19,7 @@ const plugin: FastifyPluginAsync = async fastify => {
     {
       attachValidation: true,
       schema: introspectTokenSchema,
-      preHandler: fastify.clientAuthPreHandler
+      preHandler: [fastify.clientAuthPreHandler]
     },
     introspectHandler
   )

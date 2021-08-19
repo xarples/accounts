@@ -4,6 +4,7 @@ export interface AccessTokenResponse {
   client_id: string
   user_id: string
   token: string
+  audience: string[]
   scopes: string[]
   expires_in: string
   created_at: string
@@ -18,6 +19,7 @@ export interface AuthorizationCodeResponse {
   code_challenge: string
   code_challenge_method: string
   redirect_uri: string
+  audience: string[]
   scopes: string[]
   expires_in: string
   created_at: string
@@ -90,6 +92,7 @@ export interface RefreshTokenResponse {
   client_id: string
   user_id: string
   token: string
+  audience: string[]
   scopes: string[]
   expires_in: string
   created_at: string
@@ -114,6 +117,7 @@ export interface AuthorizationRequest {
     redirect_uri: string
     response_type: string
     response_mode?: 'web_message'
+    resource: string | string[]
     scope?: string
     state?: string
   }
@@ -126,6 +130,7 @@ export interface AuthorizationConsentRequest {
     code_challenge_method: string
     redirect_uri: string
     response_type: string
+    resource: string | string[]
     scope?: string
     state?: string
   }
@@ -139,11 +144,27 @@ export interface TokenRequest {
     code?: string
     code_verifier?: string
     client_id?: string
-    grant_type: 'authorization_code' | 'client_credentials' | 'refresh_token'
+    grant_type: 'authorization_code'
     redirect_uri?: string
-    refresh_token?: string
     scope?: string
+    resource?: string[]
     nonce?: string
+  }
+}
+
+export interface ClientCredentialsGrantRequest {
+  Body: {
+    grant_type: 'client_credentials'
+    refresh_token: string
+    resource?: string[]
+    scope?: string
+  }
+}
+
+export interface RefreshTokenRequest {
+  Body: {
+    grant_type: 'refresh_token'
+    refresh_token?: string
   }
 }
 

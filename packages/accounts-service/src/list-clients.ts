@@ -1,7 +1,7 @@
 import * as db from '@xarples/accounts-db'
 import { grpc, Client, ClientList } from '@xarples/accounts-protobuf'
 import { getClientMessage } from './utils'
-import { withAuthorization } from './handlers'
+import { withAuthorization } from './hoc'
 
 async function listClients(
   call: grpc.ServerUnaryCall<Client, ClientList>,

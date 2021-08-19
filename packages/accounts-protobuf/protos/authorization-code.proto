@@ -12,11 +12,12 @@ message AuthorizationCode {
   string code_challenge = 5;
   string code_challenge_method = 6;
   string redirect_uri = 7;
-  string expires_in = 8;
-  string created_at = 9;
-  string updated_at = 10;
-  repeated string scope = 11;
-  client.Client client = 12;
+  repeated string audience = 8;
+  string expires_in = 9;
+  string created_at = 10;
+  string updated_at = 11;
+  repeated string scope = 12;
+  client.Client client = 13;
 }
 
 message AuthorizationCodeList {

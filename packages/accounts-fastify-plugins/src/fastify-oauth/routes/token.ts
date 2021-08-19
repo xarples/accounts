@@ -6,14 +6,20 @@ import {
 } from 'fastify'
 import fp from 'fastify-plugin'
 import { codeChallenge } from '@xarples/accounts-utils'
-import { TokenRequest } from '../types'
+import {
+  ClientCredentialsGrantRequest,
+  RefreshTokenRequest,
+  TokenRequest
+} from '../types'
 
 const plugin: FastifyPluginAsync = async fastify => {
   const _authorizationCodeHandler = authorizationCodeGrantHandler.bind(fastify)
   const _clientCredentialsHandler = clientCredentialsGrantHandler.bind(fastify)
   const _refreshTokenHandler = refreshTokenGrantHandler.bind(fastify)
 
-  fastify.post<TokenRequest>(
+  fastify.post<
+    TokenRequest | ClientCredentialsGrantRequest | RefreshTokenRequest
+  >(
     '/token',
     {
       attachValidation: true,
@@ -35,9 +41,18 @@ const plugin: FastifyPluginAsync = async fastify => {
           })
         }
 
-        await _authorizationCodeHandler(request, reply)
-        await _clientCredentialsHandler(request, reply)
-        await _refreshTokenHandler(request, reply)
+        await _authorizationCodeHandler(
+          request as FastifyRequest<TokenRequest>,
+          reply
+        )
+        await _clientCredentialsHandler(
+          request as FastifyRequest<ClientCredentialsGrantRequest>,
+          reply
+        )
+        await _refreshTokenHandler(
+          request as FastifyRequest<RefreshTokenRequest>,
+          reply
+        )
       } catch (error) {
         reply.code(500).send({
           error: 'server_error',
@@ -49,7 +64,7 @@ const plugin: FastifyPluginAsync = async fastify => {
 }
 
 async function clientCredentialsGrantHandler(
-  request: FastifyRequest<TokenRequest>,
+  request: FastifyRequest<ClientCredentialsGrantRequest>,
   reply: FastifyReply
 ) {
   if (request.body.grant_type === 'client_credentials') {
@@ -73,7 +88,8 @@ async function clientCredentialsGrantHandler(
 
     const accessToken = await fastify.accessTokenService.create({
       clientId: request.client!.clientId,
-      scopeList: request.body.scope?.split(' ')
+      scopeList: request.body.scope?.split(' '),
+      audienceList: request.body.resource
     })
 
     reply.code(200).send({
@@ -87,7 +103,7 @@ async function clientCredentialsGrantHandler(
 }
 
 async function refreshTokenGrantHandler(
-  request: FastifyRequest<TokenRequest>,
+  request: FastifyRequest<RefreshTokenRequest>,
   reply: FastifyReply
 ) {
   if (request.body.grant_type === 'refresh_token') {
@@ -141,6 +157,7 @@ async function refreshTokenGrantHandler(
       authorizationCodeId: refreshToken!.authorization_code_id,
       userId: authorizationCode!.user_id,
       clientId: request.client!.clientId,
+      audienceList: authorizationCode!.audience,
       scopeList: authorizationCode!.scopes
     })
 
@@ -148,6 +165,7 @@ async function refreshTokenGrantHandler(
       authorizationCodeId: refreshToken!.authorization_code_id,
       userId: authorizationCode!.user_id,
       clientId: request.client!.clientId,
+      audienceList: authorizationCode!.audience,
       scopeList: authorizationCode!.scopes
     })
 
@@ -272,6 +290,7 @@ async function authorizationCodeGrantHandler(
       authorizationCodeId: authorizationCode!.id,
       userId: authorizationCode!.user_id,
       clientId: request.client!.clientId,
+      audienceList: authorizationCode!.audience,
       scopeList: authorizationCode.scopes
     })
 
@@ -282,6 +301,7 @@ async function authorizationCodeGrantHandler(
       authorizationCodeId: authorizationCode!.id,
       userId: authorizationCode!.user_id,
       clientId: request.client!.clientId,
+      audienceList: authorizationCode!.audience,
       scopeList: authorizationCode.scopes
     })
 

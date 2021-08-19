@@ -1,4 +1,4 @@
-export { default as getAccessTokenMessage } from './get-token-message'
+export { default as getAccessTokenMessage } from './get-access-token-message'
 export { default as getAuthorizationCodeMessage } from './get-authorization-code-message'
 export { default as getClientMessage } from './get-client-message'
 export { default as getPublicClientMessage } from './get-public-client-message'
