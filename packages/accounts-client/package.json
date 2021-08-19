@@ -1,6 +1,6 @@
 {
   "name": "@xarples/accounts-client",
-  "version": "0.0.1-alpha.0",
+  "version": "0.0.4-alpha.0",
   "description": "",
   "main": "dist/index.js",
   "keywords": [],
@@ -18,7 +18,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "@xarples/accounts-protobuf": "^0.0.1-alpha.0"
+    "@xarples/accounts-protobuf": "^0.0.4-alpha.0"
   },
   "devDependencies": {
     "@types/node": "^15.6.0",
