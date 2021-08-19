@@ -1,11 +1,10 @@
 import { FastifyPluginAsync, FastifyRequest, FastifyReply } from 'fastify'
 import fp from 'fastify-plugin'
-import { getUnixTime, add } from 'date-fns'
-import { SignJWT } from 'jose/jwt/sign'
-import { parseJwk } from 'jose/jwk/parse'
+// import { getUnixTime, add } from 'date-fns'
+// import { SignJWT } from 'jose/jwt/sign'
+// import { parseJwk } from 'jose/jwk/parse'
 import { jwtVerify } from 'jose/jwt/verify'
 import { createRemoteJWKSet } from 'jose/jwks/remote'
-import privateJWK from '@xarples/accounts-config/config/private-jwk.json'
 
 interface Context {
   request: FastifyRequest
@@ -29,21 +28,21 @@ export class IdTokenService {
 
   async sign(options: Options): Promise<string | undefined> {
     try {
-      const signKey = await parseJwk(privateJWK)
+      // const signKey = await parseJwk(privateJWK)
 
-      const token = new SignJWT({
-        iss: options.iss,
-        sub: options.sub,
-        aud: options.aud,
-        nonce: options.nonce,
-        exp: getUnixTime(add(new Date(), { hours: 1 })),
-        iat: getUnixTime(new Date()),
-        auth_time: getUnixTime(new Date(options.auth_time))
-      })
-        .setProtectedHeader({ alg: 'RS256' })
-        .sign(signKey)
+      // const token = new SignJWT({
+      //   iss: options.iss,
+      //   sub: options.sub,
+      //   aud: options.aud,
+      //   nonce: options.nonce,
+      //   exp: getUnixTime(add(new Date(), { hours: 1 })),
+      //   iat: getUnixTime(new Date()),
+      //   auth_time: getUnixTime(new Date(options.auth_time))
+      // })
+      //   .setProtectedHeader({ alg: 'RS256' })
+      //   .sign(signKey)
 
-      return token
+      return ''
     } catch (error) {
       return Promise.reject(error)
     }

@@ -18,7 +18,6 @@
   },
   "dependencies": {
     "@xarples/accounts-client": "^0.0.4-alpha.0",
-    "@xarples/accounts-config": "^0.0.1-alpha.0",
     "@xarples/accounts-protobuf": "^0.0.4-alpha.0",
     "@xarples/accounts-utils": "^0.0.4-alpha.0",
     "basic-auth": "^2.0.1",
