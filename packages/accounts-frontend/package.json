@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "description": "Auth server",
   "main": "index.js",
+  "private": true,
   "scripts": {
     "dev": "nodemon",
     "build:nuxt": "nuxt build",
