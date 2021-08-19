@@ -1,6 +1,6 @@
 {
   "name": "@xarples/accounts-config",
-  "version": "0.0.0",
+  "version": "0.0.1-alpha.0",
   "description": "",
   "main": "dist/index.js",
   "keywords": [],
@@ -15,7 +15,7 @@
     "jose": "^3.14.3"
   },
   "devDependencies": {
-    "typescript": "^4.2.4",
-    "@types/node": "^15.6.0"
+    "@types/node": "^15.6.0",
+    "typescript": "^4.2.4"
   }
 }

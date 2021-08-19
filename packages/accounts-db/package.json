@@ -1,6 +1,6 @@
 {
   "name": "@xarples/accounts-db",
-  "version": "0.0.0",
+  "version": "0.0.1-alpha.0",
   "description": "",
   "main": "dist/index.js",
   "private": true,
@@ -18,8 +18,8 @@
     "date-fns": "^2.22.1"
   },
   "devDependencies": {
-    "@types/node": "^15.6.0",
     "@types/date-fns": "^2.6.0",
+    "@types/node": "^15.6.0",
     "prisma": "^2.27.0",
     "typescript": "^4.2.4"
   }

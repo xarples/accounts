@@ -1,6 +1,6 @@
 {
   "name": "@xarples/accounts-service",
-  "version": "0.0.0",
+  "version": "0.0.1-alpha.0",
   "description": "",
   "main": "dist/index.js",
   "keywords": [],
@@ -12,10 +12,10 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
-    "@xarples/accounts-config": "^0.0.0",
-    "@xarples/accounts-db": "^0.0.0",
-    "@xarples/accounts-protobuf": "^0.0.0",
-    "@xarples/accounts-utils": "^0.0.0",
+    "@xarples/accounts-config": "^0.0.1-alpha.0",
+    "@xarples/accounts-db": "^0.0.1-alpha.0",
+    "@xarples/accounts-protobuf": "^0.0.1-alpha.0",
+    "@xarples/accounts-utils": "^0.0.1-alpha.0",
     "axios": "^0.21.1",
     "date-fns": "^2.22.1",
     "jose": "^3.14.3"
