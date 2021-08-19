@@ -1,6 +1,6 @@
 {
   "name": "@xarples/accounts-frontend",
-  "version": "0.0.4-alpha.0",
+  "version": "0.0.5-alpha.0",
   "description": "Auth server",
   "main": "index.js",
   "private": true,
@@ -17,7 +17,7 @@
     "@nuxtjs/composition-api": "^0.24.4",
     "@xarples/accounts-client": "^0.0.4-alpha.0",
     "@xarples/accounts-db": "^0.0.1-alpha.0",
-    "@xarples/accounts-fastify-plugins": "^0.0.4-alpha.0",
+    "@xarples/accounts-fastify-plugins": "^0.0.5-alpha.0",
     "@xarples/accounts-protobuf": "^0.0.4-alpha.0",
     "@xarples/accounts-utils": "^0.0.4-alpha.0",
     "bootstrap": "^4.6.0",
