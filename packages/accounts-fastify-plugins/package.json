@@ -9,6 +9,13 @@
   },
   "author": "xarples",
   "license": "MIT",
+  "files": [
+    "dist",
+    "package.json"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
   "dependencies": {
     "@xarples/accounts-client": "^0.0.1-alpha.0",
     "@xarples/accounts-config": "^0.0.1-alpha.0",
@@ -29,5 +36,5 @@
     "@types/date-fns": "^2.6.0",
     "@types/node": "^15.6.0"
   },
-  "gitHead": "0ca3a4a97f7ac56dbefbb853fb9389567db070ad"
+  "gitHead": "51e2292b83baca7f5a022875786bbf427e8c7388"
 }

@@ -3,6 +3,14 @@
   "version": "0.0.1-alpha.0",
   "description": "",
   "main": "dist/index.js",
+  "files": [
+    "dist",
+    "generated",
+    "package.json"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "tsc",
     "generate": "grpc_tools_node_protoc --proto_path=./protos --ts_out=grpc_js:./generated --js_out=import_style=commonjs,binary:./generated/ --grpc_out=grpc_js:./generated --plugin=protoc-gen-ts=../../node_modules/.bin/protoc-gen-ts --plugin=protoc-gen-grpc=`which grpc_tools_node_protoc_plugin` ./protos/*.proto",

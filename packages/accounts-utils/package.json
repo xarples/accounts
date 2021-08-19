@@ -10,6 +10,9 @@
     "dist",
     "package.json"
   ],
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -21,5 +24,5 @@
     "@types/cuid": "^2.0.1",
     "@types/node": "^15.6.0"
   },
-  "gitHead": "0ca3a4a97f7ac56dbefbb853fb9389567db070ad"
+  "gitHead": "51e2292b83baca7f5a022875786bbf427e8c7388"
 }
