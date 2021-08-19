@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package jwks;
+
+import "google/protobuf/any.proto";
+
+
+message GetJWKSRequest {}
+
+message GetJWKSResponse {
+  string jwks = 1;
+}
+

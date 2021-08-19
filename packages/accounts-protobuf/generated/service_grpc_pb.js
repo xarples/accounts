@@ -6,6 +6,7 @@ var access$token_pb = require('./access-token_pb.js');
 var authorization$code_pb = require('./authorization-code_pb.js');
 var client_pb = require('./client_pb.js');
 var id$token_pb = require('./id-token_pb.js');
+var jwks_pb = require('./jwks_pb.js');
 var refresh$token_pb = require('./refresh-token_pb.js');
 var scope_pb = require('./scope_pb.js');
 var user_pb = require('./user_pb.js');
@@ -96,6 +97,28 @@ function serialize_id_token_IdTokenResponse(arg) {
 
 function deserialize_id_token_IdTokenResponse(buffer_arg) {
   return id$token_pb.IdTokenResponse.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_jwks_GetJWKSRequest(arg) {
+  if (!(arg instanceof jwks_pb.GetJWKSRequest)) {
+    throw new Error('Expected argument of type jwks.GetJWKSRequest');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_jwks_GetJWKSRequest(buffer_arg) {
+  return jwks_pb.GetJWKSRequest.deserializeBinary(new Uint8Array(buffer_arg));
+}
+
+function serialize_jwks_GetJWKSResponse(arg) {
+  if (!(arg instanceof jwks_pb.GetJWKSResponse)) {
+    throw new Error('Expected argument of type jwks.GetJWKSResponse');
+  }
+  return Buffer.from(arg.serializeBinary());
+}
+
+function deserialize_jwks_GetJWKSResponse(buffer_arg) {
+  return jwks_pb.GetJWKSResponse.deserializeBinary(new Uint8Array(buffer_arg));
 }
 
 function serialize_refresh_token_RefreshToken(arg) {
@@ -506,6 +529,17 @@ var AccountService = exports.AccountService = {
     requestDeserialize: deserialize_id_token_IdTokenRequest,
     responseSerialize: serialize_id_token_IdTokenResponse,
     responseDeserialize: deserialize_id_token_IdTokenResponse,
+  },
+  getJWKS: {
+    path: '/auth.Account/GetJWKS',
+    requestStream: false,
+    responseStream: false,
+    requestType: jwks_pb.GetJWKSRequest,
+    responseType: jwks_pb.GetJWKSResponse,
+    requestSerialize: serialize_jwks_GetJWKSRequest,
+    requestDeserialize: deserialize_jwks_GetJWKSRequest,
+    responseSerialize: serialize_jwks_GetJWKSResponse,
+    responseDeserialize: deserialize_jwks_GetJWKSResponse,
   },
 };
 

@@ -10,6 +10,7 @@ import * as access_token_pb from "./access-token_pb";
 import * as authorization_code_pb from "./authorization-code_pb";
 import * as client_pb from "./client_pb";
 import * as id_token_pb from "./id-token_pb";
+import * as jwks_pb from "./jwks_pb";
 import * as refresh_token_pb from "./refresh-token_pb";
 import * as scope_pb from "./scope_pb";
 import * as user_pb from "./user_pb";
@@ -46,6 +47,7 @@ interface IAccountService extends grpc.ServiceDefinition<grpc.UntypedServiceImpl
     getScope: IAccountService_IGetScope;
     listScopes: IAccountService_IListScopes;
     createAIdToken: IAccountService_ICreateAIdToken;
+    getJWKS: IAccountService_IGetJWKS;
 }
 
 interface IAccountService_ICreateUser extends grpc.MethodDefinition<user_pb.User, user_pb.User> {
@@ -327,6 +329,15 @@ interface IAccountService_ICreateAIdToken extends grpc.MethodDefinition<id_token
     responseSerialize: grpc.serialize<id_token_pb.IdTokenResponse>;
     responseDeserialize: grpc.deserialize<id_token_pb.IdTokenResponse>;
 }
+interface IAccountService_IGetJWKS extends grpc.MethodDefinition<jwks_pb.GetJWKSRequest, jwks_pb.GetJWKSResponse> {
+    path: "/auth.Account/GetJWKS";
+    requestStream: false;
+    responseStream: false;
+    requestSerialize: grpc.serialize<jwks_pb.GetJWKSRequest>;
+    requestDeserialize: grpc.deserialize<jwks_pb.GetJWKSRequest>;
+    responseSerialize: grpc.serialize<jwks_pb.GetJWKSResponse>;
+    responseDeserialize: grpc.deserialize<jwks_pb.GetJWKSResponse>;
+}
 
 export const AccountService: IAccountService;
 
@@ -362,6 +373,7 @@ export interface IAccountServer extends grpc.UntypedServiceImplementation {
     getScope: grpc.handleUnaryCall<scope_pb.Scope, scope_pb.Scope>;
     listScopes: grpc.handleUnaryCall<scope_pb.Scope, scope_pb.ScopeList>;
     createAIdToken: grpc.handleUnaryCall<id_token_pb.IdTokenRequest, id_token_pb.IdTokenResponse>;
+    getJWKS: grpc.handleUnaryCall<jwks_pb.GetJWKSRequest, jwks_pb.GetJWKSResponse>;
 }
 
 export interface IAccountClient {
@@ -458,6 +470,9 @@ export interface IAccountClient {
     createAIdToken(request: id_token_pb.IdTokenRequest, callback: (error: grpc.ServiceError | null, response: id_token_pb.IdTokenResponse) => void): grpc.ClientUnaryCall;
     createAIdToken(request: id_token_pb.IdTokenRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: id_token_pb.IdTokenResponse) => void): grpc.ClientUnaryCall;
     createAIdToken(request: id_token_pb.IdTokenRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: id_token_pb.IdTokenResponse) => void): grpc.ClientUnaryCall;
+    getJWKS(request: jwks_pb.GetJWKSRequest, callback: (error: grpc.ServiceError | null, response: jwks_pb.GetJWKSResponse) => void): grpc.ClientUnaryCall;
+    getJWKS(request: jwks_pb.GetJWKSRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: jwks_pb.GetJWKSResponse) => void): grpc.ClientUnaryCall;
+    getJWKS(request: jwks_pb.GetJWKSRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: jwks_pb.GetJWKSResponse) => void): grpc.ClientUnaryCall;
 }
 
 export class AccountClient extends grpc.Client implements IAccountClient {
@@ -555,4 +570,7 @@ export class AccountClient extends grpc.Client implements IAccountClient {
     public createAIdToken(request: id_token_pb.IdTokenRequest, callback: (error: grpc.ServiceError | null, response: id_token_pb.IdTokenResponse) => void): grpc.ClientUnaryCall;
     public createAIdToken(request: id_token_pb.IdTokenRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: id_token_pb.IdTokenResponse) => void): grpc.ClientUnaryCall;
     public createAIdToken(request: id_token_pb.IdTokenRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: id_token_pb.IdTokenResponse) => void): grpc.ClientUnaryCall;
+    public getJWKS(request: jwks_pb.GetJWKSRequest, callback: (error: grpc.ServiceError | null, response: jwks_pb.GetJWKSResponse) => void): grpc.ClientUnaryCall;
+    public getJWKS(request: jwks_pb.GetJWKSRequest, metadata: grpc.Metadata, callback: (error: grpc.ServiceError | null, response: jwks_pb.GetJWKSResponse) => void): grpc.ClientUnaryCall;
+    public getJWKS(request: jwks_pb.GetJWKSRequest, metadata: grpc.Metadata, options: Partial<grpc.CallOptions>, callback: (error: grpc.ServiceError | null, response: jwks_pb.GetJWKSResponse) => void): grpc.ClientUnaryCall;
 }

@@ -1,3 +1,4 @@
+import { promisify } from 'util'
 import {
   FastifyPluginAsync,
   FastifyRequest,
@@ -5,12 +6,18 @@ import {
   FastifyInstance
 } from 'fastify'
 import fp from 'fastify-plugin'
-import jwks from '@xarples/accounts-config/config/jwks.json'
+import { GetJWKSRequest, GetJWKSResponse } from '@xarples/accounts-protobuf'
+import client from '@xarples/accounts-client'
+
 interface Context {
   fastify: FastifyInstance
   request: FastifyRequest
   reply: FastifyReply
 }
+
+const getJWKS = promisify<GetJWKSRequest, GetJWKSResponse>(
+  client.getJWKS.bind(client)
+)
 
 export class MetadataService {
   context: Context | undefined
@@ -29,8 +36,8 @@ export class MetadataService {
       authorization_endpoint: 'https://accounts.xarples.com/authorize',
       token_endpoint: 'https://accounts.xarples.com/token',
       token_endpoint_auth_methods_supported: [
-        'client_secret_basic',
-        'private_key_jwt'
+        'client_secret_basic'
+        // 'private_key_jwt'
       ],
       userinfo_endpoint: 'https://accounts.xarples.com/userinfo',
       registration_endpoint: 'https://accounts.xarples.com/signup',
@@ -49,7 +56,14 @@ export class MetadataService {
   }
 
   async getJWKS() {
-    return jwks
+    try {
+      const message = new GetJWKSRequest()
+      const response = await (await getJWKS(message)).toObject()
+
+      return JSON.parse(response.jwks)
+    } catch (error) {
+      return {}
+    }
   }
 }
 

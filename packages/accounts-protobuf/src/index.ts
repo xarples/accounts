@@ -8,6 +8,7 @@ export * from '../generated/client_pb'
 
 export * from '../generated/id-token_pb'
 
+export * from '../generated/jwks_pb'
 
 export * from '../generated/refresh-token_pb'
 

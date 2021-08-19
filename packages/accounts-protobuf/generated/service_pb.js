@@ -23,6 +23,8 @@ var client_pb = require('./client_pb.js');
 goog.object.extend(proto, client_pb);
 var id$token_pb = require('./id-token_pb.js');
 goog.object.extend(proto, id$token_pb);
+var jwks_pb = require('./jwks_pb.js');
+goog.object.extend(proto, jwks_pb);
 var refresh$token_pb = require('./refresh-token_pb.js');
 goog.object.extend(proto, refresh$token_pb);
 var scope_pb = require('./scope_pb.js');

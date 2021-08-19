@@ -6,6 +6,7 @@ import "access-token.proto";
 import "authorization-code.proto";
 import "client.proto";
 import "id-token.proto";
+import "jwks.proto";
 import "refresh-token.proto";
 import "scope.proto";
 import "user.proto";
@@ -48,6 +49,8 @@ service Account{
   rpc ListScopes(scope.Scope) returns (scope.ScopeList) {}
 
   rpc CreateAIdToken(id_token.IdTokenRequest) returns (id_token.IdTokenResponse) {}
+
+  rpc GetJWKS(jwks.GetJWKSRequest) returns (jwks.GetJWKSResponse) {}
 }
 
 

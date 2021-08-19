@@ -24,8 +24,8 @@ export default async function createAccessToken(
       aud: request.audienceList,
       scopes: request.scopeList,
       exp: getUnixTime(add(new Date(), { hours: 1 })),
-      iat: getUnixTime(new Date()),
-      auth_time: getUnixTime(new Date())
+      iat: getUnixTime(new Date())
+      // auth_time: getUnixTime(new Date())
     })
 
     const jwt = await token
