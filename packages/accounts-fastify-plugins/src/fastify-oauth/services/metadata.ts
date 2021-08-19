@@ -15,6 +15,8 @@ interface Context {
   reply: FastifyReply
 }
 
+const host = process.env.PROD_HOST_HERE_CHANGE_THIS || 'http://localhost:5000'
+
 const getJWKS = promisify<GetJWKSRequest, GetJWKSResponse>(
   client.getJWKS.bind(client)
 )
@@ -32,15 +34,15 @@ export class MetadataService {
     )
 
     return {
-      issuer: 'https://accounts.xarples.com',
-      authorization_endpoint: 'https://accounts.xarples.com/authorize',
-      token_endpoint: 'https://accounts.xarples.com/token',
+      issuer: host,
+      authorization_endpoint: `${host}/authorize`,
+      token_endpoint: `${host}/token`,
       token_endpoint_auth_methods_supported: [
         'client_secret_basic'
         // 'private_key_jwt'
       ],
-      userinfo_endpoint: 'https://accounts.xarples.com/userinfo',
-      registration_endpoint: 'https://accounts.xarples.com/signup',
+      userinfo_endpoint: `${host}/userinfo`,
+      registration_endpoint: `${host}/signup`,
       scopes_supported: [
         'profile',
         'email',
@@ -50,7 +52,7 @@ export class MetadataService {
         ...scopes
       ],
       response_types_supported: ['code'],
-      service_documentation: 'http://accounts.xarples.com/docs',
+      service_documentation: `${host}/docs`,
       ui_locales_supported: ['en-US']
     }
   }
