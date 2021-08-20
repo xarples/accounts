@@ -1,2 +1,2 @@
-export * from './verify'
 export * from './verify-scopes'
+export * from './verify'
