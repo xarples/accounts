@@ -1,6 +1,6 @@
 {
   "name": "@xarples/accounts-server",
-  "version": "0.0.4-alpha.0",
+  "version": "0.0.7-alpha.0",
   "description": "",
   "main": "index.js",
   "keywords": [],
@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "@xarples/accounts-protobuf": "^0.0.4-alpha.0",
-    "@xarples/accounts-service": "^0.0.4-alpha.0"
+    "@xarples/accounts-service": "^0.0.7-alpha.0"
   },
   "devDependencies": {
     "@types/node": "^15.6.0"
